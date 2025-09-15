@@ -16,6 +16,7 @@ import {
   Facebook,
   Youtube
 } from "lucide-react";
+import FAQ from "@/components/FAQ";
 import { useToast } from "@/hooks/use-toast";
 
 const Contact = () => {
@@ -81,7 +82,8 @@ const Contact = () => {
       icon: <Clock className="w-6 h-6 text-primary" />,
       title: "Jam Operasional",
       details: [
-        "Senin - Sabtu: 08:00 - 17:00",
+        "Senin - Jumat: 10:00 - 20:00",
+        "Sabtu: 10:00 - 16:00", 
         "Minggu: Tutup"
       ]
     }
@@ -89,20 +91,24 @@ const Contact = () => {
 
   const faqs = [
     {
-      question: "Apakah ada kelas online?",
-      answer: "Ya, kami menyediakan opsi kelas online dan offline sesuai kebutuhan siswa."
+      question: "Bagaimana jika tidak memiliki latar belakang IT?",
+      answer: "Tidak masalah! Program kami dirancang untuk semua level, termasuk pemula tanpa latar belakang IT. Instruktur kami akan membantu Anda dari dasar hingga mahir."
     },
     {
-      question: "Berapa lama durasi kursus?",
-      answer: "Durasi bervariasi, mulai dari 1 bulan untuk kursus dasar hingga 4 bulan untuk program lanjutan."
+      question: "Apakah ada kelas FullStack Web Development?",
+      answer: "Saat ini kami fokus pada fundamental programming (Python, Java). Untuk FullStack development, Anda bisa mengikuti program programming terlebih dahulu sebagai foundation."
     },
     {
-      question: "Apakah mendapatkan sertifikat?",
-      answer: "Ya, semua siswa yang menyelesaikan kursus akan mendapatkan sertifikat resmi."
+      question: "Apakah pembayaran dapat dilakukan dengan cara mencicil?",
+      answer: "Ya, kami menyediakan sistem pembayaran cicilan yang fleksibel untuk memudahkan siswa mengikuti program kursus."
     },
     {
-      question: "Apakah bisa cicil biaya kursus?",
-      answer: "Ya, kami menyediakan sistem pembayaran cicilan yang fleksibel."
+      question: "Apakah ada kelas coding untuk anak SD?",
+      answer: "Ya! Kami memiliki program Scratch yang khusus dirancang untuk anak-anak SD. Program ini mengajarkan logika programming dengan cara yang menyenangkan dan mudah dipahami."
+    },
+    {
+      question: "Apakah setelah mengikuti kursus ini bisa dapat pekerjaan di bidang IT?",
+      answer: "Program kami dirancang untuk mempersiapkan siswa dengan skill yang dibutuhkan industri IT. Banyak alumni kami yang berhasil berkarir di bidang IT setelah menyelesaikan program."
     }
   ];
 
@@ -299,17 +305,8 @@ const Contact = () => {
             </p>
           </div>
           
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <Card key={index} className="p-6">
-                <h3 className="font-semibold text-lg mb-2 flex items-center gap-2">
-                  <CheckCircle className="w-5 h-5 text-primary flex-shrink-0" />
-                  {faq.question}
-                </h3>
-                <p className="text-muted-foreground pl-7">{faq.answer}</p>
-              </Card>
-            ))}
-          </div>
+          
+          <FAQ items={faqs} />
         </div>
       </section>
 

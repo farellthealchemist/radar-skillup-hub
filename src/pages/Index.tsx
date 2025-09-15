@@ -64,34 +64,26 @@ const Index = () => {
 
   const testimonials = [
     {
-      name: "Budi Santoso",
-      role: "Software Developer",
-      company: "PT. Tech Indonesia",
-      content: "Setelah kursus Python di RADAR, saya berhasil mendapatkan pekerjaan sebagai developer. Instrukturnya sangat profesional dan sabar mengajar.",
+      name: "Sarah",
+      role: "Pelajar",
+      company: "SMA Negeri 1",
+      content: "Tempat kursus ini benar-benar bagus! Instruktur sangat ramah dan sabar dalam menjelaskan setiap konsep. Saya sekarang memiliki pemahaman yang lebih baik tentang dunia komputer dan merasa lebih siap untuk melanjutkan studi di perguruan tinggi.",
       rating: 5,
       image: "/api/placeholder/80/80"
     },
     {
-      name: "Sari Wulandari", 
-      role: "Data Analyst",
-      company: "Bank Mandiri",
-      content: "Kursus Excel di sini benar-benar mengubah cara kerja saya. Sekarang saya bisa menganalisis data dengan lebih efisien dan akurat.",
+      name: "Daniel", 
+      role: "Mahasiswa",
+      company: "Universitas Bina Nusantara",
+      content: "Saya sangat puas mengikuti kursus di sini. Instruktur sangat kompeten dan materi yang diajarkan sangat relevan dengan perkembangan IT. Saya merasa lebih percaya diri dalam menghadapi tugas kuliah setelah mengikuti kursus ini.",
       rating: 5,
       image: "/api/placeholder/80/80"
     },
     {
-      name: "Ahmad Rizky",
-      role: "Network Administrator", 
-      company: "Telkom Indonesia",
-      content: "Program networking sangat lengkap, dari basic sampai advanced. Sekarang saya bekerja sebagai network admin di perusahaan besar.",
-      rating: 5,
-      image: "/api/placeholder/80/80"
-    },
-    {
-      name: "Maya Putri",
-      role: "Mahasiswa", 
-      company: "Universitas Indonesia",
-      content: "Scratch programming sangat membantu saya memahami logika programming. Sekarang saya tertarik untuk lanjut belajar programming lainnya.",
+      name: "Maria",
+      role: "Mahasiswa",
+      company: "Universitas Indonesia", 
+      content: "Tempat kursus ini memberikan pengalaman belajar yang sangat baik. Materi disampaikan dengan cara yang mudah dipahami, dan fasilitas yang disediakan sangat memadai. Saya telah meningkatkan keterampilan teknis saya dan merasa lebih siap untuk menghadapi tugas-tugas ke depannya.",
       rating: 5,
       image: "/api/placeholder/80/80"
     }
@@ -173,16 +165,45 @@ const Index = () => {
             </div>
             
             <div className="relative lg:block hidden">
-              <div className="relative">
-                <img 
-                  src={heroImage} 
-                  alt="RADAR Education Center - IT Training" 
-                  className="rounded-2xl shadow-hero w-full animate-scale-in"
-                />
-                <div className="absolute -bottom-6 -left-6 bg-white p-4 rounded-xl shadow-card">
-                  <div className="flex items-center gap-3">
-                    <div className="w-3 h-3 bg-green-500 rounded-full animate-bounce-subtle"></div>
-                    <span className="text-sm font-medium">1,000+ Alumni yang Sukses</span>
+              <div className="max-w-max mx-auto">
+                <div className="flex flex-col space-y-6">
+                  {/* Instructor Card 1 */}
+                  <div className="w-64 p-4 bg-white transform hover:-translate-y-3 transition-all duration-1000 rounded-2xl shadow-card animate-scale-in">
+                    <div className="flex items-center gap-4">
+                      <img 
+                        src={instructorImage} 
+                        alt="Asep Surahmat M.Kom" 
+                        className="w-12 h-12 rounded-full object-cover"
+                      />
+                      <div className="flex-1">
+                        <h3 className="font-heading font-semibold text-gray-900">Asep Surahmat M.Kom</h3>
+                        <p className="text-sm text-gray-500 mb-2">Pengajar</p>
+                        <div className="flex items-center gap-2 px-2 py-1 bg-gray-100 rounded-full">
+                          <MapPin className="w-3 h-3 text-gray-500" />
+                          <span className="text-xs text-gray-700">Pinang, ID</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Instructor Card 2 */}
+                  <div className="w-64 p-4 bg-white transform hover:-translate-y-3 transition-all duration-1000 rounded-2xl shadow-card animate-scale-in" 
+                       style={{ animationDelay: "200ms" }}>
+                    <div className="flex items-center gap-4">
+                      <img 
+                        src={instructorImage} 
+                        alt="Rizqi Darmawan" 
+                        className="w-12 h-12 rounded-full object-cover"
+                      />
+                      <div className="flex-1">
+                        <h3 className="font-heading font-semibold text-gray-900">Rizqi Darmawan</h3>
+                        <p className="text-sm text-gray-500 mb-2">Pengajar</p>
+                        <div className="flex items-center gap-2 px-2 py-1 bg-gray-100 rounded-full">
+                          <MapPin className="w-3 h-3 text-gray-500" />
+                          <span className="text-xs text-gray-700">Karawaci, ID</span>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -318,7 +339,7 @@ const Index = () => {
           <div className="text-center mb-16">
             <Badge className="mb-4">Testimoni</Badge>
             <h2 className="text-3xl md:text-4xl font-heading font-bold mb-4">
-              Apa Kata Alumni Kami?
+              Testimoni
             </h2>
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
               Dengarkan cerita sukses dari alumni yang telah mengembangkan karir mereka 
@@ -326,7 +347,7 @@ const Index = () => {
             </p>
           </div>
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid md:grid-cols-3 gap-6">
             {testimonials.map((testimonial, index) => (
               <Card key={index} className="p-6 hover:shadow-card-hover transition-all duration-300 animate-fade-in"
                    style={{ animationDelay: `${index * 100}ms` }}>

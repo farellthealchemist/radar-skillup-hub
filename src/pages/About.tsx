@@ -1,29 +1,24 @@
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Users, Award, BookOpen, Target } from "lucide-react";
+import { Users, Award, BookOpen, Target, Clock } from "lucide-react";
 import instructorImage from "@/assets/instructor-teaching.jpg";
 
 const About = () => {
   const values = [
     {
-      icon: <Target className="w-8 h-8 text-primary" />,
-      title: "Misi",
-      description: "Menjadi pusat pelatihan IT terdepan yang menghasilkan SDM berkualitas tinggi"
-    },
-    {
-      icon: <Users className="w-8 h-8 text-primary" />,
-      title: "Pengalaman",
-      description: "Lebih dari 10 tahun mengembangkan skill IT untuk berbagai kalangan"
+      icon: <Users className="w-8 h-8 text-primary" />,  
+      title: "SD - PERGURUAN TINGGI",
+      description: "Radar education membuka pembelajaran dari pendidikan SD s/d Perguruan Tinggi"
     },
     {
       icon: <Award className="w-8 h-8 text-primary" />,
-      title: "Sertifikat",
-      description: "Program sertifikasi yang diakui industri dan lembaga pendidikan"
+      title: "SERTIFIKAT", 
+      description: "Sertifikat sering kali dianggap sebagai tambahan yang bernilai pada resume atau portofolio seseorang karena menunjukkan dedikasi, pencapaian, dan kompetensi yang dimiliki oleh pemilik sertifikat tersebut"
     },
     {
-      icon: <BookOpen className="w-8 h-8 text-primary" />,
-      title: "Kurikulum",
-      description: "Kurikulum yang selalu update dengan perkembangan teknologi terkini"
+      icon: <Clock className="w-8 h-8 text-primary" />,
+      title: "BELAJAR FLEKSIBEL",
+      description: "Pembelajaran Fleksibel yang memungkinkan akses materi kapan pun dimana pun melalui perangkat digital. Selain itu, ada juga pendekatan belajar mandiri yang memberikan ruang bagi seseorang untuk mengatur waktu belajar sesuai dengan kebutuhan dan tingkat pemahaman mereka"
     }
   ];
 
@@ -68,14 +63,16 @@ const About = () => {
                 Media Meningkatkan Skill dalam Bidang IT
               </h2>
               <p className="text-muted-foreground text-lg mb-6 leading-relaxed">
-                Sejak didirikan, RADAR Education Center berkomitmen untuk menjadi media terdepan 
-                dalam meningkatkan skill IT di Indonesia. Kami percaya bahwa teknologi adalah kunci 
-                masa depan, dan setiap orang berhak mendapatkan akses untuk mempelajarinya.
+                Radar Education Center merupakan pusat pendidikan yang didedikasikan untuk memajukan 
+                keterampilan dan pengetahuan Anda di bidang IT. Sebagai mitra dalam perjalanan pendidikan Anda, 
+                Radar Education Center menawarkan pengalaman belajar yang inovatif dan berorientasi pada praktik, 
+                membantu Anda mempersiapkan diri untuk tantangan yang terus berkembang di dunia IT.
               </p>
               <p className="text-muted-foreground text-lg mb-8 leading-relaxed">
-                Dengan instruktur berpengalaman dan kurikulum yang selalu update, kami telah 
-                melatih ribuan siswa dari berbagai latar belakang, mulai dari pelajar hingga 
-                profesional yang ingin meningkatkan skill mereka.
+                Radar Education Center menawarkan beragam program pelatihan IT yang dirancang oleh para ahli industri. 
+                Mulai dari pemrograman hingga keamanan informasi, program kami mencakup spektrum luas keterampilan 
+                yang dibutuhkan dalam dunia kerja saat ini. Dengan fokus pada pendekatan praktis, Anda akan mengasah 
+                keterampilan sehari-hari yang dapat diterapkan secara langsung dalam pekerjaan.
               </p>
               <div className="grid grid-cols-2 gap-4">
                 <div className="text-center p-4">
