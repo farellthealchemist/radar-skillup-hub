@@ -19,6 +19,11 @@ const About = () => {
       icon: <Clock className="w-8 h-8 text-primary" />,
       title: "BELAJAR FLEKSIBEL",
       description: "Pembelajaran Fleksibel yang memungkinkan akses materi kapan pun dimana pun melalui perangkat digital. Selain itu, ada juga pendekatan belajar mandiri yang memberikan ruang bagi seseorang untuk mengatur waktu belajar sesuai dengan kebutuhan dan tingkat pemahaman mereka"
+    },
+    {
+      icon: <Users className="w-8 h-8 text-primary" />,  
+      title: "SD - PERGURUAN TINGGI",
+      description: "Radar education center membuka pembelajaran dari pendidikan SD s/d Perguruan Tinggi"
     }
   ];
 
