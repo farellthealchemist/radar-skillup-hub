@@ -22,7 +22,7 @@ const Footer = () => {
   ];
 
   const courses = [
-    { name: "Programming Python & Java", path: "/courses#programming" },
+    { name: "Programming Python & Javasss", path: "/courses#programming" },
     { name: "Scratch Programming", path: "/courses#scratch" },
     { name: "Microsoft Office", path: "/courses#office" },
     { name: "Network Administration", path: "/courses#networking" }
