@@ -9,6 +9,7 @@ import {
   Youtube,
   MessageCircle
 } from "lucide-react";
+import logoRadar from "@/assets/logo RADAR.png"; // Import logo
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -22,7 +23,7 @@ const Footer = () => {
   ];
 
   const courses = [
-    { name: "Programming Python & Javasss", path: "/courses#programming" },
+    { name: "Programming Python & Java", path: "/courses#programming" },
     { name: "Scratch Programming", path: "/courses#scratch" },
     { name: "Microsoft Office", path: "/courses#office" },
     { name: "Network Administration", path: "/courses#networking" }
@@ -35,11 +36,15 @@ const Footer = () => {
           {/* Company Info */}
           <div className="lg:col-span-1">
             <div className="flex items-center gap-2 mb-6">
-              <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                <span className="text-primary-foreground font-bold text-sm">R</span>
-              </div>
+              {/* Ganti kotak R dengan logo gambar */}
+              <img 
+                src={logoRadar} 
+                alt="RADAR Logo" 
+                className="w-8 h-8 object-contain"
+                style={{ background: 'transparent', border: 'none', boxShadow: 'none', padding: 0 }}
+              />
               <span className="font-heading font-bold text-xl">
-                RADAR Education
+                RADAR Education Center
               </span>
             </div>
             <p className="text-gray-300 mb-6 leading-relaxed">
