@@ -406,7 +406,7 @@ const Index = () => {
                 </div>
                 <div className="flex items-center gap-3">
                   <MapPin className="w-5 h-5" />
-                  <span>Jl. HR Rasuna Said No.59, Cipete, Pinang, Tangerang</span>
+                  <span>Jl. Pinang-Kunciran No.114, RT.003/RW.005, Kunciran, Kec. Pinang, Kota Tangerang, Banten 15144</span>
                 </div>
               </div>
             </div>

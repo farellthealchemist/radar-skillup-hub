@@ -128,9 +128,8 @@ const Footer = () => {
               <div className="flex items-start gap-3">
                 <MapPin className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
                 <div className="text-gray-300 text-sm">
-                  <div>Jl. HR Rasuna Said No.59</div>
-                  <div>Cipete, Pinang, Tangerang</div>
-                  <div>Banten, Indonesia</div>
+                  <div>Jl. Pinang-Kunciran No.114, RT.003/RW.005</div>
+                  <div>Kunciran, Kec. Pinang, Kota Tangerang, Banten 15144</div>
                 </div>
               </div>
               

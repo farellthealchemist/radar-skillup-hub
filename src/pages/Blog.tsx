@@ -261,8 +261,11 @@ const Blog = () => {
             <Button size="lg" className="bg-white text-primary hover:bg-gray-100">
               Lihat Program Kursus
             </Button>
-            <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-primary">
-              Konsultasi Gratis
+            <Button 
+              size="lg" 
+              variant="outline" 
+              className="border-2 border-white text-white bg-transparent hover:bg-white hover:text-slate-900 transition-colors duration-200">
+              Download Brosur
             </Button>
           </div>
         </div>

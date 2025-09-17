@@ -21,9 +21,9 @@ const About = () => {
       description: "Pembelajaran Fleksibel yang memungkinkan akses materi kapan pun dimana pun melalui perangkat digital. Selain itu, ada juga pendekatan belajar mandiri yang memberikan ruang bagi seseorang untuk mengatur waktu belajar sesuai dengan kebutuhan dan tingkat pemahaman mereka"
     },
     {
-      icon: <Users className="w-8 h-8 text-primary" />,  
-      title: "SD - PERGURUAN TINGGI",
-      description: "Radar education center membuka pembelajaran dari pendidikan SD s/d Perguruan Tinggi"
+      icon: <BookOpen className="w-8 h-8 text-primary" />,
+      title: "KURIKULUM TERKINI",
+      description: "Menggunakan kurikulum yang selalu diperbarui sesuai dengan perkembangan zaman dan kebutuhan industri, memastikan siswa mendapatkan pengetahuan yang relevan dan aplikatif"
     }
   ];
 

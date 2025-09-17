@@ -53,15 +53,15 @@ const Contact = () => {
   };
 
   const contactInfo = [
-    {
-      icon: <MapPin className="w-6 h-6 text-primary" />,
-      title: "Alamat",
-      details: [
-        "Jl. HR Rasuna Said No.59",
-        "Cipete, Pinang, Tangerang",
-        "Banten, Indonesia"
-      ]
-    },
+  {
+  icon: <MapPin className="w-6 h-6 text-primary" />,
+  title: "Alamat",
+  details: [
+    "Jl. Pinang-Kunciran No.114, RT.003/RW.005",
+    "Kunciran, Kec. Pinang",
+    "Kota Tangerang, Banten 15144"
+  ]
+  },
     {
       icon: <Phone className="w-6 h-6 text-primary" />,
       title: "Telepon",
@@ -325,9 +325,10 @@ const Contact = () => {
                 <MapPin className="w-12 h-12 text-primary mx-auto mb-4" />
                 <h3 className="font-semibold text-lg mb-2">RADAR Education Center</h3>
                 <p className="text-muted-foreground">
-                  Jl. HR Rasuna Said No.59, Cipete, Pinang, Tangerang
+                  Jl. Pinang-Kunciran No.114, RT.003/RW.005, Kunciran, Kec. Pinang, Kota Tangerang, Banten 15144
                 </p>
-                <Button className="mt-4" variant="outline">
+                <Button className="mt-4" variant="outline"
+                onClick={() => window.open('https://maps.app.goo.gl/iKmXrw9u4ecF129T8', '_blank')}>
                   Buka di Google Maps
                 </Button>
               </div>
