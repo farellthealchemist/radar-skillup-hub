@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X, Phone, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import logoRadar from "@/assets/logo RADAR.png";
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -21,13 +22,21 @@ const Navigation = () => {
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm border-b">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          {/* Logo */}
+          {/* Logo - Modified to remove frame */}
           <Link to="/" className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-              <span className="text-primary-foreground font-bold text-sm">R</span>
-            </div>
+            <img 
+              src={logoRadar} 
+              alt="RADAR Logo" 
+              className="w-8 h-8 object-contain"
+              style={{ 
+                background: 'transparent',
+                border: 'none',
+                boxShadow: 'none',
+                padding: '0'
+              }}
+            />
             <span className="font-heading font-bold text-xl text-primary">
-              RADAR Education
+              RADAR Education Center
             </span>
           </Link>
 

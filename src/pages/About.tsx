@@ -8,7 +8,7 @@ const About = () => {
     {
       icon: <Users className="w-8 h-8 text-primary" />,  
       title: "SD - PERGURUAN TINGGI",
-      description: "Radar education membuka pembelajaran dari pendidikan SD s/d Perguruan Tinggi"
+      description: "Radar education center membuka pembelajaran dari pendidikan SD s/d Perguruan Tinggi"
     },
     {
       icon: <Award className="w-8 h-8 text-primary" />,
@@ -48,7 +48,7 @@ const About = () => {
             Tentang RADAR Education Center
           </h1>
           <p className="text-xl max-w-3xl mx-auto opacity-90 animate-slide-up">
-            PT. Radar Teknologi Komputer Education telah menjadi pionir dalam pendidikan IT di Indonesia, 
+            PT. Radar Teknologi Komputer Education Center telah menjadi pionir dalam pendidikan IT di Indonesia, 
             mengembangkan skill teknologi untuk semua kalangan dari tingkat dasar hingga mahir.
           </p>
         </div>

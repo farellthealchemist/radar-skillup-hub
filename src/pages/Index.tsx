@@ -142,7 +142,7 @@ const Index = () => {
                   <PlayCircle className="w-5 h-5 mr-2" />
                   Mulai Belajar Sekarang
                 </Button>
-                <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-primary">
+                <Button size="lg" variant="outline" className="border-white text-primary hover:bg-white hover:text-primary">
                   Lihat Program Kursus
                   <ArrowRight className="w-5 h-5 ml-2" />
                 </Button>
@@ -293,7 +293,7 @@ const Index = () => {
             <div>
               <Badge className="mb-4">Tentang Kami</Badge>
               <h2 className="text-3xl md:text-4xl font-heading font-bold mb-6">
-                PT. Radar Teknologi Komputer Education
+                PT. Radar Teknologi Komputer Education Center
               </h2>
               <p className="text-muted-foreground text-lg mb-6 leading-relaxed">
                 Sejak didirikan, RADAR Education Center telah menjadi pionir dalam pendidikan IT di Indonesia. 
@@ -424,7 +424,7 @@ const Index = () => {
                     </Button>
                   </Link>
                   <Link to="/courses">
-                    <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-primary">
+                    <Button size="lg" variant="outline" className="border-white text-primary hover:bg-white hover:text-primary">
                       Lihat Semua Kursus
                     </Button>
                   </Link>
