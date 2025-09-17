@@ -126,39 +126,39 @@ const Index = () => {
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="text-white">
-              <Badge className="mb-6 bg-white/20 text-white border-white/30">
+              <Badge className="mb-6 bg-white/20 text-white border-white/30 animate-fade-in">
                 #1 IT Training Center di Tangerang
               </Badge>
-              <h1 className="text-4xl md:text-6xl font-heading font-bold mb-6 animate-fade-in">
+              <h1 className="text-4xl md:text-6xl font-heading font-bold mb-6 animate-slide-up">
                 Media Meningkatkan
-                <span className="block text-gradient bg-white">Skill dalam Bidang IT</span>
+                <span className="block gradient-text-animated bg-gradient-to-r from-white to-gray-200 bg-clip-text text-transparent">Skill dalam Bidang IT</span>
               </h1>
-              <p className="text-xl opacity-90 mb-8 max-w-lg animate-slide-up">
+              <p className="text-xl opacity-90 mb-8 max-w-lg animate-fade-in-delayed">
                 Bergabunglah dengan RADAR Education Center dan kembangkan skill IT Anda 
                 dari level pemula hingga profesional dengan kurikulum terkini dan instruktur berpengalaman.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 animate-fade-in" style={{ animationDelay: "300ms" }}>
-                <Button size="lg" className="bg-white text-primary hover:bg-gray-100 shadow-hero">
+              <div className="flex flex-col sm:flex-row gap-4 animate-stagger-1">
+                <Button size="lg" className="bg-white text-primary hover:bg-gray-100 shadow-hero hover-lift btn-interactive">
                   <PlayCircle className="w-5 h-5 mr-2" />
                   Mulai Belajar Sekarang
                 </Button>
-                <Button size="lg" variant="outline" className="border-white text-primary hover:bg-white hover:text-primary">
+                <Button size="lg" variant="outline" className="border-2 border-white text-white bg-transparent hover:bg-white hover:text-primary smooth-transition btn-interactive">
                   Lihat Program Kursus
-                  <ArrowRight className="w-5 h-5 ml-2" />
+                  <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
                 </Button>
               </div>
               
-              <div className="grid grid-cols-3 gap-8 mt-12 pt-8 border-t border-white/20">
-                <div className="text-center">
-                  <div className="text-3xl font-bold mb-2">1000+</div>
+              <div className="grid grid-cols-3 gap-8 mt-12 pt-8 border-t border-white/20 stagger-children">
+                <div className="text-center hover-scale smooth-transition">
+                  <div className="text-3xl font-bold mb-2 gradient-text-animated bg-gradient-to-b from-white to-gray-300 bg-clip-text text-transparent">1000+</div>
                   <div className="text-sm opacity-75">Siswa Terdidik</div>
                 </div>
-                <div className="text-center">
-                  <div className="text-3xl font-bold mb-2">50+</div>
+                <div className="text-center hover-scale smooth-transition">
+                  <div className="text-3xl font-bold mb-2 gradient-text-animated bg-gradient-to-b from-white to-gray-300 bg-clip-text text-transparent">50+</div>
                   <div className="text-sm opacity-75">Program Kursus</div>
                 </div>
-                <div className="text-center">
-                  <div className="text-3xl font-bold mb-2">10+</div>
+                <div className="text-center hover-scale smooth-transition">
+                  <div className="text-3xl font-bold mb-2 gradient-text-animated bg-gradient-to-b from-white to-gray-300 bg-clip-text text-transparent">10+</div>
                   <div className="text-sm opacity-75">Tahun Pengalaman</div>
                 </div>
               </div>
@@ -168,35 +168,35 @@ const Index = () => {
               <div className="max-w-max mx-auto">
                 <div className="flex flex-col space-y-6">
                   {/* Instructor Card 1 */}
-                  <div className="w-64 p-4 bg-white transform hover:-translate-y-3 transition-all duration-1000 rounded-2xl shadow-card animate-scale-in">
+                  <div className="w-64 p-4 bg-white hover-lift shadow-card hover:shadow-card-hover smooth-transition rounded-2xl animate-scale-in-bounce pulse-border">
                     <div className="flex items-center gap-4">
                       <img 
                         src={instructorImage} 
                         alt="Asep Surahmat M.Kom" 
-                        className="w-12 h-12 rounded-full object-cover"
+                        className="w-12 h-12 rounded-full object-cover border-2 border-primary/20 hover-scale smooth-transition"
                       />
                       <div className="flex-1">
-                        <h3 className="font-heading font-semibold text-gray-900">Asep Surahmat M.Kom</h3>
+                        <h3 className="font-heading font-semibold text-gray-900 hover:text-primary smooth-transition">Asep Surahmat M.Kom</h3>
                         <p className="text-sm text-gray-500 mb-2">Pengajar</p>
-                        <div className="flex items-center gap-2 px-2 py-1 bg-gray-100 rounded-full">
-                          <MapPin className="w-3 h-3 text-gray-500" />
-                          <span className="text-xs text-gray-700">Pinang, ID</span>
+                        <div className="flex items-center gap-2 px-2 py-1 bg-gradient-to-r from-gray-50 to-gray-100 rounded-full hover-scale smooth-transition">
+                          <MapPin className="w-3 h-3 text-primary animate-pulse-soft" />
+                          <span className="text-xs text-gray-700 font-medium">Pinang, ID</span>
                         </div>
                       </div>
                     </div>
                   </div>
 
                   {/* Instructor Card 2 */}
-                  <div className="w-64 p-4 bg-white transform hover:-translate-y-3 transition-all duration-1000 rounded-2xl shadow-card animate-scale-in" 
-                       style={{ animationDelay: "200ms" }}>
+                  <div className="w-64 p-4 bg-white hover-lift shadow-card hover:shadow-card-hover smooth-transition rounded-2xl animate-scale-in-bounce pulse-border" 
+                       style={{ animationDelay: "300ms" }}>
                     <div className="flex items-center gap-4">
                       <img 
                         src={instructorImage} 
                         alt="Rizqi Darmawan" 
-                        className="w-12 h-12 rounded-full object-cover"
+                        className="w-12 h-12 rounded-full object-cover border-2 border-primary/20 hover-scale smooth-transition"
                       />
                       <div className="flex-1">
-                        <h3 className="font-heading font-semibold text-gray-900">Rizqi Darmawan</h3>
+                        <h3 className="font-heading font-semibold text-gray-900 hover:text-primary smooth-transition">Rizqi Darmawan</h3>
                         <p className="text-sm text-gray-500 mb-2">Pengajar</p>
                         <div className="flex items-center gap-2 px-2 py-1 bg-gray-100 rounded-full">
                           <MapPin className="w-3 h-3 text-gray-500" />
@@ -216,34 +216,37 @@ const Index = () => {
       <section className="py-20 bg-background">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <Badge className="mb-4">Program Unggulan</Badge>
-            <h2 className="text-3xl md:text-4xl font-heading font-bold mb-4">
+            <Badge className="mb-4 animate-fade-in">Program Unggulan</Badge>
+            <h2 className="text-3xl md:text-4xl font-heading font-bold mb-4 animate-slide-up">
               4 Kategori Kursus Terpopuler
             </h2>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+            <p className="text-muted-foreground text-lg max-w-2xl mx-auto animate-fade-in-delayed">
               Pilih program yang sesuai dengan minat dan kebutuhan karir Anda. 
               Dari programming hingga office skills, semua tersedia di sini.
             </p>
           </div>
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 stagger-children">
             {services.map((service, index) => (
-              <Card key={index} className="group hover:shadow-card-hover transition-all duration-300 overflow-hidden animate-fade-in" 
-                   style={{ animationDelay: `${index * 100}ms` }}>
+              <Card key={index} className="group hover-lift shadow-card hover:shadow-card-hover smooth-transition overflow-hidden animate-scale-in-bounce pulse-border" 
+                   style={{ animationDelay: `${index * 150}ms` }}>
                 <div className="aspect-video relative overflow-hidden">
                   <img 
                     src={service.image} 
                     alt={service.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    className="w-full h-full object-cover group-hover:scale-110 smooth-transition"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                  <div className="absolute bottom-4 left-4 text-white">
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent group-hover:from-black/60 smooth-transition"></div>
+                  <div className="absolute bottom-4 left-4 text-white group-hover:scale-110 group-hover:text-primary smooth-transition">
                     {service.icon}
+                  </div>
+                  <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 smooth-transition">
+                    <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
                   </div>
                 </div>
                 
-                <div className="p-6">
-                  <h3 className="font-heading font-bold text-lg mb-3 group-hover:text-primary transition-colors">
+                <div className="p-6 relative">
+                  <h3 className="font-heading font-bold text-lg mb-3 group-hover:text-primary smooth-transition gradient-text-animated">
                     {service.title}
                   </h3>
                   <p className="text-muted-foreground text-sm mb-4 leading-relaxed">
@@ -252,17 +255,17 @@ const Index = () => {
                   
                   <div className="space-y-2 mb-4">
                     {service.courses.map((course, idx) => (
-                      <div key={idx} className="flex items-center gap-2 text-xs text-muted-foreground">
-                        <CheckCircle className="w-3 h-3 text-primary flex-shrink-0" />
+                      <div key={idx} className="flex items-center gap-2 text-xs text-muted-foreground hover:text-foreground smooth-transition group/item">
+                        <CheckCircle className="w-3 h-3 text-primary flex-shrink-0 group-hover/item:scale-110 smooth-transition" />
                         {course}
                       </div>
                     ))}
                   </div>
                   
                   <Link to={service.link}>
-                    <Button variant="ghost" className="w-full group-hover:bg-primary group-hover:text-white transition-colors">
+                    <Button variant="ghost" className="w-full group-hover:bg-primary group-hover:text-white smooth-transition btn-interactive hover-glow">
                       Pelajari Lebih Lanjut
-                      <ArrowRight className="w-4 h-4 ml-2" />
+                      <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 smooth-transition" />
                     </Button>
                   </Link>
                 </div>
