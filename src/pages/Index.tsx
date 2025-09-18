@@ -118,7 +118,7 @@ const Index = () => {
   ];
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen overflow-hidden">
       {/* Hero Section */}
       <section className="relative pt-16 pb-20 overflow-hidden">
         <div className="absolute inset-0 hero-gradient"></div>
@@ -129,16 +129,17 @@ const Index = () => {
         ></div>
         
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="text-white">
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+            {/* Left Column - Main Content */}
+            <div className="text-white order-2 lg:order-1">
               <Badge className="mb-6 bg-white/20 text-white border-white/30 animate-fade-in">
                 #1 IT Training Center di Tangerang
               </Badge>
-              <h1 className="text-4xl md:text-6xl font-heading font-bold mb-6 animate-slide-up">
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-heading font-bold mb-6 animate-slide-up leading-tight">
                 Media Meningkatkan
                 <span className="block gradient-text-animated bg-gradient-to-r from-white to-gray-200 bg-clip-text text-transparent">Skill dalam Bidang IT</span>
               </h1>
-              <p className="text-xl opacity-90 mb-8 max-w-lg animate-fade-in-delayed">
+              <p className="text-lg lg:text-xl opacity-90 mb-8 max-w-lg animate-fade-in-delayed leading-relaxed">
                 Bergabunglah dengan RADAR Education Center dan kembangkan skill IT Anda 
                 dari level pemula hingga profesional dengan kurikulum terkini dan instruktur berpengalaman.
               </p>
@@ -153,59 +154,60 @@ const Index = () => {
                 </Button>
               </div>
               
-              <div className="grid grid-cols-3 gap-8 mt-12 pt-8 border-t border-white/20 stagger-children">
+              <div className="grid grid-cols-3 gap-4 lg:gap-8 mt-8 lg:mt-12 pt-6 lg:pt-8 border-t border-white/20 stagger-children">
                 <div className="text-center hover-scale smooth-transition">
-                  <div className="text-3xl font-bold mb-2 gradient-text-animated bg-gradient-to-b from-white to-gray-300 bg-clip-text text-transparent">1000+</div>
-                  <div className="text-sm opacity-75">Siswa Terdidik</div>
+                  <div className="text-2xl lg:text-3xl font-bold mb-2 gradient-text-animated bg-gradient-to-b from-white to-gray-300 bg-clip-text text-transparent">1000+</div>
+                  <div className="text-xs lg:text-sm opacity-75">Siswa Terdidik</div>
                 </div>
                 <div className="text-center hover-scale smooth-transition">
-                  <div className="text-3xl font-bold mb-2 gradient-text-animated bg-gradient-to-b from-white to-gray-300 bg-clip-text text-transparent">50+</div>
-                  <div className="text-sm opacity-75">Program Kursus</div>
+                  <div className="text-2xl lg:text-3xl font-bold mb-2 gradient-text-animated bg-gradient-to-b from-white to-gray-300 bg-clip-text text-transparent">50+</div>
+                  <div className="text-xs lg:text-sm opacity-75">Program Kursus</div>
                 </div>
                 <div className="text-center hover-scale smooth-transition">
-                  <div className="text-3xl font-bold mb-2 gradient-text-animated bg-gradient-to-b from-white to-gray-300 bg-clip-text text-transparent">10+</div>
-                  <div className="text-sm opacity-75">Tahun Pengalaman</div>
+                  <div className="text-2xl lg:text-3xl font-bold mb-2 gradient-text-animated bg-gradient-to-b from-white to-gray-300 bg-clip-text text-transparent">10+</div>
+                  <div className="text-xs lg:text-sm opacity-75">Tahun Pengalaman</div>
                 </div>
               </div>
             </div>
             
-           <div className="relative lg:block hidden">
-              <div className="max-w-max mx-auto">
-                <div className="flex flex-col space-y-6">
+            {/* Right Column - Instructor Cards */}
+            <div className="relative order-1 lg:order-2 flex justify-center lg:justify-end">
+              <div className="w-full max-w-sm lg:max-w-none">
+                <div className="flex flex-col space-y-4 lg:space-y-6">
                   {/* Instructor Card 1 */}
-                  <div className="w-64 p-4 bg-white hover-lift shadow-card hover:shadow-card-hover smooth-transition rounded-2xl animate-scale-in-bounce">
+                  <div className="w-full max-w-xs mx-auto lg:mx-0 lg:w-64 p-4 bg-white hover-lift shadow-card hover:shadow-card-hover smooth-transition rounded-2xl animate-scale-in-bounce">
                     <div className="flex items-center gap-4">
                       <img 
                         src={instructorImage} 
                         alt="Asep Surahmat M.Kom" 
-                        className="w-12 h-12 rounded-full object-cover border-2 border-primary/20 hover-scale smooth-transition"
+                        className="w-12 h-12 rounded-full object-cover border-2 border-primary/20 hover-scale smooth-transition flex-shrink-0"
                       />
-                      <div className="flex-1">
-                        <h3 className="font-heading font-semibold text-gray-900 smooth-transition">Asep Surahmat M.Kom</h3>
-                        <p className="text-sm text-gray-500 mb-2">Pengajar</p>
+                      <div className="flex-1 min-w-0">
+                        <h3 className="font-heading font-semibold text-gray-900 smooth-transition text-sm lg:text-base truncate">Asep Surahmat M.Kom</h3>
+                        <p className="text-xs lg:text-sm text-gray-500 mb-2">Pengajar</p>
                         <div className="flex items-center gap-2 px-2 py-1 bg-gradient-to-r from-gray-50 to-gray-100 rounded-full hover-scale smooth-transition">
-                          <MapPin className="w-3 h-3 text-primary animate-pulse-soft" />
-                          <span className="text-xs text-gray-700 font-medium">Pinang, ID</span>
+                          <MapPin className="w-3 h-3 text-primary animate-pulse-soft flex-shrink-0" />
+                          <span className="text-xs text-gray-700 font-medium truncate">Pinang, ID</span>
                         </div>
                       </div>
                     </div>
                   </div>
 
                   {/* Instructor Card 2 */}
-                    <div className="w-64 p-4 bg-white hover-lift shadow-card hover:shadow-card-hover smooth-transition rounded-2xl animate-scale-in-bounce" 
-                      style={{ animationDelay: "300ms" }}>
+                  <div className="w-full max-w-xs mx-auto lg:mx-0 lg:w-64 p-4 bg-white hover-lift shadow-card hover:shadow-card-hover smooth-transition rounded-2xl animate-scale-in-bounce" 
+                    style={{ animationDelay: "300ms" }}>
                     <div className="flex items-center gap-4">
                       <img 
                         src={instructorImage} 
                         alt="Rizqi Darmawan" 
-                        className="w-12 h-12 rounded-full object-cover border-2 border-primary/20 hover-scale smooth-transition"
+                        className="w-12 h-12 rounded-full object-cover border-2 border-primary/20 hover-scale smooth-transition flex-shrink-0"
                       />
-                      <div className="flex-1">
-                        <h3 className="font-heading font-semibold text-gray-900 smooth-transition">Rizqi Darmawan</h3>
-                        <p className="text-sm text-gray-500 mb-2">Pengajar</p>
+                      <div className="flex-1 min-w-0">
+                        <h3 className="font-heading font-semibold text-gray-900 smooth-transition text-sm lg:text-base truncate">Rizqi Darmawan</h3>
+                        <p className="text-xs lg:text-sm text-gray-500 mb-2">Pengajar</p>
                         <div className="flex items-center gap-2 px-2 py-1 bg-gray-100 rounded-full">
-                          <MapPin className="w-3 h-3 text-gray-500" />
-                          <span className="text-xs text-gray-700">Karawaci, ID</span>
+                          <MapPin className="w-3 h-3 text-gray-500 flex-shrink-0" />
+                          <span className="text-xs text-gray-700 truncate">Karawaci, ID</span>
                         </div>
                       </div>
                     </div>
@@ -236,7 +238,7 @@ const Index = () => {
               <Card 
                 key={index} 
                 className={`group hover-lift shadow-card hover:shadow-card-hover overflow-hidden transition-all duration-800 ease-out ${
-                  visibleItems.includes(index) ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-16 scale-90'
+                  visibleItems.includes(index) ? 'opacity-100 translate-y-0 scale-100' : 'opacity-100 translate-y-0 scale-100'
                 }`}>
                 <div className="aspect-video relative overflow-hidden">
                   <img 
@@ -288,7 +290,7 @@ const Index = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className={`relative transition-all duration-1000 ease-out ${
-              aboutVisible ? 'opacity-100 translate-x-0 scale-100' : 'opacity-0 -translate-x-20 scale-95'
+              aboutVisible ? 'opacity-100 translate-x-0 scale-100' : 'opacity-100 translate-x-0 scale-100'
             }`}>
               <img 
                 src={instructorImage} 
@@ -296,7 +298,7 @@ const Index = () => {
                 className="rounded-2xl shadow-card w-full hover-scale smooth-transition"
               />
               <div className={`absolute -top-6 -right-6 bg-primary text-primary-foreground p-6 rounded-xl shadow-card hover-lift animate-float transition-all duration-1000 ease-out delay-300 ${
-                aboutVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-8 scale-90'
+                aboutVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-100 translate-y-0 scale-100'
               }`}>
                 <div className="text-center">
                   <div className="text-3xl font-bold mb-1-text-animated">15+</div>
@@ -306,7 +308,7 @@ const Index = () => {
             </div>
             
             <div className={`transition-all duration-1000 ease-out delay-400 ${
-              aboutVisible ? 'opacity-100 translate-x-0 scale-100' : 'opacity-0 translate-x-20 scale-95'
+              aboutVisible ? 'opacity-100 translate-x-0 scale-100' : 'opacity-100 translate-x-0 scale-100'
             }`}>
               <Badge className="mb-4 animate-scale-in">Tentang Kami</Badge>
               <h2 className="text-3xl md:text-4xl font-heading font-bold mb-6 gradient-text-animated">
@@ -323,9 +325,8 @@ const Index = () => {
                   <div 
                     key={index} 
                     className={`flex items-start gap-3 hover-lift smooth-transition transition-all duration-800 ease-out ${
-                      aboutVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-12 scale-95'
+                      aboutVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-100 translate-y-0 scale-100'
                     }`}
-                    style={{ transitionDelay: `0ms` }}
                   >
                     <div className="flex-shrink-0 w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center hover-scale animate-pulse-soft">
                       {item.icon}
@@ -339,7 +340,7 @@ const Index = () => {
               </div>
               
               <div className={`flex flex-col sm:flex-row gap-4 transition-all duration-800 ease-out delay-1000 ${
-                aboutVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-12 scale-95'
+                aboutVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-100 translate-y-0 scale-100'
               }`}>
                 <Link to="/about">
                   <Button className="hero-gradient hover-glow btn-interactive">
@@ -377,7 +378,7 @@ const Index = () => {
               <Card 
                 key={index} 
                 className={`p-6 hover:shadow-card-hover hover-lift smooth-transition transition-all duration-700 ${
-                  testimonialVisible.includes(index) ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-8 scale-95'
+                  testimonialVisible.includes(index) ? 'opacity-100 translate-y-0 scale-100' : 'opacity-100 translate-y-0 scale-100'
                 }`}>
                 <div className="flex items-center gap-1 mb-4">
                   {[...Array(testimonial.rating)].map((_, i) => (
@@ -432,8 +433,8 @@ const Index = () => {
                   <Mail className="w-5 h-5" />
                   <span>asep@radarteknologikomputer.id</span>
                 </div>
-                <div className="flex items-center gap-3">
-                  <MapPin className="w-5 h-5" />
+                <div className="flex items-start gap-3">
+                  <MapPin className="w-5 h-5 mt-1 flex-shrink-0" />
                   <span>Jl. Pinang-Kunciran No.114, RT.003/RW.005, Kunciran, Kec. Pinang, Kota Tangerang, Banten 15144</span>
                 </div>
               </div>
