@@ -134,12 +134,12 @@ const About = () => {
             {values.map((value, index) => (
               <Card 
                 key={index} 
-                className={`p-6 text-center hover:shadow-card-hover pulse-border hover-lift smooth-transition transition-all duration-800 ease-out ${
+                className={`p-6 text-center hover:shadow-card hover-lift smooth-transition transition-all duration-800 ease-out ${
                   valueItems.includes(index) ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-12 scale-90'
                 }`}
               >
                 <div className="flex justify-center mb-4 hover-scale smooth-transition">{value.icon}</div>
-                <h3 className="font-heading font-semibold text-lg mb-3 hover:text-primary smooth-transition">{value.title}</h3>
+                <h3 className="font-heading font-semibold text-lg mb-3 smooth-transition">{value.title}</h3>
                 <p className="text-muted-foreground text-sm leading-relaxed">{value.description}</p>
               </Card>
             ))}
@@ -160,7 +160,7 @@ const About = () => {
             {instructors.map((instructor, index) => (
               <Card 
                 key={index} 
-                className={`overflow-hidden hover:shadow-card-hover pulse-border hover-lift smooth-transition transition-all duration-800 ease-out ${
+                className={`overflow-hidden hover:shadow-card-hover hover-lift smooth-transition transition-all duration-800 ease-out ${
                   instructorItems.includes(index) ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-12 scale-95'
                 }`}
               >
@@ -173,7 +173,7 @@ const About = () => {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 hover:opacity-100 smooth-transition"></div>
                 </div>
                 <div className="p-6">
-                  <h3 className="font-heading font-bold text-xl mb-2 hover:text-primary smooth-transition">{instructor.name}</h3>
+                  <h3 className="font-heading font-bold text-xl mb-2 smooth-transition">{instructor.name}</h3>
                   <Badge variant="secondary" className="mb-3 hover-scale smooth-transition">{instructor.title}</Badge>
                   <p className="text-muted-foreground mb-3 leading-relaxed">{instructor.specialization}</p>
                   <p className="text-sm text-primary font-medium hover:text-primary/80 smooth-transition">{instructor.experience}</p>
