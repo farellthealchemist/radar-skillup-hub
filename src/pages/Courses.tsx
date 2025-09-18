@@ -2,12 +2,19 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Clock, Users, Award, BookOpen } from "lucide-react";
+import { useScrollAnimation, useStaggeredAnimation } from "@/hooks/useScrollAnimation";
 import programmingImage from "@/assets/programming-course.jpg";
 import scratchImage from "@/assets/scratch-course.jpg";
 import officeImage from "@/assets/office-course.jpg";
 import networkingImage from "@/assets/networking-course.jpg";
 
 const Courses = () => {
+  const { ref: heroRef, isVisible: heroVisible } = useScrollAnimation();
+  const { ref: categoriesRef, isVisible: categoriesVisible } = useScrollAnimation();
+  const { ref: coursesRef, visibleItems } = useStaggeredAnimation(4, 150);
+  const { ref: guaranteeRef, isVisible: guaranteeVisible } = useScrollAnimation();
+  const { ref: ctaRef, isVisible: ctaVisible } = useScrollAnimation();
+
   const courses = [
     {
       id: 1,
@@ -112,12 +119,16 @@ const Courses = () => {
   return (
     <div className="min-h-screen pt-16">
       {/* Hero Section */}
-      <section className="py-20 hero-gradient text-white">
+      <section ref={heroRef as any} className="py-20 hero-gradient text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl md:text-5xl font-heading font-bold mb-6 animate-fade-in">
+          <h1 className={`text-4xl md:text-5xl font-heading font-bold mb-6 transition-all duration-700 ${
+            heroVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+          }`}>
             Program Kursus IT
           </h1>
-          <p className="text-xl max-w-3xl mx-auto opacity-90 animate-slide-up">
+          <p className={`text-xl max-w-3xl mx-auto opacity-90 transition-all duration-700 delay-200 ${
+            heroVisible ? 'opacity-90 translate-y-0' : 'opacity-0 translate-y-8'
+          }`}>
             Pilih program kursus yang sesuai dengan kebutuhan dan level skill Anda. 
             Dari pemula hingga profesional, kami ada untuk semua.
           </p>
@@ -125,14 +136,19 @@ const Courses = () => {
       </section>
 
       {/* Course Categories */}
-      <section className="py-12 bg-muted/50">
+      <section ref={categoriesRef as any} className="py-12 bg-muted/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-wrap justify-center gap-4">
-            {categories.map((category) => (
+          <div className={`flex flex-wrap justify-center gap-4 transition-all duration-700 ${
+            categoriesVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+          }`}>
+            {categories.map((category, index) => (
               <Button
                 key={category}
                 variant={category === "Semua" ? "default" : "outline"}
-                className="px-6 py-2"
+                className={`px-6 py-2 hover-lift smooth-transition transition-all duration-500 ${
+                  categoriesVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+                }`}
+                style={{ transitionDelay: `${index * 100}ms` }}
               >
                 {category}
               </Button>
@@ -144,26 +160,31 @@ const Courses = () => {
       {/* Courses Grid */}
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-8">
+          <div ref={coursesRef as any} className="grid lg:grid-cols-2 gap-8">
             {courses.map((course, index) => (
-              <Card key={course.id} className="overflow-hidden hover:shadow-card-hover transition-all duration-300 animate-fade-in" 
-                   style={{ animationDelay: `${index * 100}ms` }}>
+              <Card 
+                key={course.id} 
+                className={`overflow-hidden hover-lift shadow-card hover:shadow-card-hover smooth-transition pulse-border transition-all duration-700 ${
+                  visibleItems.includes(index) ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-8 scale-95'
+                }`}
+              >
                 <div className="aspect-video relative overflow-hidden">
                   <img 
                     src={course.image} 
                     alt={course.title}
-                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                    className="w-full h-full object-cover hover:scale-110 smooth-transition"
                   />
                   <div className="absolute top-4 left-4">
-                    <Badge variant="secondary">{course.category}</Badge>
+                    <Badge variant="secondary" className="animate-scale-in-bounce">{course.category}</Badge>
                   </div>
                   <div className="absolute top-4 right-4">
-                    <Badge className="bg-primary text-primary-foreground">{course.level}</Badge>
+                    <Badge className="bg-primary text-primary-foreground animate-scale-in-bounce" style={{ animationDelay: '100ms' }}>{course.level}</Badge>
                   </div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 hover:opacity-100 smooth-transition"></div>
                 </div>
                 
                 <div className="p-6">
-                  <h3 className="font-heading font-bold text-xl mb-3">{course.title}</h3>
+                  <h3 className="font-heading font-bold text-xl mb-3 gradient-text-animated hover:scale-105 smooth-transition">{course.title}</h3>
                   <p className="text-muted-foreground mb-4 leading-relaxed">{course.description}</p>
                   
                   {/* Course Stats */}
@@ -209,10 +230,10 @@ const Courses = () => {
                       <div className="text-sm text-muted-foreground">Per program</div>
                     </div>
                     <div className="flex gap-2">
-                      <Button variant="outline" size="sm">
+                      <Button variant="outline" size="sm" className="hover-lift btn-interactive">
                         Detail
                       </Button>
-                      <Button size="sm" className="hero-gradient">
+                      <Button size="sm" className="hero-gradient hover-glow btn-interactive">
                         Daftar
                       </Button>
                     </div>
@@ -225,29 +246,37 @@ const Courses = () => {
       </section>
 
       {/* Learning Guarantee */}
-      <section className="py-16 bg-muted/50">
+      <section ref={guaranteeRef as any} className="py-16 bg-muted/50">
         <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-heading font-bold mb-6">Jaminan Pembelajaran</h2>
+          <h2 className={`text-3xl font-heading font-bold mb-6 gradient-text-animated transition-all duration-700 ${
+            guaranteeVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+          }`}>Jaminan Pembelajaran</h2>
           <div className="grid md:grid-cols-3 gap-6">
-            <div className="p-6">
-              <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+            <div className={`p-6 hover-lift smooth-transition transition-all duration-700 ${
+              guaranteeVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+            }`} style={{ transitionDelay: '100ms' }}>
+              <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4 hover-scale animate-pulse-soft">
                 <Award className="w-6 h-6 text-primary" />
               </div>
-              <h3 className="font-semibold mb-2">Sertifikat Resmi</h3>
+              <h3 className="font-semibold mb-2 hover:text-primary smooth-transition">Sertifikat Resmi</h3>
               <p className="text-sm text-muted-foreground">Dapatkan sertifikat yang diakui industri</p>
             </div>
-            <div className="p-6">
-              <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+            <div className={`p-6 hover-lift smooth-transition transition-all duration-700 ${
+              guaranteeVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+            }`} style={{ transitionDelay: '200ms' }}>
+              <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4 hover-scale animate-pulse-soft" style={{ animationDelay: '0.5s' }}>
                 <Users className="w-6 h-6 text-primary" />
               </div>
-              <h3 className="font-semibold mb-2">Kelas Kecil</h3>
+              <h3 className="font-semibold mb-2 hover:text-primary smooth-transition">Kelas Kecil</h3>
               <p className="text-sm text-muted-foreground">Maksimal 15 siswa per kelas untuk perhatian optimal</p>
             </div>
-            <div className="p-6">
-              <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+            <div className={`p-6 hover-lift smooth-transition transition-all duration-700 ${
+              guaranteeVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+            }`} style={{ transitionDelay: '300ms' }}>
+              <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4 hover-scale animate-pulse-soft" style={{ animationDelay: '1s' }}>
                 <BookOpen className="w-6 h-6 text-primary" />
               </div>
-              <h3 className="font-semibold mb-2">Praktek Langsung</h3>
+              <h3 className="font-semibold mb-2 hover:text-primary smooth-transition">Praktek Langsung</h3>
               <p className="text-sm text-muted-foreground">70% praktek, 30% teori untuk hasil optimal</p>
             </div>
           </div>
@@ -255,22 +284,28 @@ const Courses = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 hero-gradient text-white">
+      <section ref={ctaRef as any} className="py-16 hero-gradient text-white">
         <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-heading font-bold mb-4">
+          <h2 className={`text-3xl font-heading font-bold mb-4 transition-all duration-700 ${
+            ctaVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+          }`}>
             Mulai Perjalanan IT Anda Hari Ini
           </h2>
-          <p className="text-xl opacity-90 mb-8">
+          <p className={`text-xl opacity-90 mb-8 transition-all duration-700 delay-100 ${
+            ctaVisible ? 'opacity-90 translate-y-0' : 'opacity-0 translate-y-8'
+          }`}>
             Konsultasi gratis untuk menentukan program yang tepat untuk Anda
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" className="bg-white text-primary hover:bg-gray-100">
+          <div className={`flex flex-col sm:flex-row gap-4 justify-center transition-all duration-700 delay-200 ${
+            ctaVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+          }`}>
+            <Button size="lg" className="bg-white text-primary hover:bg-gray-100 hover-lift btn-interactive">
               Konsultasi Gratis
             </Button>
             <Button 
               size="lg" 
               variant="outline" 
-              className="border-2 border-white text-white bg-transparent hover:bg-white hover:text-slate-900 transition-colors duration-200">
+              className="border-2 border-white text-white bg-transparent hover:bg-white hover:text-primary smooth-transition hover-lift btn-interactive">
               Download Brosur
             </Button>
           </div>

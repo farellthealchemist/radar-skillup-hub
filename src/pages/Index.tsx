@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { useScrollAnimation, useStaggeredAnimation } from "@/hooks/useScrollAnimation";
 import { 
   Code, 
   Palette, 
@@ -27,6 +28,10 @@ import officeImage from "@/assets/office-course.jpg";
 import networkingImage from "@/assets/networking-course.jpg";
 
 const Index = () => {
+  const { ref: servicesRef, visibleItems } = useStaggeredAnimation(4, 200);
+  const { ref: aboutRef, isVisible: aboutVisible } = useScrollAnimation();
+  const { ref: testimonialsRef, visibleItems: testimonialVisible } = useStaggeredAnimation(3, 150);
+
   const services = [
     {
       icon: <Code className="w-12 h-12 text-primary" />,
@@ -226,10 +231,13 @@ const Index = () => {
             </p>
           </div>
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 stagger-children">
+          <div ref={servicesRef as any} className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {services.map((service, index) => (
-              <Card key={index} className="group hover-lift shadow-card hover:shadow-card-hover smooth-transition overflow-hidden animate-scale-in-bounce pulse-border" 
-                   style={{ animationDelay: `${index * 150}ms` }}>
+              <Card 
+                key={index} 
+                className={`group hover-lift shadow-card hover:shadow-card-hover smooth-transition overflow-hidden pulse-border transition-all duration-700 ${
+                  visibleItems.includes(index) ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-12 scale-95'
+                }`}>
                 <div className="aspect-video relative overflow-hidden">
                   <img 
                     src={service.image} 
@@ -276,26 +284,30 @@ const Index = () => {
       </section>
 
       {/* About Section */}
-      <section className="py-20 bg-muted/50">
+      <section ref={aboutRef as any} className="py-20 bg-muted/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="relative">
+            <div className={`relative transition-all duration-700 ${
+              aboutVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-12'
+            }`}>
               <img 
                 src={instructorImage} 
                 alt="RADAR Education Center - Pengajar Profesional" 
-                className="rounded-2xl shadow-card w-full"
+                className="rounded-2xl shadow-card w-full hover-scale smooth-transition"
               />
-              <div className="absolute -top-6 -right-6 bg-primary text-primary-foreground p-6 rounded-xl shadow-card">
+              <div className="absolute -top-6 -right-6 bg-primary text-primary-foreground p-6 rounded-xl shadow-card hover-lift animate-float">
                 <div className="text-center">
-                  <div className="text-3xl font-bold mb-1">15+</div>
+                  <div className="text-3xl font-bold mb-1 gradient-text-animated">15+</div>
                   <div className="text-sm opacity-90">Tahun Pengalaman</div>
                 </div>
               </div>
             </div>
             
-            <div>
-              <Badge className="mb-4">Tentang Kami</Badge>
-              <h2 className="text-3xl md:text-4xl font-heading font-bold mb-6">
+            <div className={`transition-all duration-700 delay-200 ${
+              aboutVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-12'
+            }`}>
+              <Badge className="mb-4 animate-scale-in">Tentang Kami</Badge>
+              <h2 className="text-3xl md:text-4xl font-heading font-bold mb-6 gradient-text-animated">
                 PT. Radar Teknologi Komputer Education Center
               </h2>
               <p className="text-muted-foreground text-lg mb-6 leading-relaxed">
@@ -306,27 +318,35 @@ const Index = () => {
               
               <div className="grid grid-cols-2 gap-6 mb-8">
                 {whyChooseUs.map((item, index) => (
-                  <div key={index} className="flex items-start gap-3">
-                    <div className="flex-shrink-0 w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
+                  <div 
+                    key={index} 
+                    className={`flex items-start gap-3 hover-lift smooth-transition transition-all duration-700 ${
+                      aboutVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+                    }`}
+                    style={{ transitionDelay: `${(index + 3) * 100}ms` }}
+                  >
+                    <div className="flex-shrink-0 w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center hover-scale animate-pulse-soft">
                       {item.icon}
                     </div>
                     <div>
-                      <h3 className="font-semibold mb-1">{item.title}</h3>
+                      <h3 className="font-semibold mb-1 hover:text-primary smooth-transition">{item.title}</h3>
                       <p className="text-sm text-muted-foreground">{item.description}</p>
                     </div>
                   </div>
                 ))}
               </div>
               
-              <div className="flex flex-col sm:flex-row gap-4">
+              <div className={`flex flex-col sm:flex-row gap-4 transition-all duration-700 delay-700 ${
+                aboutVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+              }`}>
                 <Link to="/about">
-                  <Button className="hero-gradient">
+                  <Button className="hero-gradient hover-glow btn-interactive">
                     Pelajari Lebih Lanjut
-                    <ArrowRight className="w-4 h-4 ml-2" />
+                    <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 smooth-transition" />
                   </Button>
                 </Link>
                 <Link to="/contact">
-                  <Button variant="outline">
+                  <Button variant="outline" className="hover-lift btn-interactive">
                     Konsultasi Gratis
                   </Button>
                 </Link>
@@ -350,10 +370,13 @@ const Index = () => {
             </p>
           </div>
           
-          <div className="grid md:grid-cols-3 gap-6">
+          <div ref={testimonialsRef as any} className="grid md:grid-cols-3 gap-6">
             {testimonials.map((testimonial, index) => (
-              <Card key={index} className="p-6 hover:shadow-card-hover transition-all duration-300 animate-fade-in"
-                   style={{ animationDelay: `${index * 100}ms` }}>
+              <Card 
+                key={index} 
+                className={`p-6 hover:shadow-card-hover hover-lift smooth-transition transition-all duration-700 ${
+                  testimonialVisible.includes(index) ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-8 scale-95'
+                }`}>
                 <div className="flex items-center gap-1 mb-4">
                   {[...Array(testimonial.rating)].map((_, i) => (
                     <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
