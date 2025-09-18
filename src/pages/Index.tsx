@@ -169,11 +169,11 @@ const Index = () => {
               </div>
             </div>
             
-            <div className="relative lg:block hidden">
+           <div className="relative lg:block hidden">
               <div className="max-w-max mx-auto">
                 <div className="flex flex-col space-y-6">
                   {/* Instructor Card 1 */}
-                  <div className="w-64 p-4 bg-white hover-lift shadow-card hover:shadow-card-hover smooth-transition rounded-2xl animate-scale-in-bounce pulse-border">
+                  <div className="w-64 p-4 bg-white hover-lift shadow-card hover:shadow-card-hover smooth-transition rounded-2xl animate-scale-in-bounce">
                     <div className="flex items-center gap-4">
                       <img 
                         src={instructorImage} 
@@ -181,7 +181,7 @@ const Index = () => {
                         className="w-12 h-12 rounded-full object-cover border-2 border-primary/20 hover-scale smooth-transition"
                       />
                       <div className="flex-1">
-                        <h3 className="font-heading font-semibold text-gray-900 hover:text-primary smooth-transition">Asep Surahmat M.Kom</h3>
+                        <h3 className="font-heading font-semibold text-gray-900 smooth-transition">Asep Surahmat M.Kom</h3>
                         <p className="text-sm text-gray-500 mb-2">Pengajar</p>
                         <div className="flex items-center gap-2 px-2 py-1 bg-gradient-to-r from-gray-50 to-gray-100 rounded-full hover-scale smooth-transition">
                           <MapPin className="w-3 h-3 text-primary animate-pulse-soft" />
@@ -192,8 +192,8 @@ const Index = () => {
                   </div>
 
                   {/* Instructor Card 2 */}
-                  <div className="w-64 p-4 bg-white hover-lift shadow-card hover:shadow-card-hover smooth-transition rounded-2xl animate-scale-in-bounce pulse-border" 
-                       style={{ animationDelay: "300ms" }}>
+                    <div className="w-64 p-4 bg-white hover-lift shadow-card hover:shadow-card-hover smooth-transition rounded-2xl animate-scale-in-bounce" 
+                      style={{ animationDelay: "300ms" }}>
                     <div className="flex items-center gap-4">
                       <img 
                         src={instructorImage} 
@@ -201,7 +201,7 @@ const Index = () => {
                         className="w-12 h-12 rounded-full object-cover border-2 border-primary/20 hover-scale smooth-transition"
                       />
                       <div className="flex-1">
-                        <h3 className="font-heading font-semibold text-gray-900 hover:text-primary smooth-transition">Rizqi Darmawan</h3>
+                        <h3 className="font-heading font-semibold text-gray-900 smooth-transition">Rizqi Darmawan</h3>
                         <p className="text-sm text-gray-500 mb-2">Pengajar</p>
                         <div className="flex items-center gap-2 px-2 py-1 bg-gray-100 rounded-full">
                           <MapPin className="w-3 h-3 text-gray-500" />
