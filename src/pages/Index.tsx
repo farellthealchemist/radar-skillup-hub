@@ -238,7 +238,7 @@ const Index = () => {
               <Card 
                 key={index} 
                 className={`group hover-lift shadow-card hover:shadow-card-hover overflow-hidden transition-all duration-800 ease-out ${
-                  visibleItems.includes(index) ? 'opacity-100 translate-y-0 scale-100' : 'opacity-100 translate-y-0 scale-100'
+                  visibleItems.includes(index) ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-16 scale-90'
                 }`}>
                 <div className="aspect-video relative overflow-hidden">
                   <img 
@@ -290,7 +290,7 @@ const Index = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className={`relative transition-all duration-1000 ease-out ${
-              aboutVisible ? 'opacity-100 translate-x-0 scale-100' : 'opacity-100 translate-x-0 scale-100'
+              aboutVisible ? 'opacity-100 translate-x-0 scale-100' : 'opacity-0 -translate-x-20 scale-95'
             }`}>
               <img 
                 src={instructorImage} 
@@ -298,7 +298,7 @@ const Index = () => {
                 className="rounded-2xl shadow-card w-full hover-scale smooth-transition"
               />
               <div className={`absolute -top-6 -right-6 bg-primary text-primary-foreground p-6 rounded-xl shadow-card hover-lift animate-float transition-all duration-1000 ease-out delay-300 ${
-                aboutVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-100 translate-y-0 scale-100'
+                aboutVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-8 scale-90'
               }`}>
                 <div className="text-center">
                   <div className="text-3xl font-bold mb-1-text-animated">15+</div>
@@ -308,7 +308,7 @@ const Index = () => {
             </div>
             
             <div className={`transition-all duration-1000 ease-out delay-400 ${
-              aboutVisible ? 'opacity-100 translate-x-0 scale-100' : 'opacity-100 translate-x-0 scale-100'
+              aboutVisible ? 'opacity-100 translate-x-0 scale-100' : 'opacity-0 translate-x-20 scale-95'
             }`}>
               <Badge className="mb-4 animate-scale-in">Tentang Kami</Badge>
               <h2 className="text-3xl md:text-4xl font-heading font-bold mb-6 gradient-text-animated">
@@ -325,8 +325,9 @@ const Index = () => {
                   <div 
                     key={index} 
                     className={`flex items-start gap-3 hover-lift smooth-transition transition-all duration-800 ease-out ${
-                      aboutVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-100 translate-y-0 scale-100'
+                      aboutVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-12 scale-95'
                     }`}
+                    style={{ transitionDelay: `${index * 200}ms` }}
                   >
                     <div className="flex-shrink-0 w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center hover-scale animate-pulse-soft">
                       {item.icon}
@@ -340,7 +341,7 @@ const Index = () => {
               </div>
               
               <div className={`flex flex-col sm:flex-row gap-4 transition-all duration-800 ease-out delay-1000 ${
-                aboutVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-100 translate-y-0 scale-100'
+                aboutVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-12 scale-95'
               }`}>
                 <Link to="/about">
                   <Button className="hero-gradient hover-glow btn-interactive">
@@ -378,7 +379,7 @@ const Index = () => {
               <Card 
                 key={index} 
                 className={`p-6 hover:shadow-card-hover hover-lift smooth-transition transition-all duration-700 ${
-                  testimonialVisible.includes(index) ? 'opacity-100 translate-y-0 scale-100' : 'opacity-100 translate-y-0 scale-100'
+                  testimonialVisible.includes(index) ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-8 scale-95'
                 }`}>
                 <div className="flex items-center gap-1 mb-4">
                   {[...Array(testimonial.rating)].map((_, i) => (
