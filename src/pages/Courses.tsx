@@ -9,10 +9,10 @@ import officeImage from "@/assets/office-course.jpg";
 import networkingImage from "@/assets/networking-course.jpg";
 
 const Courses = () => {
-  const { ref: heroRef, isVisible: heroVisible } = useScrollAnimation();
-  const { ref: categoriesRef, isVisible: categoriesVisible } = useScrollAnimation();
-  const { ref: coursesRef, visibleItems } = useStaggeredAnimation(4, 150);
-  const { ref: guaranteeRef, isVisible: guaranteeVisible } = useScrollAnimation();
+  const { ref: heroRef, isVisible: heroVisible } = useScrollAnimation({ delay: 200 });
+  const { ref: categoriesRef, isVisible: categoriesVisible } = useScrollAnimation({ threshold: 0.3, rootMargin: "-50px" });
+  const { ref: coursesRef, visibleItems } = useStaggeredAnimation(4, 200, 300);
+  const { ref: guaranteeRef, visibleItems: guaranteeItems } = useStaggeredAnimation(3, 180, 250);
   const { ref: ctaRef, isVisible: ctaVisible } = useScrollAnimation();
 
   const courses = [
@@ -121,12 +121,12 @@ const Courses = () => {
       {/* Hero Section */}
       <section ref={heroRef as any} className="py-20 hero-gradient text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className={`text-4xl md:text-5xl font-heading font-bold mb-6 transition-all duration-700 ${
+          <h1 className={`text-4xl md:text-5xl font-heading font-bold mb-6 transition-all duration-800 ease-out ${
             heroVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
           }`}>
             Program Kursus IT
           </h1>
-          <p className={`text-xl max-w-3xl mx-auto opacity-90 transition-all duration-700 delay-200 ${
+          <p className={`text-xl max-w-3xl mx-auto opacity-90 transition-all duration-800 ease-out delay-300 ${
             heroVisible ? 'opacity-90 translate-y-0' : 'opacity-0 translate-y-8'
           }`}>
             Pilih program kursus yang sesuai dengan kebutuhan dan level skill Anda. 
@@ -138,17 +138,17 @@ const Courses = () => {
       {/* Course Categories */}
       <section ref={categoriesRef as any} className="py-12 bg-muted/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className={`flex flex-wrap justify-center gap-4 transition-all duration-700 ${
+          <div className={`flex flex-wrap justify-center gap-4 transition-all duration-800 ease-out ${
             categoriesVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
           }`}>
             {categories.map((category, index) => (
               <Button
                 key={category}
                 variant={category === "Semua" ? "default" : "outline"}
-                className={`px-6 py-2 hover-lift smooth-transition transition-all duration-500 ${
+                className={`px-6 py-2 hover-lift smooth-transition transition-all duration-600 ease-out ${
                   categoriesVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
                 }`}
-                style={{ transitionDelay: `${index * 100}ms` }}
+                style={{ transitionDelay: `${200 + (index * 100)}ms` }}
               >
                 {category}
               </Button>
@@ -164,8 +164,8 @@ const Courses = () => {
             {courses.map((course, index) => (
               <Card 
                 key={course.id} 
-                className={`overflow-hidden hover-lift shadow-card hover:shadow-card-hover smooth-transition pulse-border transition-all duration-700 ${
-                  visibleItems.includes(index) ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-8 scale-95'
+                className={`overflow-hidden hover-lift shadow-card hover:shadow-card-hover smooth-transition pulse-border transition-all duration-800 ease-out ${
+                  visibleItems.includes(index) ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-16 scale-90'
                 }`}
               >
                 <div className="aspect-video relative overflow-hidden">
@@ -248,37 +248,28 @@ const Courses = () => {
       {/* Learning Guarantee */}
       <section ref={guaranteeRef as any} className="py-16 bg-muted/50">
         <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-          <h2 className={`text-3xl font-heading font-bold mb-6 gradient-text-animated transition-all duration-700 ${
-            guaranteeVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+          <h2 className={`text-3xl font-heading font-bold mb-6 gradient-text-animated transition-all duration-800 ease-out ${
+            guaranteeItems.includes(0) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
           }`}>Jaminan Pembelajaran</h2>
           <div className="grid md:grid-cols-3 gap-6">
-            <div className={`p-6 hover-lift smooth-transition transition-all duration-700 ${
-              guaranteeVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-            }`} style={{ transitionDelay: '100ms' }}>
-              <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4 hover-scale animate-pulse-soft">
-                <Award className="w-6 h-6 text-primary" />
+            {[
+              { icon: <Award className="w-6 h-6 text-primary" />, title: "Sertifikat Resmi", desc: "Dapatkan sertifikat yang diakui industri" },
+              { icon: <Users className="w-6 h-6 text-primary" />, title: "Kelas Kecil", desc: "Maksimal 15 siswa per kelas untuk perhatian optimal" },
+              { icon: <BookOpen className="w-6 h-6 text-primary" />, title: "Praktek Langsung", desc: "70% praktek, 30% teori untuk hasil optimal" }
+            ].map((item, index) => (
+              <div 
+                key={index}
+                className={`p-6 hover-lift smooth-transition transition-all duration-800 ease-out ${
+                  guaranteeItems.includes(index + 1) ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-8 scale-95'
+                }`}
+              >
+                <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4 hover-scale animate-pulse-soft" style={{ animationDelay: `${index * 0.5}s` }}>
+                  {item.icon}
+                </div>
+                <h3 className="font-semibold mb-2 hover:text-primary smooth-transition">{item.title}</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
               </div>
-              <h3 className="font-semibold mb-2 hover:text-primary smooth-transition">Sertifikat Resmi</h3>
-              <p className="text-sm text-muted-foreground">Dapatkan sertifikat yang diakui industri</p>
-            </div>
-            <div className={`p-6 hover-lift smooth-transition transition-all duration-700 ${
-              guaranteeVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-            }`} style={{ transitionDelay: '200ms' }}>
-              <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4 hover-scale animate-pulse-soft" style={{ animationDelay: '0.5s' }}>
-                <Users className="w-6 h-6 text-primary" />
-              </div>
-              <h3 className="font-semibold mb-2 hover:text-primary smooth-transition">Kelas Kecil</h3>
-              <p className="text-sm text-muted-foreground">Maksimal 15 siswa per kelas untuk perhatian optimal</p>
-            </div>
-            <div className={`p-6 hover-lift smooth-transition transition-all duration-700 ${
-              guaranteeVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-            }`} style={{ transitionDelay: '300ms' }}>
-              <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4 hover-scale animate-pulse-soft" style={{ animationDelay: '1s' }}>
-                <BookOpen className="w-6 h-6 text-primary" />
-              </div>
-              <h3 className="font-semibold mb-2 hover:text-primary smooth-transition">Praktek Langsung</h3>
-              <p className="text-sm text-muted-foreground">70% praktek, 30% teori untuk hasil optimal</p>
-            </div>
+            ))}
           </div>
         </div>
       </section>
@@ -286,26 +277,26 @@ const Courses = () => {
       {/* CTA Section */}
       <section ref={ctaRef as any} className="py-16 hero-gradient text-white">
         <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-          <h2 className={`text-3xl font-heading font-bold mb-4 transition-all duration-700 ${
+          <h2 className={`text-3xl font-heading font-bold mb-4 transition-all duration-800 ease-out ${
             ctaVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
           }`}>
             Mulai Perjalanan IT Anda Hari Ini
           </h2>
-          <p className={`text-xl opacity-90 mb-8 transition-all duration-700 delay-100 ${
+          <p className={`text-xl opacity-90 mb-8 transition-all duration-800 ease-out delay-200 ${
             ctaVisible ? 'opacity-90 translate-y-0' : 'opacity-0 translate-y-8'
           }`}>
             Konsultasi gratis untuk menentukan program yang tepat untuk Anda
           </p>
-          <div className={`flex flex-col sm:flex-row gap-4 justify-center transition-all duration-700 delay-200 ${
+          <div className={`flex flex-col sm:flex-row gap-4 justify-center transition-all duration-800 ease-out delay-400 ${
             ctaVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
           }`}>
-            <Button size="lg" className="bg-white text-primary hover:bg-gray-100 hover-lift btn-interactive">
+            <Button size="lg" className="bg-white text-primary hover:bg-gray-100 hover-lift btn-interactive hover:scale-105 smooth-transition">
               Konsultasi Gratis
             </Button>
             <Button 
               size="lg" 
               variant="outline" 
-              className="border-2 border-white text-white bg-transparent hover:bg-white hover:text-primary smooth-transition hover-lift btn-interactive">
+              className="border-2 border-white text-white bg-transparent hover:bg-white hover:text-primary hover-lift btn-interactive hover:scale-105 smooth-transition">
               Download Brosur
             </Button>
           </div>

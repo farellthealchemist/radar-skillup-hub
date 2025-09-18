@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
+import { useScrollAnimation, useStaggeredAnimation } from "@/hooks/useScrollAnimation";
 import { 
   MapPin, 
   Phone, 
@@ -20,6 +21,11 @@ import FAQ from "@/components/FAQ";
 import { useToast } from "@/hooks/use-toast";
 
 const Contact = () => {
+  const { ref: heroRef, isVisible: heroVisible } = useScrollAnimation({ delay: 200 });
+  const { ref: contactRef, isVisible: contactVisible } = useScrollAnimation({ threshold: 0.2, rootMargin: "-100px" });
+  const { ref: contactInfoRef, visibleItems: infoItems } = useStaggeredAnimation(4, 150, 200);
+  const { ref: faqRef, isVisible: faqVisible } = useScrollAnimation();
+  const { ref: mapRef, isVisible: mapVisible } = useScrollAnimation();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -115,12 +121,16 @@ const Contact = () => {
   return (
     <div className="min-h-screen pt-16">
       {/* Hero Section */}
-      <section className="py-20 hero-gradient text-white">
+      <section ref={heroRef as any} className="py-20 hero-gradient text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl md:text-5xl font-heading font-bold mb-6 animate-fade-in">
+          <h1 className={`text-4xl md:text-5xl font-heading font-bold mb-6 transition-all duration-800 ease-out ${
+            heroVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+          }`}>
             Hubungi Kami
           </h1>
-          <p className="text-xl max-w-3xl mx-auto opacity-90 animate-slide-up">
+          <p className={`text-xl max-w-3xl mx-auto opacity-90 transition-all duration-800 ease-out delay-300 ${
+            heroVisible ? 'opacity-90 translate-y-0' : 'opacity-0 translate-y-8'
+          }`}>
             Punya pertanyaan tentang program kursus? Tim kami siap membantu Anda 
             menemukan program yang tepat untuk mengembangkan skill IT Anda.
           </p>
@@ -128,12 +138,14 @@ const Contact = () => {
       </section>
 
       {/* Contact Form & Info */}
-      <section className="py-20">
+      <section ref={contactRef as any} className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12">
             {/* Contact Form */}
-            <Card className="p-8 shadow-card-hover">
-              <h2 className="text-2xl font-heading font-bold mb-6">Kirim Pesan</h2>
+            <Card className={`p-8 shadow-card-hover hover-lift pulse-border smooth-transition transition-all duration-1000 ease-out ${
+              contactVisible ? 'opacity-100 translate-x-0 scale-100' : 'opacity-0 -translate-x-20 scale-95'
+            }`}>
+              <h2 className="text-2xl font-heading font-bold mb-6 gradient-text-animated">Kirim Pesan</h2>
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
@@ -220,20 +232,27 @@ const Contact = () => {
             </Card>
 
             {/* Contact Information */}
-            <div className="space-y-6">
+            <div className={`space-y-6 transition-all duration-1000 ease-out delay-300 ${
+              contactVisible ? 'opacity-100 translate-x-0 scale-100' : 'opacity-0 translate-x-20 scale-95'
+            }`}>
               <div>
-                <h2 className="text-2xl font-heading font-bold mb-6">Informasi Kontak</h2>
-                <div className="grid gap-6">
+                <h2 className="text-2xl font-heading font-bold mb-6 gradient-text-animated">Informasi Kontak</h2>
+                <div ref={contactInfoRef as any} className="grid gap-6">
                   {contactInfo.map((info, index) => (
-                    <Card key={index} className="p-6 hover:shadow-card-hover transition-all duration-300">
+                    <Card 
+                      key={index} 
+                      className={`p-6 hover:shadow-card-hover hover-lift pulse-border smooth-transition transition-all duration-800 ease-out ${
+                        infoItems.includes(index) ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-12 scale-95'
+                      }`}
+                    >
                       <div className="flex items-start gap-4">
-                        <div className="flex-shrink-0 w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
+                        <div className="flex-shrink-0 w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center hover-scale animate-pulse-soft">
                           {info.icon}
                         </div>
                         <div>
-                          <h3 className="font-semibold text-lg mb-2">{info.title}</h3>
+                          <h3 className="font-semibold text-lg mb-2 hover:text-primary smooth-transition">{info.title}</h3>
                           {info.details.map((detail, idx) => (
-                            <p key={idx} className="text-muted-foreground text-sm">
+                            <p key={idx} className="text-muted-foreground text-sm leading-relaxed">
                               {detail}
                             </p>
                           ))}
@@ -296,38 +315,47 @@ const Contact = () => {
       </section>
 
       {/* FAQ Section */}
-      <section className="py-20 bg-muted/50">
+      <section ref={faqRef as any} className="py-20 bg-muted/50">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-heading font-bold mb-4">Pertanyaan yang Sering Diajukan</h2>
+          <div className={`text-center mb-12 transition-all duration-800 ease-out ${
+            faqVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+          }`}>
+            <h2 className="text-3xl font-heading font-bold mb-4 gradient-text-animated">Pertanyaan yang Sering Diajukan</h2>
             <p className="text-muted-foreground text-lg">
               Temukan jawaban untuk pertanyaan umum seputar program kursus kami
             </p>
           </div>
           
-          
-          <FAQ items={faqs} />
+          <div className={`transition-all duration-800 ease-out delay-300 ${
+            faqVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
+          }`}>
+            <FAQ items={faqs} />
+          </div>
         </div>
       </section>
 
       {/* Map Section */}
-      <section className="py-16">
+      <section ref={mapRef as any} className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-8">
-            <h2 className="text-3xl font-heading font-bold mb-4">Lokasi Kami</h2>
+          <div className={`text-center mb-8 transition-all duration-800 ease-out ${
+            mapVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+          }`}>
+            <h2 className="text-3xl font-heading font-bold mb-4 gradient-text-animated">Lokasi Kami</h2>
             <p className="text-muted-foreground">
               Kunjungi langsung kantor kami di Tangerang untuk konsultasi tatap muka
             </p>
           </div>
-          <Card className="overflow-hidden">
+          <Card className={`overflow-hidden hover-lift shadow-card hover:shadow-card-hover smooth-transition transition-all duration-800 ease-out delay-300 ${
+            mapVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-12 scale-95'
+          }`}>
             <div className="aspect-video bg-muted flex items-center justify-center">
               <div className="text-center">
-                <MapPin className="w-12 h-12 text-primary mx-auto mb-4" />
-                <h3 className="font-semibold text-lg mb-2">RADAR Education Center</h3>
-                <p className="text-muted-foreground">
+                <MapPin className="w-12 h-12 text-primary mx-auto mb-4 hover-scale animate-pulse-soft" />
+                <h3 className="font-semibold text-lg mb-2 hover:text-primary smooth-transition">RADAR Education Center</h3>
+                <p className="text-muted-foreground leading-relaxed">
                   Jl. Pinang-Kunciran No.114, RT.003/RW.005, Kunciran, Kec. Pinang, Kota Tangerang, Banten 15144
                 </p>
-                <Button className="mt-4" variant="outline"
+                <Button className="mt-4 hover-glow btn-interactive" variant="outline"
                 onClick={() => window.open('https://maps.app.goo.gl/iKmXrw9u4ecF129T8', '_blank')}>
                   Buka di Google Maps
                 </Button>

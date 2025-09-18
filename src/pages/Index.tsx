@@ -28,9 +28,9 @@ import officeImage from "@/assets/office-course.jpg";
 import networkingImage from "@/assets/networking-course.jpg";
 
 const Index = () => {
-  const { ref: servicesRef, visibleItems } = useStaggeredAnimation(4, 200);
-  const { ref: aboutRef, isVisible: aboutVisible } = useScrollAnimation();
-  const { ref: testimonialsRef, visibleItems: testimonialVisible } = useStaggeredAnimation(3, 150);
+  const { ref: servicesRef, visibleItems } = useStaggeredAnimation(4, 180, 300);
+  const { ref: aboutRef, isVisible: aboutVisible } = useScrollAnimation({ threshold: 0.2, rootMargin: "-100px" });
+  const { ref: testimonialsRef, visibleItems: testimonialVisible } = useStaggeredAnimation(3, 200, 250);
 
   const services = [
     {
@@ -235,8 +235,8 @@ const Index = () => {
             {services.map((service, index) => (
               <Card 
                 key={index} 
-                className={`group hover-lift shadow-card hover:shadow-card-hover smooth-transition overflow-hidden pulse-border transition-all duration-700 ${
-                  visibleItems.includes(index) ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-12 scale-95'
+                className={`group hover-lift shadow-card hover:shadow-card-hover overflow-hidden pulse-border transition-all duration-800 ease-out ${
+                  visibleItems.includes(index) ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-16 scale-90'
                 }`}>
                 <div className="aspect-video relative overflow-hidden">
                   <img 
@@ -287,15 +287,17 @@ const Index = () => {
       <section ref={aboutRef as any} className="py-20 bg-muted/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className={`relative transition-all duration-700 ${
-              aboutVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-12'
+            <div className={`relative transition-all duration-1000 ease-out ${
+              aboutVisible ? 'opacity-100 translate-x-0 scale-100' : 'opacity-0 -translate-x-20 scale-95'
             }`}>
               <img 
                 src={instructorImage} 
                 alt="RADAR Education Center - Pengajar Profesional" 
                 className="rounded-2xl shadow-card w-full hover-scale smooth-transition"
               />
-              <div className="absolute -top-6 -right-6 bg-primary text-primary-foreground p-6 rounded-xl shadow-card hover-lift animate-float">
+              <div className={`absolute -top-6 -right-6 bg-primary text-primary-foreground p-6 rounded-xl shadow-card hover-lift animate-float transition-all duration-1000 ease-out delay-300 ${
+                aboutVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-8 scale-90'
+              }`}>
                 <div className="text-center">
                   <div className="text-3xl font-bold mb-1 gradient-text-animated">15+</div>
                   <div className="text-sm opacity-90">Tahun Pengalaman</div>
@@ -303,8 +305,8 @@ const Index = () => {
               </div>
             </div>
             
-            <div className={`transition-all duration-700 delay-200 ${
-              aboutVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-12'
+            <div className={`transition-all duration-1000 ease-out delay-400 ${
+              aboutVisible ? 'opacity-100 translate-x-0 scale-100' : 'opacity-0 translate-x-20 scale-95'
             }`}>
               <Badge className="mb-4 animate-scale-in">Tentang Kami</Badge>
               <h2 className="text-3xl md:text-4xl font-heading font-bold mb-6 gradient-text-animated">
@@ -320,10 +322,10 @@ const Index = () => {
                 {whyChooseUs.map((item, index) => (
                   <div 
                     key={index} 
-                    className={`flex items-start gap-3 hover-lift smooth-transition transition-all duration-700 ${
-                      aboutVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+                    className={`flex items-start gap-3 hover-lift smooth-transition transition-all duration-800 ease-out ${
+                      aboutVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-12 scale-95'
                     }`}
-                    style={{ transitionDelay: `${(index + 3) * 100}ms` }}
+                    style={{ transitionDelay: `${600 + (index * 150)}ms` }}
                   >
                     <div className="flex-shrink-0 w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center hover-scale animate-pulse-soft">
                       {item.icon}
@@ -336,8 +338,8 @@ const Index = () => {
                 ))}
               </div>
               
-              <div className={`flex flex-col sm:flex-row gap-4 transition-all duration-700 delay-700 ${
-                aboutVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+              <div className={`flex flex-col sm:flex-row gap-4 transition-all duration-800 ease-out delay-1000 ${
+                aboutVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-12 scale-95'
               }`}>
                 <Link to="/about">
                   <Button className="hero-gradient hover-glow btn-interactive">
