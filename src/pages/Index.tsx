@@ -299,7 +299,7 @@ const Index = () => {
                 aboutVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-8 scale-90'
               }`}>
                 <div className="text-center">
-                  <div className="text-3xl font-bold mb-1 gradient-text-animated">15+</div>
+                  <div className="text-3xl font-bold mb-1-text-animated">15+</div>
                   <div className="text-sm opacity-90">Tahun Pengalaman</div>
                 </div>
               </div>
@@ -452,7 +452,7 @@ const Index = () => {
                     </Button>
                   </Link>
                   <Link to="/courses">
-                    <Button size="lg" variant="outline" className="border-white text-primary hover:bg-white hover:text-primary">
+                    <Button size="lg" className="bg-white text-primary hover:bg-gray-100">
                       Lihat Semua Kursus
                     </Button>
                   </Link>
