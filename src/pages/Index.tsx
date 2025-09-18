@@ -235,29 +235,9 @@ const Index = () => {
             {services.map((service, index) => (
               <Card 
                 key={index} 
-                className={`group hover-lift shadow-card hover:shadow-card-hover overflow-hidden pulse-border transition-all duration-800 ease-out
-                  ${visibleItems.includes(index) ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-16 scale-90'}
-                  ${["Programming", "Scratch Programming", "Microsoft Office", "Networking"].includes(service.title) 
-                    ? 'transform-none shadow-card' 
-                    : ''}`}
-                style={
-                  ["Programming", "Scratch Programming", "Microsoft Office", "Networking"].includes(service.title)
-                    ? {
-                        transform: 'none !important',
-                        boxShadow: 'var(--shadow-card) !important'
-                      }
-                    : {}
-                }
-  onMouseEnter={
-    ["Programming", "Scratch Programming", "Microsoft Office", "Networking"].includes(service.title)
-      ? (e) => {
-          e.currentTarget.style.transform = 'none';
-          e.currentTarget.style.boxShadow = 'var(--shadow-card)';
-        }
-      : undefined
-  }
->
-
+                className={`group hover-lift shadow-card hover:shadow-card-hover overflow-hidden transition-all duration-800 ease-out ${
+                  visibleItems.includes(index) ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-16 scale-90'
+                }`}>
                 <div className="aspect-video relative overflow-hidden">
                   <img 
                     src={service.image} 
@@ -345,7 +325,7 @@ const Index = () => {
                     className={`flex items-start gap-3 hover-lift smooth-transition transition-all duration-800 ease-out ${
                       aboutVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-12 scale-95'
                     }`}
-                      style={{ transitionDelay: `0ms` }}
+                    style={{ transitionDelay: `0ms` }}
                   >
                     <div className="flex-shrink-0 w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center hover-scale animate-pulse-soft">
                       {item.icon}
