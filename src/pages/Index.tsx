@@ -171,9 +171,9 @@ const Index = () => {
             </div>
             
             {/* Right Column - Instructor Cards */}
-            <div className="relative order-1 lg:order-2 flex justify-center lg:justify-end">
+            <div className="relative order-2 lg:order-2 flex justify-center lg:justify-end items-center lg:items-start lg:pt-12">
               <div className="w-full max-w-sm lg:max-w-none">
-                <div className="flex flex-col space-y-4 lg:space-y-6">
+                <div className="flex flex-col space-y-4 lg:space-y-6 lg:mt-8">
                   {/* Instructor Card 1 */}
                   <div className="w-full max-w-xs mx-auto lg:mx-0 lg:w-64 p-4 bg-white hover-lift shadow-card hover:shadow-card-hover smooth-transition rounded-2xl animate-scale-in-bounce">
                     <div className="flex items-center gap-4">

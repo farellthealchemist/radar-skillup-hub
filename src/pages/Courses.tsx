@@ -12,7 +12,7 @@ const Courses = () => {
   const { ref: heroRef, isVisible: heroVisible } = useScrollAnimation({ delay: 200 });
   const { ref: categoriesRef, isVisible: categoriesVisible } = useScrollAnimation({ threshold: 0.3, rootMargin: "-50px" });
   const { ref: coursesRef, visibleItems } = useStaggeredAnimation(4, 200, 300);
-  const { ref: guaranteeRef, visibleItems: guaranteeItems } = useStaggeredAnimation(3, 180, 250);
+  const { ref: guaranteeRef, visibleItems: guaranteeItems } = useStaggeredAnimation(4, 180, 250);
   const { ref: ctaRef, isVisible: ctaVisible } = useScrollAnimation();
 
   const courses = [
@@ -248,9 +248,9 @@ const Courses = () => {
       {/* Learning Guarantee */}
       <section ref={guaranteeRef as any} className="py-16 bg-muted/50">
         <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-          <h2 className={`text-3xl font-heading font-bold mb-6 gradient-text-animated transition-all duration-800 ease-out ${
-            guaranteeItems.includes(0) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-          }`}>Jaminan Pembelajaran</h2>
+          <h2 className="text-3xl font-heading font-bold mb-6 gradient-text-animated">
+            Jaminan Pembelajaran
+          </h2>
           <div className="grid md:grid-cols-3 gap-6">
             {[
               { icon: <Award className="w-6 h-6 text-primary" />, title: "Sertifikat Resmi", desc: "Dapatkan sertifikat yang diakui industri" },
@@ -260,10 +260,11 @@ const Courses = () => {
               <div 
                 key={index}
                 className={`p-6 hover-lift smooth-transition transition-all duration-800 ease-out ${
-                  guaranteeItems.includes(index + 1) ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-8 scale-95'
+                  guaranteeItems.includes(index) ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-8 scale-95'
                 }`}
+                style={{ transitionDelay: `${index * 200}ms` }}
               >
-                <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4 hover-scale animate-pulse-soft" style={{ animationDelay: `${index * 0.5}s` }}>
+                <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4 hover-scale animate-pulse-soft">
                   {item.icon}
                 </div>
                 <h3 className="font-semibold mb-2 hover:text-primary smooth-transition">{item.title}</h3>
