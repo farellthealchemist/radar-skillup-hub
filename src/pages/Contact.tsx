@@ -254,14 +254,14 @@ const OptimizedContact = () => {
         }
       `}</style>
 
-      {/* Success Toast */}
+      {/* Success Toast - Mobile Responsive */}
       {showSuccess && (
-        <div className="fixed top-20 right-4 bg-green-600 text-white px-6 py-4 rounded-lg shadow-xl z-50 max-w-sm">
-          <div className="flex items-start gap-3">
-            <CheckCircle className="w-6 h-6 flex-shrink-0 mt-0.5" />
+        <div className="fixed top-16 sm:top-20 right-2 sm:right-4 bg-green-600 text-white px-4 sm:px-6 py-3 sm:py-4 rounded-lg shadow-xl z-50 max-w-xs sm:max-w-sm">
+          <div className="flex items-start gap-2 sm:gap-3">
+            <CheckCircle className="w-5 sm:w-6 h-5 sm:h-6 flex-shrink-0 mt-0.5" />
             <div>
-              <div className="font-semibold mb-1">Pesan Berhasil Terkirim!</div>
-              <div className="text-sm opacity-90">Tim kami akan segera merespons dalam 24 jam. Terima kasih!</div>
+              <div className="font-semibold mb-1 text-sm sm:text-base">Pesan Berhasil Terkirim!</div>
+              <div className="text-xs sm:text-sm opacity-90">Tim kami akan segera merespons dalam 24 jam. Terima kasih!</div>
             </div>
           </div>
         </div>
@@ -333,24 +333,24 @@ const OptimizedContact = () => {
       {/* Contact Form & Info */}
       <section ref={contactRef} className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-12">
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
             {/* Contact Form */}
             <div className={`transition-all duration-1000 ease-out ${
               contactVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-6'
             }`}>
-              <div className="bg-white rounded-2xl shadow-xl border p-8 hover-lift smooth-transition">
+              <div className="bg-white rounded-2xl shadow-xl border p-6 sm:p-8 hover-lift smooth-transition">
                 <div className="flex items-center gap-3 mb-6">
-                  <div className="w-12 h-12 bg-red-100 rounded-xl flex items-center justify-center">
-                    <Send className="w-6 h-6 text-red-600" />
+                  <div className="w-10 sm:w-12 h-10 sm:h-12 bg-red-100 rounded-xl flex items-center justify-center">
+                    <Send className="w-5 sm:w-6 h-5 sm:h-6 text-red-600" />
                   </div>
                   <div>
-                    <h2 className="text-2xl font-bold gradient-text">Kirim Pesan</h2>
+                    <h2 className="text-xl sm:text-2xl font-bold gradient-text">Kirim Pesan</h2>
                     <p className="text-gray-600 text-sm">Kami akan merespons dalam 24 jam</p>
                   </div>
                 </div>
                 
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <div className="grid md:grid-cols-2 gap-4">
+                <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-sm font-semibold mb-2 text-gray-700">Nama Lengkap *</label>
                       <input
@@ -359,7 +359,7 @@ const OptimizedContact = () => {
                         value={formData.name}
                         onChange={handleChange}
                         placeholder="Masukkan nama lengkap"
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent smooth-transition"
+                        className="w-full px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent smooth-transition"
                         required
                       />
                     </div>
@@ -371,13 +371,13 @@ const OptimizedContact = () => {
                         value={formData.email}
                         onChange={handleChange}
                         placeholder="nama@email.com"
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent smooth-transition"
+                        className="w-full px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent smooth-transition"
                         required
                       />
                     </div>
                   </div>
                   
-                  <div className="grid md:grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-sm font-semibold mb-2 text-gray-700">Nomor HP</label>
                       <input
@@ -386,7 +386,7 @@ const OptimizedContact = () => {
                         value={formData.phone}
                         onChange={handleChange}
                         placeholder="08xx-xxxx-xxxx"
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent smooth-transition"
+                        className="w-full px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent smooth-transition"
                       />
                     </div>
                     <div>
@@ -395,7 +395,7 @@ const OptimizedContact = () => {
                         name="course"
                         value={formData.course}
                         onChange={handleChange}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent smooth-transition"
+                        className="w-full px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent smooth-transition"
                       >
                         <option value="">Pilih Program</option>
                         <option value="programming">Programming Fundamentals</option>
@@ -413,25 +413,25 @@ const OptimizedContact = () => {
                       value={formData.message}
                       onChange={handleChange}
                       placeholder="Tulis pertanyaan atau pesan Anda di sini..."
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent resize-none h-32 smooth-transition"
+                      className="w-full px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent resize-none h-24 sm:h-32 smooth-transition"
                       required
                     />
                   </div>
 
                   <button 
                     type="submit"
-                    className="w-full hero-gradient text-white py-4 rounded-lg font-semibold hover:scale-105 smooth-transition btn-glow disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full hero-gradient text-white py-3 sm:py-4 rounded-lg font-semibold hover:scale-105 smooth-transition btn-glow disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base"
                     disabled={isSubmitting}
                   >
                     {isSubmitting ? (
                       <div className="flex items-center justify-center">
-                        <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-3"></div>
-                        Mengirim Pesan...
+                        <div className="animate-spin rounded-full h-4 sm:h-5 w-4 sm:w-5 border-b-2 border-white mr-2 sm:mr-3"></div>
+                        <span className="text-sm sm:text-base">Mengirim Pesan...</span>
                       </div>
                     ) : (
                       <div className="flex items-center justify-center">
-                        <Send className="w-5 h-5 mr-2" />
-                        Kirim Pesan Sekarang
+                        <Send className="w-4 sm:w-5 h-4 sm:h-5 mr-2" />
+                        <span className="text-sm sm:text-base">Kirim Pesan Sekarang</span>
                       </div>
                     )}
                   </button>
@@ -440,27 +440,27 @@ const OptimizedContact = () => {
             </div>
 
             {/* Contact Information */}
-            <div className={`space-y-6 transition-all duration-1000 ease-out delay-300 ${
+            <div className={`space-y-4 sm:space-y-6 transition-all duration-1000 ease-out delay-300 ${
               contactVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-6'
             }`}>
               <div>
-                <h2 className="text-2xl font-bold mb-6 gradient-text">Informasi Kontak</h2>
-                <div ref={contactInfoRef} className="space-y-4">
+                <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 gradient-text">Informasi Kontak</h2>
+                <div ref={contactInfoRef} className="space-y-3 sm:space-y-4">
                   {contactInfo.map((info, index) => (
                     <div 
                       key={index} 
-                      className={`bg-white rounded-xl shadow-md border p-6 hover:shadow-lg hover-lift smooth-transition transition-all duration-800 ease-out ${
+                      className={`bg-white rounded-xl shadow-md border p-4 sm:p-6 hover:shadow-lg hover-lift smooth-transition transition-all duration-800 ease-out ${
                         infoItems.includes(index) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
                       }`}
                     >
-                      <div className="flex items-start gap-4">
-                        <div className="flex-shrink-0 w-12 h-12 bg-red-50 rounded-xl flex items-center justify-center">
+                      <div className="flex items-start gap-3 sm:gap-4">
+                        <div className="flex-shrink-0 w-10 sm:w-12 h-10 sm:h-12 bg-red-50 rounded-xl flex items-center justify-center">
                           {info.icon}
                         </div>
-                        <div className="flex-1">
-                          <h3 className="font-bold text-lg mb-2 text-gray-900">{info.title}</h3>
+                        <div className="flex-1 min-w-0">
+                          <h3 className="font-bold text-base sm:text-lg mb-1 sm:mb-2 text-gray-900">{info.title}</h3>
                           {info.details.map((detail, idx) => (
-                            <p key={idx} className="text-gray-600 text-sm leading-relaxed mb-1">
+                            <p key={idx} className="text-gray-600 text-xs sm:text-sm leading-relaxed mb-1">
                               {detail}
                             </p>
                           ))}
@@ -472,59 +472,59 @@ const OptimizedContact = () => {
               </div>
 
               {/* Quick Actions */}
-              <div className="bg-white rounded-xl shadow-md border p-6">
-                <h3 className="font-bold text-lg mb-4 gradient-text">Kontak Cepat</h3>
+              <div className="bg-white rounded-xl shadow-md border p-4 sm:p-6">
+                <h3 className="font-bold text-base sm:text-lg mb-3 sm:mb-4 gradient-text">Kontak Cepat</h3>
                 <div className="space-y-3">
                   <a 
                     href="https://wa.me/6285782763529" 
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-4 p-4 rounded-xl border-2 border-green-200 hover:bg-green-50 hover:border-green-400 smooth-transition group"
+                    className="flex items-center gap-3 sm:gap-4 p-3 sm:p-4 rounded-xl border-2 border-green-200 hover:bg-green-50 hover:border-green-400 smooth-transition group"
                   >
-                    <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center group-hover:scale-110 smooth-transition">
-                      <MessageCircle className="w-6 h-6 text-green-600" />
+                    <div className="w-10 sm:w-12 h-10 sm:h-12 bg-green-100 rounded-xl flex items-center justify-center group-hover:scale-110 smooth-transition flex-shrink-0">
+                      <MessageCircle className="w-5 sm:w-6 h-5 sm:h-6 text-green-600" />
                     </div>
-                    <div className="flex-1">
-                      <div className="font-semibold text-gray-900">WhatsApp</div>
-                      <div className="text-sm text-gray-600">Respon cepat dalam 5 menit</div>
+                    <div className="flex-1 min-w-0">
+                      <div className="font-semibold text-sm sm:text-base text-gray-900">WhatsApp</div>
+                      <div className="text-xs sm:text-sm text-gray-600">Respon cepat dalam 5 menit</div>
                     </div>
-                    <div className="flex items-center gap-2">
-                      <span className="px-3 py-1 bg-green-100 text-green-800 text-xs font-medium rounded-full">Online</span>
-                      <ArrowRight className="w-4 h-4 text-green-600" />
+                    <div className="flex items-center gap-2 flex-shrink-0">
+                      <span className="px-2 sm:px-3 py-1 bg-green-100 text-green-800 text-xs font-medium rounded-full">Online</span>
+                      <ArrowRight className="w-3 sm:w-4 h-3 sm:h-4 text-green-600" />
                     </div>
                   </a>
                   
                   <a 
                     href="tel:+6285782763529" 
-                    className="flex items-center gap-4 p-4 rounded-xl border-2 border-red-200 hover:bg-red-50 hover:border-red-400 smooth-transition group"
+                    className="flex items-center gap-3 sm:gap-4 p-3 sm:p-4 rounded-xl border-2 border-red-200 hover:bg-red-50 hover:border-red-400 smooth-transition group"
                   >
-                    <div className="w-12 h-12 bg-red-100 rounded-xl flex items-center justify-center group-hover:scale-110 smooth-transition">
-                      <Phone className="w-6 h-6 text-red-600" />
+                    <div className="w-10 sm:w-12 h-10 sm:h-12 bg-red-100 rounded-xl flex items-center justify-center group-hover:scale-110 smooth-transition flex-shrink-0">
+                      <Phone className="w-5 sm:w-6 h-5 sm:h-6 text-red-600" />
                     </div>
-                    <div className="flex-1">
-                      <div className="font-semibold text-gray-900">Telepon Langsung</div>
-                      <div className="text-sm text-gray-600">0857-8276-3529</div>
+                    <div className="flex-1 min-w-0">
+                      <div className="font-semibold text-sm sm:text-base text-gray-900">Telepon Langsung</div>
+                      <div className="text-xs sm:text-sm text-gray-600">0857-8276-3529</div>
                     </div>
-                    <ArrowRight className="w-4 h-4 text-red-600" />
+                    <ArrowRight className="w-3 sm:w-4 h-3 sm:h-4 text-red-600 flex-shrink-0" />
                   </a>
                 </div>
               </div>
 
               {/* Social Media */}
-              <div className="bg-white rounded-xl shadow-md border p-6">
-                <h3 className="font-bold text-lg mb-4 gradient-text">Ikuti Media Sosial Kami</h3>
-                <div className="flex gap-4">
-                  <a href="#" className="w-12 h-12 bg-gradient-to-br from-pink-500 to-orange-400 rounded-xl flex items-center justify-center text-white hover:scale-110 smooth-transition">
-                    <Instagram className="w-6 h-6" />
+              <div className="bg-white rounded-xl shadow-md border p-4 sm:p-6">
+                <h3 className="font-bold text-base sm:text-lg mb-3 sm:mb-4 gradient-text">Ikuti Media Sosial Kami</h3>
+                <div className="flex gap-3 sm:gap-4">
+                  <a href="#" className="w-10 sm:w-12 h-10 sm:h-12 bg-gradient-to-br from-pink-500 to-orange-400 rounded-xl flex items-center justify-center text-white hover:scale-110 smooth-transition">
+                    <Instagram className="w-5 sm:w-6 h-5 sm:h-6" />
                   </a>
-                  <a href="#" className="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center text-white hover:scale-110 smooth-transition">
-                    <Facebook className="w-6 h-6" />
+                  <a href="#" className="w-10 sm:w-12 h-10 sm:h-12 bg-blue-600 rounded-xl flex items-center justify-center text-white hover:scale-110 smooth-transition">
+                    <Facebook className="w-5 sm:w-6 h-5 sm:h-6" />
                   </a>
-                  <a href="#" className="w-12 h-12 bg-red-600 rounded-xl flex items-center justify-center text-white hover:scale-110 smooth-transition">
-                    <Youtube className="w-6 h-6" />
+                  <a href="#" className="w-10 sm:w-12 h-10 sm:h-12 bg-red-600 rounded-xl flex items-center justify-center text-white hover:scale-110 smooth-transition">
+                    <Youtube className="w-5 sm:w-6 h-5 sm:h-6" />
                   </a>
                 </div>
-                <p className="text-sm text-gray-600 mt-3">Dapatkan tips IT dan update program terbaru</p>
+                <p className="text-xs sm:text-sm text-gray-600 mt-2 sm:mt-3">Dapatkan tips IT dan update program terbaru</p>
               </div>
             </div>
           </div>

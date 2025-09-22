@@ -334,7 +334,7 @@ const Homepage = () => {
       <style dangerouslySetInnerHTML={{ __html: styles }} />
 
       {/* Hero Section */}
-      <section ref={heroRef} className="relative pt-24 sm:pt-28 pb-20 sm:pb-24 overflow-hidden min-h-screen flex items-center hero-gradient hero-pattern">
+      <section ref={heroRef} className="relative pt-24 sm:pt-28 pb-24 sm:pb-28 overflow-hidden min-h-screen flex items-center hero-gradient hero-pattern">
         <div className="absolute inset-0 hero-gradient"></div>
         <div className="absolute inset-0 bg-black/20"></div>
         <div 
@@ -364,7 +364,7 @@ const Homepage = () => {
                 heroVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
               }`}>
                 Media Meningkatkan
-                <span className="block gradient-text-animated bg-gradient-to-r from-white to-gray-200 bg-clip-text text-transparent">
+                <span className="block text-white">
                   Skill dalam Bidang IT
                 </span>
               </h1>
@@ -376,7 +376,7 @@ const Homepage = () => {
                 dari level pemula hingga profesional dengan kurikulum terkini dan instruktur berpengalaman.
               </p>
               
-              <div className={`flex flex-col gap-3 sm:gap-4 mb-8 sm:mb-12 transition-all duration-800 ease-out delay-600 ${
+              <div className={`flex flex-col gap-3 sm:gap-4 transition-all duration-800 ease-out delay-600 ${
                 heroVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
               }`}>
                 <button className="inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 bg-white text-red-600 font-semibold rounded-lg hover:bg-gray-100 hover:scale-105 smooth-transition btn-glow text-sm sm:text-base">
@@ -388,32 +388,9 @@ const Homepage = () => {
                   <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 ml-2" />
                 </button>
               </div>
-              
-              <div className={`grid grid-cols-3 gap-3 sm:gap-4 lg:gap-8 pt-4 sm:pt-6 lg:pt-8 border-t border-white/20 transition-all duration-800 ease-out delay-800 ${
-                heroVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-              }`}>
-                <div className="text-center hover-scale smooth-transition">
-                  <div className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold mb-1 sm:mb-2 gradient-text-animated bg-gradient-to-b from-white to-gray-300 bg-clip-text text-transparent">
-                    {heroVisible ? studentCount : 0}+
-                  </div>
-                  <div className="text-xs sm:text-sm lg:text-base opacity-75 leading-tight">Siswa Terdidik</div>
-                </div>
-                <div className="text-center hover-scale smooth-transition">
-                  <div className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold mb-1 sm:mb-2 gradient-text-animated bg-gradient-to-b from-white to-gray-300 bg-clip-text text-transparent">
-                    {heroVisible ? courseCount : 0}+
-                  </div>
-                  <div className="text-xs sm:text-sm lg:text-base opacity-75 leading-tight">Program Kursus</div>
-                </div>
-                <div className="text-center hover-scale smooth-transition">
-                  <div className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold mb-1 sm:mb-2 gradient-text-animated bg-gradient-to-b from-white to-gray-300 bg-clip-text text-transparent">
-                    15+
-                  </div>
-                  <div className="text-xs sm:text-sm lg:text-base opacity-75 leading-tight">Tahun Pengalaman</div>
-                </div>
-              </div>
 
-              {/* Instructor Cards - Positioned after stats dengan spacing lebih besar */}
-              <div className={`mt-12 sm:mt-16 mb-8 lg:hidden flex flex-col space-y-4 transition-all duration-1000 ease-out delay-1000 ${
+              {/* Instructor Cards - Positioned after buttons dengan spacing yang disesuaikan */}
+              <div className={`mt-16 sm:mt-20 mb-8 lg:hidden flex flex-col space-y-4 transition-all duration-1000 ease-out delay-800 ${
                 heroVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
               }`}>
                 <div className="w-full p-3 sm:p-4 bg-white hover-lift shadow-card hover:shadow-card-hover smooth-transition rounded-xl pulse-border">

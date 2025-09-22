@@ -3,7 +3,6 @@ import { Link, useLocation } from "react-router-dom";
 import { Menu, X, Phone, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useHeaderAnimation } from "@/hooks/useScrollAnimation";
-import logoRadar from "@/assets/logo RADAR.png";
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -32,7 +31,7 @@ const Navigation = () => {
             }`}
           >
             <img 
-              src={logoRadar} 
+              src="https://radarteknologikomputer.id/upload/01HH6SVBHE39X68755WZ5ZP8YV.png" 
               alt="RADAR Logo" 
               className="w-8 h-8 object-contain transition-transform duration-300 hover:scale-110"
               style={{ 
