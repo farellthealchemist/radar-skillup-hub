@@ -205,7 +205,7 @@ const OptimizedBlog = () => {
   return (
     <div className="min-h-screen pt-16 overflow-x-hidden">
       {/* Consistent Styles */}
-      <style jsx>{`
+      <style>{`
         .hero-gradient {
           background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
         }
@@ -242,10 +242,12 @@ const OptimizedBlog = () => {
         }
       `}</style>
 
-      {/* Enhanced Hero Section - Consistent with other pages */}
-      <section className="relative py-24 hero-gradient text-white overflow-hidden">
-        <div className="absolute inset-0 bg-black/20"></div>
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PGNpcmNsZSBjeD0iMzAiIGN5PSIzMCIgcj0iMiIvPjwvZz48L2c+PC9zdmc+')] opacity-20"></div>
+      {/* Magazine-style Blog Hero Section */}
+      <section className="relative py-24 bg-gradient-to-r from-purple-900 via-violet-900 to-fuchsia-900 text-white overflow-hidden">
+        <div className="absolute inset-0 bg-black/25"></div>
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAiIGhlaWdodD0iODAiIHZpZXdCb3g9IjAgMCA4MCA4MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZGVmcz48cGF0dGVybiBpZD0iYSIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgd2lkdGg9IjgwIiBoZWlnaHQ9IjgwIj48cGF0aCBkPSJNMCAwaDQwdjQwSDB6IiBmaWxsPSIjZmZmIiBmaWxsLW9wYWNpdHk9IjAuMDQiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSI4MCIgaGVpZ2h0PSI4MCIgZmlsbD0idXJsKCNhKSIvPjwvc3ZnPg==')] opacity-15"></div>
+        <div className="absolute top-10 right-20 w-24 h-24 bg-purple-400/20 rounded-full blur-2xl animate-pulse"></div>
+        <div className="absolute bottom-10 left-20 w-36 h-36 bg-fuchsia-400/15 rounded-full blur-3xl"></div>
         
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Breadcrumb */}

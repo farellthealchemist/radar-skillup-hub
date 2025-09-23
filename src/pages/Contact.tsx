@@ -153,7 +153,7 @@ const OptimizedContact = () => {
   return (
     <div className="min-h-screen pt-16 overflow-x-hidden">
       {/* Consistent Styles */}
-      <style jsx>{`
+      <style>{`
         .hero-gradient {
           background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
         }
@@ -198,10 +198,12 @@ const OptimizedContact = () => {
         </div>
       )}
 
-      {/* Enhanced Hero Section - Consistent with other pages */}
-      <section className="relative py-24 hero-gradient text-white overflow-hidden">
-        <div className="absolute inset-0 bg-black/20"></div>
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PGNpcmNsZSBjeD0iMzAiIGN5PSIzMCIgcj0iMiIvPjwvZz48L2c+PC9zdmc+')] opacity-20"></div>
+      {/* Communication-focused Contact Hero Section */}
+      <section className="relative py-24 bg-gradient-to-br from-emerald-900 via-teal-900 to-cyan-900 text-white overflow-hidden">
+        <div className="absolute inset-0 bg-black/25"></div>
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNiI+PGNpcmNsZSBjeD0iMzAiIGN5PSIzMCIgcj0iMyIvPjwvZz48L2c+PC9zdmc+')] opacity-25"></div>
+        <div className="absolute top-16 left-16 w-28 h-28 bg-emerald-400/20 rounded-full blur-2xl"></div>
+        <div className="absolute bottom-16 right-16 w-32 h-32 bg-cyan-400/15 rounded-full blur-3xl animate-pulse"></div>
         
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Breadcrumb */}

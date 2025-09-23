@@ -232,7 +232,7 @@ const OptimizedCourses = () => {
   return (
     <div className="min-h-screen pt-16 overflow-x-hidden">
       {/* Consistent Styles with Homepage */}
-      <style jsx>{`
+      <style>{`
         .hero-gradient {
           background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
         }
@@ -262,10 +262,12 @@ const OptimizedCourses = () => {
         }
       `}</style>
 
-      {/* Enhanced Hero Section */}
-      <section className="relative py-24 hero-gradient text-white overflow-hidden">
-        <div className="absolute inset-0 bg-black/20"></div>
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PGNpcmNsZSBjeD0iMzAiIGN5PSIzMCIgcj0iMiIvPjwvZz48L2c+PC9zdmc+')] opacity-20"></div>
+      {/* Educational Courses Hero Section */}
+      <section className="relative py-24 bg-gradient-to-r from-orange-900 via-amber-900 to-yellow-800 text-white overflow-hidden">
+        <div className="absolute inset-0 bg-black/30"></div>
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgdmlld0JveD0iMCAwIDEyMCAxMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImEiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiIHdpZHRoPSIxMjAiIGhlaWdodD0iMTIwIj48Y2lyY2xlIGN4PSI2MCIgY3k9IjYwIiByPSI0IiBmaWxsPSIjZmZmIiBmaWxsLW9wYWNpdHk9IjAuMDMiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMjAiIGhlaWdodD0iMTIwIiBmaWxsPSJ1cmwoI2EpIi8+PC9zdmc+')] opacity-20"></div>
+        <div className="absolute top-12 left-12 w-20 h-20 bg-orange-400/25 rounded-lg blur-2xl rotate-45"></div>
+        <div className="absolute bottom-12 right-12 w-24 h-24 bg-yellow-400/20 rounded-lg blur-3xl rotate-12"></div>
         
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Breadcrumb */}
