@@ -17,9 +17,127 @@ import {
   Quote,
   Target,
   Shield,
-  MessageCircle
+  MessageCircle,
+  ChevronDown,
+  HelpCircle
 } from "lucide-react";
 
+// FAQ Component
+const FAQ = ({ items }) => {
+  const [openIndex, setOpenIndex] = useState(null);
+
+  const toggleItem = (index) => {
+    setOpenIndex(openIndex === index ? null : index);
+  };
+
+  const sampleItems = [
+    {
+      question: "Bagaimana jika tidak memiliki latar belakang IT?",
+      answer: "Tidak masalah! Program kami dirancang untuk semua level, termasuk pemula tanpa latar belakang IT. Instruktur kami akan membantu Anda dari dasar hingga mahir."
+    },
+    {
+      question: "Apakah ada kelas FullStack Web Development?",
+      answer: "Saat ini kami fokus pada fundamental programming (Python, Java). Untuk FullStack development, Anda bisa mengikuti program programming terlebih dahulu sebagai foundation."
+    },
+    {
+      question: "Apakah pembayaran dapat dilakukan dengan cara mencicil?",
+      answer: "Ya, kami menyediakan sistem pembayaran cicilan yang fleksibel untuk memudahkan siswa mengikuti program kursus."
+    }
+  ];
+
+  const displayItems = items && items.length > 0 ? items : sampleItems;
+
+  return (
+    <div className="space-y-6">
+      {/* FAQ Items */}
+      <div className="space-y-4">
+        {displayItems.map((item, index) => (
+          <div
+            key={index}
+            className="group bg-white rounded-xl border border-gray-200 shadow-card hover:shadow-card-hover hover-lift smooth-transition overflow-hidden pulse-border"
+          >
+            <button
+              onClick={() => toggleItem(index)}
+              className="w-full p-6 text-left focus:outline-none focus:ring-4 focus:ring-red-100 smooth-transition"
+            >
+              <div className="flex items-center justify-between">
+                <div className="flex items-start gap-4 flex-1">
+                  <div className="flex-shrink-0 w-10 h-10 bg-red-50 rounded-full flex items-center justify-center group-hover:bg-red-100 smooth-transition">
+                    <HelpCircle className="w-5 h-5 text-red-600" />
+                  </div>
+                  <h3 className="font-bold text-lg text-gray-900 group-hover:text-red-600 smooth-transition leading-tight">
+                    {item.question}
+                  </h3>
+                </div>
+                <div className={`flex-shrink-0 ml-4 p-2 rounded-full smooth-transition ${
+                  openIndex === index 
+                    ? 'bg-red-100 rotate-180' 
+                    : 'bg-gray-100 group-hover:bg-red-50'
+                }`}>
+                  <ChevronDown className={`w-5 h-5 smooth-transition ${
+                    openIndex === index ? 'text-red-600' : 'text-gray-500 group-hover:text-red-500'
+                  }`} />
+                </div>
+              </div>
+            </button>
+            
+            <div className={`overflow-hidden smooth-transition ${
+              openIndex === index ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+            }`}>
+              <div className="px-6 pb-6">
+                <div className="ml-14 pt-2 border-t border-gray-100">
+                  <p className="text-gray-600 leading-relaxed text-base mt-4">
+                    {item.answer}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* CTA Section */}
+      <div className="bg-gray-50 rounded-2xl p-6 sm:p-8 text-center mt-8">
+        <div className="max-w-2xl mx-auto">
+          <div className="flex justify-center mb-4">
+            <div className="p-3 bg-red-100 rounded-full">
+              <MessageCircle className="w-8 h-8 text-red-600" />
+            </div>
+          </div>
+          
+          <h3 className="text-2xl font-bold text-gray-900 mb-4">
+            Masih Ada Pertanyaan?
+          </h3>
+          <p className="text-gray-600 mb-6 leading-relaxed">
+            Tim kami siap membantu Anda menemukan program kursus yang tepat sesuai kebutuhan dan tujuan karir Anda.
+          </p>
+          
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <button className="inline-flex items-center justify-center px-6 py-3 hero-gradient text-white font-semibold rounded-lg hover:scale-105 smooth-transition btn-glow text-sm sm:text-base">
+              <Phone className="w-4 h-4 mr-2" />
+              Hubungi WhatsApp
+            </button>
+            <button className="inline-flex items-center justify-center px-6 py-3 border border-red-600 text-red-600 font-semibold rounded-lg hover:bg-red-600 hover:text-white hover:scale-105 smooth-transition text-sm sm:text-base">
+              <MessageCircle className="w-4 h-4 mr-2" />
+              Chat Live Support
+            </button>
+          </div>
+          
+          <div className="mt-6 pt-6 border-t border-gray-200">
+            <p className="text-sm text-gray-500 mb-2">
+              <strong>Jam Operasional:</strong> Senin - Sabtu, 09:00 - 17:00 WIB
+            </p>
+            <p className="text-sm text-gray-500">
+              <strong>Response Time:</strong> Maksimal 2 jam pada jam kerja
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// Custom Hooks
 const useScrollAnimation = ({ delay = 0, threshold = 0.1, rootMargin = "0px" } = {}) => {
   const [isVisible, setIsVisible] = useState(false);
   const ref = useRef(null);
@@ -97,13 +215,44 @@ const useCountAnimation = (targetValue, duration = 2000, isVisible = false) => {
   return count;
 };
 
+// Main Homepage Component
 const Homepage = () => {
+  // FAQ data
+  const faqs = [
+    {
+      question: "Bagaimana jika tidak memiliki latar belakang IT?",
+      answer: "Tidak masalah! Program kami dirancang untuk semua level, termasuk pemula tanpa latar belakang IT. Instruktur kami akan membantu Anda dari dasar hingga mahir."
+    },
+    {
+      question: "Apakah ada kelas FullStack Web Development?",
+      answer: "Saat ini kami fokus pada fundamental programming (Python, Java). Untuk FullStack development, Anda bisa mengikuti program programming terlebih dahulu sebagai foundation."
+    },
+    {
+      question: "Apakah pembayaran dapat dilakukan dengan cara mencicil?",
+      answer: "Ya, kami menyediakan sistem pembayaran cicilan yang fleksibel untuk memudahkan siswa mengikuti program kursus."
+    },
+    {
+      question: "Apakah ada kelas coding untuk anak SD?",
+      answer: "Ya! Kami memiliki program Scratch yang khusus dirancang untuk anak-anak SD. Program ini mengajarkan logika programming dengan cara yang menyenangkan dan mudah dipahami."
+    },
+    {
+      question: "Berapa lama durasi setiap kelas?",
+      answer: "Setiap sesi kelas berlangsung 2-3 jam dengan istirahat. Frekuensi kelas disesuaikan dengan program yang diambil."
+    },
+    {
+      question: "Apakah mendapat sertifikat setelah lulus?",
+      answer: "Ya, setiap peserta yang menyelesaikan program akan mendapat sertifikat resmi dari RADAR Education Center yang diakui industri."
+    }
+  ];
+
+  // Animation hooks
   const { ref: heroRef, isVisible: heroVisible } = useScrollAnimation({ delay: 200 });
   const { ref: servicesRef, visibleItems } = useStaggeredAnimation(4, 150, 300);
   const { ref: aboutRef, isVisible: aboutVisible } = useScrollAnimation({ threshold: 0.1, rootMargin: "-50px" });
   const { ref: testimonialsRef, visibleItems: testimonialVisible } = useStaggeredAnimation(3, 200, 250);
   const { ref: statsRef, isVisible: statsVisible } = useScrollAnimation({ threshold: 0.3 });
   const { ref: ctaRef, isVisible: ctaVisible } = useScrollAnimation();
+  const { ref: faqRef, isVisible: faqVisible } = useScrollAnimation({ threshold: 0.1 });
 
   const studentCount = useCountAnimation(1000, 2500, statsVisible);
   const courseCount = useCountAnimation(50, 2000, statsVisible);
@@ -389,7 +538,7 @@ const Homepage = () => {
                 </button>
               </div>
 
-              {/* Instructor Cards - Positioned after buttons dengan spacing yang disesuaikan */}
+              {/* Instructor Cards - Mobile Only */}
               <div className={`mt-16 sm:mt-20 mb-8 lg:hidden flex flex-col space-y-4 transition-all duration-1000 ease-out delay-800 ${
                 heroVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
               }`}>
@@ -431,6 +580,7 @@ const Homepage = () => {
               </div>
             </div>
             
+            {/* Instructor Cards - Desktop Only */}
             <div className={`relative order-1 lg:order-2 hidden lg:flex justify-center lg:justify-end items-center lg:items-start transition-all duration-1000 ease-out delay-400 ${
               heroVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-6'
             }`}>
@@ -745,6 +895,33 @@ const Homepage = () => {
         </div>
       </section>
 
+      {/* FAQ Section */}
+      <section ref={faqRef} className="py-12 sm:py-16 lg:py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
+          <div className="text-center mb-8 sm:mb-12 lg:mb-16">
+            <div className={`transition-all duration-800 ease-out ${
+              faqVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
+            }`}>
+              <span className="inline-block mb-3 sm:mb-4 px-3 sm:px-4 py-2 bg-red-50 text-red-600 rounded-full text-xs sm:text-sm font-medium">
+                FAQ
+              </span>
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
+                Pertanyaan yang Sering Diajukan
+              </h2>
+              <p className="text-gray-600 max-w-2xl mx-auto text-sm sm:text-base lg:text-lg leading-relaxed px-4">
+                Temukan jawaban untuk pertanyaan umum tentang program kursus kami
+              </p>
+            </div>
+          </div>
+          
+          <div className={`max-w-4xl mx-auto transition-all duration-800 ease-out delay-200 ${
+            faqVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
+          }`}>
+            <FAQ items={faqs} />
+          </div>
+        </div>
+      </section>
+
       {/* Contact CTA */}
       <section ref={ctaRef} className="py-12 sm:py-16 lg:py-20 hero-gradient text-white relative overflow-hidden">
         <div className="absolute inset-0 bg-black/20"></div>
@@ -794,10 +971,6 @@ const Homepage = () => {
                   Diskusikan kebutuhan dan tujuan karir Anda dengan tim kami
                 </p>
                 <div className="flex flex-col gap-3 sm:gap-4">
-                  <button className="px-6 sm:px-8 py-3 sm:py-4 bg-white text-red-600 font-semibold rounded-lg hover:bg-gray-100 hover:scale-105 smooth-transition btn-glow text-sm sm:text-base">
-                    <MessageCircle className="w-4 h-4 sm:w-5 sm:h-5 mr-2 inline" />
-                    WhatsApp Sekarang
-                  </button>
                   <button className="px-6 sm:px-8 py-3 sm:py-4 border-2 border-white text-white font-semibold rounded-lg hover:bg-white hover:text-red-600 hover:scale-105 smooth-transition text-sm sm:text-base">
                     Lihat Semua Kursus
                   </button>

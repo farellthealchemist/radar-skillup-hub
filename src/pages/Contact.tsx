@@ -10,10 +10,7 @@ import {
   Instagram,
   Facebook,
   Youtube,
-  ChevronDown,
-  ChevronUp,
   ArrowRight,
-  User,
   Building
 } from "lucide-react";
 
@@ -70,49 +67,10 @@ const useStaggeredAnimation = (itemCount, staggerDelay = 100, initialDelay = 200
   return { ref, visibleItems };
 };
 
-// FAQ Component
-const FAQ = ({ items }) => {
-  const [openItems, setOpenItems] = useState([]);
-
-  const toggleItem = (index) => {
-    setOpenItems(prev => 
-      prev.includes(index) 
-        ? prev.filter(i => i !== index)
-        : [...prev, index]
-    );
-  };
-
-  return (
-    <div className="space-y-4">
-      {items.map((item, index) => (
-        <div key={index} className="bg-white rounded-xl shadow-md hover:shadow-lg smooth-transition overflow-hidden">
-          <button
-            onClick={() => toggleItem(index)}
-            className="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 smooth-transition"
-          >
-            <span className="font-semibold text-gray-900 pr-4">{item.question}</span>
-            {openItems.includes(index) ? (
-              <ChevronUp className="w-5 h-5 text-red-600 flex-shrink-0" />
-            ) : (
-              <ChevronDown className="w-5 h-5 text-red-600 flex-shrink-0" />
-            )}
-          </button>
-          {openItems.includes(index) && (
-            <div className="px-6 pb-4 border-t bg-gray-50">
-              <p className="text-gray-600 leading-relaxed pt-4">{item.answer}</p>
-            </div>
-          )}
-        </div>
-      ))}
-    </div>
-  );
-};
-
 const OptimizedContact = () => {
   const { ref: heroRef, isVisible: heroVisible } = useScrollAnimation({ delay: 300 });
   const { ref: contactRef, isVisible: contactVisible } = useScrollAnimation({ threshold: 0.2 });
   const { ref: contactInfoRef, visibleItems: infoItems } = useStaggeredAnimation(4, 120, 250);
-  const { ref: faqRef, isVisible: faqVisible } = useScrollAnimation({ threshold: 0.15 });
   const { ref: mapRef, isVisible: mapVisible } = useScrollAnimation();
   
   const [formData, setFormData] = useState({
@@ -189,33 +147,6 @@ const OptimizedContact = () => {
         "Minggu: Tutup"
       ],
       action: "Jadwal Kunjungan"
-    }
-  ];
-
-  const faqs = [
-    {
-      question: "Bagaimana jika tidak memiliki latar belakang IT?",
-      answer: "Tidak masalah! Program kami dirancang untuk semua level, termasuk pemula tanpa latar belakang IT. Instruktur kami akan membantu Anda dari dasar hingga mahir dengan metode pembelajaran yang mudah dipahami."
-    },
-    {
-      question: "Apakah ada kelas FullStack Web Development?",
-      answer: "Saat ini kami fokus pada fundamental programming (Python, Java). Untuk FullStack development, Anda bisa mengikuti program programming terlebih dahulu sebagai foundation yang kuat."
-    },
-    {
-      question: "Apakah pembayaran dapat dilakukan dengan cara mencicil?",
-      answer: "Ya, kami menyediakan sistem pembayaran cicilan yang fleksibel untuk memudahkan siswa mengikuti program kursus. Hubungi kami untuk informasi detail paket cicilan."
-    },
-    {
-      question: "Apakah ada kelas coding untuk anak SD?",
-      answer: "Ya! Kami memiliki program Scratch yang khusus dirancang untuk anak-anak SD. Program ini mengajarkan logika programming dengan cara yang menyenangkan dan mudah dipahami."
-    },
-    {
-      question: "Apakah setelah mengikuti kursus ini bisa dapat pekerjaan di bidang IT?",
-      answer: "Program kami dirancang untuk mempersiapkan siswa dengan skill yang dibutuhkan industri IT. 85% alumni kami berhasil mendapat pekerjaan di bidang IT dalam 6 bulan setelah menyelesaikan program."
-    },
-    {
-      question: "Berapa lama durasi setiap program kursus?",
-      answer: "Durasi bervariasi: Scratch (2-3 bulan), Microsoft Office (2-4 bulan), Programming (3-6 bulan), dan Networking (4-6 bulan). Semua program disesuaikan dengan tingkat pemahaman siswa."
     }
   ];
 
@@ -531,31 +462,8 @@ const OptimizedContact = () => {
         </div>
       </section>
 
-      {/* FAQ Section */}
-      <section ref={faqRef} className="py-20 bg-gray-50">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className={`text-center mb-12 transition-all duration-1000 ease-out ${
-            faqVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
-          }`}>
-            <span className="inline-block mb-4 px-4 py-2 bg-red-50 text-red-600 rounded-full text-sm font-medium">
-              FAQ
-            </span>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 gradient-text">Pertanyaan yang Sering Diajukan</h2>
-            <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-              Temukan jawaban untuk pertanyaan umum seputar program kursus dan layanan kami
-            </p>
-          </div>
-          
-          <div className={`transition-all duration-1000 ease-out delay-300 ${
-            faqVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-          }`}>
-            <FAQ items={faqs} />
-          </div>
-        </div>
-      </section>
-
       {/* Map Section */}
-      <section ref={mapRef} className="py-20 bg-white">
+      <section ref={mapRef} className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className={`text-center mb-12 transition-all duration-1000 ease-out ${
             mapVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
@@ -603,7 +511,7 @@ const OptimizedContact = () => {
             </div>
             
             {/* Office Hours & Directions */}
-            <div className="p-6 bg-gray-50 border-t">
+            <div className="p-6 bg-white border-t">
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
                   <h4 className="font-semibold text-gray-900 mb-3 flex items-center gap-2">
