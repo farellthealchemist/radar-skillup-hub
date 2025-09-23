@@ -23,11 +23,19 @@ import {
 } from "lucide-react";
 
 // FAQ Component
+// FAQ Component - Enhanced with Smoother Animations
 const FAQ = ({ items }) => {
   const [openIndex, setOpenIndex] = useState(null);
+  const [isAnimating, setIsAnimating] = useState(false);
 
   const toggleItem = (index) => {
+    if (isAnimating) return; // Prevent multiple clicks during animation
+    
+    setIsAnimating(true);
     setOpenIndex(openIndex === index ? null : index);
+    
+    // Reset animation lock after transition completes
+    setTimeout(() => setIsAnimating(false), 400);
   };
 
   const sampleItems = [
@@ -54,41 +62,79 @@ const FAQ = ({ items }) => {
         {displayItems.map((item, index) => (
           <div
             key={index}
-            className="group bg-white rounded-xl border border-gray-200 shadow-card hover:shadow-card-hover hover-lift smooth-transition overflow-hidden pulse-border"
+            className={`group bg-white rounded-xl border border-gray-200 shadow-card hover:shadow-card-hover hover-lift overflow-hidden pulse-border transition-all duration-500 ease-out ${
+              openIndex === index ? 'ring-2 ring-red-100 border-red-200 shadow-lg' : ''
+            }`}
           >
             <button
               onClick={() => toggleItem(index)}
-              className="w-full p-6 text-left focus:outline-none focus:ring-4 focus:ring-red-100 smooth-transition"
+              disabled={isAnimating}
+              className="w-full p-6 text-left focus:outline-none focus:ring-4 focus:ring-red-100 transition-all duration-300 ease-out"
             >
               <div className="flex items-center justify-between">
                 <div className="flex items-start gap-4 flex-1">
-                  <div className="flex-shrink-0 w-10 h-10 bg-red-50 rounded-full flex items-center justify-center group-hover:bg-red-100 smooth-transition">
-                    <HelpCircle className="w-5 h-5 text-red-600" />
+                  <div className={`flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center transition-all duration-400 ease-out ${
+                    openIndex === index 
+                      ? 'bg-red-100 scale-110 rotate-6' 
+                      : 'bg-red-50 group-hover:bg-red-100 group-hover:scale-105'
+                  }`}>
+                    <HelpCircle className={`w-5 h-5 transition-all duration-400 ease-out ${
+                      openIndex === index 
+                        ? 'text-red-600 scale-110' 
+                        : 'text-red-600 group-hover:scale-105'
+                    }`} />
                   </div>
-                  <h3 className="font-bold text-lg text-gray-900 group-hover:text-red-600 smooth-transition leading-tight">
+                  <h3 className={`font-bold text-lg leading-tight transition-all duration-400 ease-out ${
+                    openIndex === index 
+                      ? 'text-red-600 scale-105' 
+                      : 'text-gray-900 group-hover:text-red-600'
+                  }`}>
                     {item.question}
                   </h3>
                 </div>
-                <div className={`flex-shrink-0 ml-4 p-2 rounded-full smooth-transition ${
+                <div className={`flex-shrink-0 ml-4 p-2 rounded-full transition-all duration-500 ease-out ${
                   openIndex === index 
-                    ? 'bg-red-100 rotate-180' 
-                    : 'bg-gray-100 group-hover:bg-red-50'
+                    ? 'bg-red-100 rotate-180 scale-110' 
+                    : 'bg-gray-100 group-hover:bg-red-50 group-hover:scale-105'
                 }`}>
-                  <ChevronDown className={`w-5 h-5 smooth-transition ${
+                  <ChevronDown className={`w-5 h-5 transition-all duration-500 ease-out ${
                     openIndex === index ? 'text-red-600' : 'text-gray-500 group-hover:text-red-500'
                   }`} />
                 </div>
               </div>
             </button>
             
-            <div className={`overflow-hidden smooth-transition ${
-              openIndex === index ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+            {/* Enhanced collapse animation with smoother transitions */}
+            <div className={`overflow-hidden transition-all duration-500 ease-out ${
+              openIndex === index 
+                ? 'max-h-96 opacity-100' 
+                : 'max-h-0 opacity-0'
             }`}>
-              <div className="px-6 pb-6">
-                <div className="ml-14 pt-2 border-t border-gray-100">
-                  <p className="text-gray-600 leading-relaxed text-base mt-4">
-                    {item.answer}
-                  </p>
+              <div className={`px-6 pb-6 transition-all duration-400 ease-out delay-75 ${
+                openIndex === index ? 'transform translate-y-0' : 'transform -translate-y-2'
+              }`}>
+                <div className="ml-14 pt-2">
+                  {/* Animated border with gradient effect */}
+                  <div className={`border-t transition-all duration-500 ease-out ${
+                    openIndex === index 
+                      ? 'border-red-200 bg-gradient-to-r from-red-50 to-transparent' 
+                      : 'border-gray-100'
+                  } rounded-sm`}></div>
+                  
+                  {/* Answer text with staggered reveal animation */}
+                  <div className={`mt-4 transition-all duration-600 ease-out delay-150 ${
+                    openIndex === index 
+                      ? 'opacity-100 transform translate-y-0' 
+                      : 'opacity-0 transform translate-y-4'
+                  }`}>
+                    <p className="text-gray-600 leading-relaxed text-base relative">
+                      {/* Subtle background glow effect */}
+                      <span className={`absolute inset-0 bg-gradient-to-r from-red-50/20 to-transparent rounded-lg transition-opacity duration-500 ${
+                        openIndex === index ? 'opacity-100' : 'opacity-0'
+                      }`}></span>
+                      <span className="relative z-10">{item.answer}</span>
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -96,40 +142,48 @@ const FAQ = ({ items }) => {
         ))}
       </div>
 
-      {/* CTA Section */}
-      <div className="bg-gray-50 rounded-2xl p-6 sm:p-8 text-center mt-8">
-        <div className="max-w-2xl mx-auto">
+      {/* Enhanced CTA Section */}
+      <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl p-6 sm:p-8 text-center mt-8 relative overflow-hidden">
+        {/* Subtle animated background pattern */}
+        <div className="absolute inset-0 opacity-30">
+          <div className="absolute top-0 left-0 w-20 h-20 bg-red-100 rounded-full blur-xl animate-pulse"></div>
+          <div className="absolute bottom-0 right-0 w-32 h-32 bg-red-50 rounded-full blur-2xl animate-pulse delay-1000"></div>
+        </div>
+        
+        <div className="max-w-2xl mx-auto relative z-10">
           <div className="flex justify-center mb-4">
-            <div className="p-3 bg-red-100 rounded-full">
+            <div className="p-3 bg-gradient-to-br from-red-100 to-red-200 rounded-full animate-float">
               <MessageCircle className="w-8 h-8 text-red-600" />
             </div>
           </div>
           
-          <h3 className="text-2xl font-bold text-gray-900 mb-4">
+          <h3 className="text-2xl font-bold text-gray-900 mb-4 animate-fade-in">
             Masih Ada Pertanyaan?
           </h3>
-          <p className="text-gray-600 mb-6 leading-relaxed">
+          <p className="text-gray-600 mb-6 leading-relaxed animate-fade-in delay-200">
             Tim kami siap membantu Anda menemukan program kursus yang tepat sesuai kebutuhan dan tujuan karir Anda.
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <button className="inline-flex items-center justify-center px-6 py-3 hero-gradient text-white font-semibold rounded-lg hover:scale-105 smooth-transition btn-glow text-sm sm:text-base">
-              <Phone className="w-4 h-4 mr-2" />
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-in delay-400">
+            <button className="inline-flex items-center justify-center px-6 py-3 hero-gradient text-white font-semibold rounded-lg hover:scale-105 hover:shadow-xl transition-all duration-300 ease-out btn-glow text-sm sm:text-base group">
+              <Phone className="w-4 h-4 mr-2 group-hover:animate-bounce" />
               Hubungi WhatsApp
             </button>
-            <button className="inline-flex items-center justify-center px-6 py-3 border border-red-600 text-red-600 font-semibold rounded-lg hover:bg-red-600 hover:text-white hover:scale-105 smooth-transition text-sm sm:text-base">
-              <MessageCircle className="w-4 h-4 mr-2" />
+            <button className="inline-flex items-center justify-center px-6 py-3 border border-red-600 text-red-600 font-semibold rounded-lg hover:bg-red-600 hover:text-white hover:scale-105 hover:shadow-xl transition-all duration-300 ease-out text-sm sm:text-base group">
+              <MessageCircle className="w-4 h-4 mr-2 group-hover:animate-pulse" />
               Chat Live Support
             </button>
           </div>
           
-          <div className="mt-6 pt-6 border-t border-gray-200">
-            <p className="text-sm text-gray-500 mb-2">
-              <strong>Jam Operasional:</strong> Senin - Sabtu, 09:00 - 17:00 WIB
-            </p>
-            <p className="text-sm text-gray-500">
-              <strong>Response Time:</strong> Maksimal 2 jam pada jam kerja
-            </p>
+          <div className="mt-6 pt-6 border-t border-gray-200 animate-fade-in delay-600">
+            <div className="grid sm:grid-cols-2 gap-2 text-center">
+              <p className="text-sm text-gray-500 hover:text-gray-700 transition-colors duration-300">
+                <strong>Jam Operasional:</strong><br />Senin - Sabtu, 09:00 - 17:00 WIB
+              </p>
+              <p className="text-sm text-gray-500 hover:text-gray-700 transition-colors duration-300">
+                <strong>Response Time:</strong><br />Maksimal 2 jam pada jam kerja
+              </p>
+            </div>
           </div>
         </div>
       </div>
