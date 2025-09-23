@@ -17,8 +17,8 @@ const NotFound = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 pt-20 pb-8 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-lg mx-auto text-center">
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4 sm:px-6 lg:px-8">
+      <div className="max-w-lg w-full text-center">
         {/* 404 Illustration */}
         <div className="mb-8">
           <div className="relative mx-auto w-48 h-48 sm:w-64 sm:h-64">
