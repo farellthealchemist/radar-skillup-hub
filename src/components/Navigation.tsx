@@ -15,6 +15,7 @@ const Navigation = () => {
     { name: "Beranda", path: "/" },
     { name: "Tentang Kami", path: "/about" },
     { name: "Kursus", path: "/courses" },
+    { name: "Blog", path: "/blog" },
     { name: "Kontak", path: "/contact" },
   ];
 
