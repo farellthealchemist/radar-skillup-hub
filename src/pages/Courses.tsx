@@ -262,73 +262,9 @@ const OptimizedCourses = () => {
         }
       `}</style>
 
-      {/* Educational Courses Hero Section */}
-      <section className="relative py-24 bg-gradient-to-r from-orange-900 via-amber-900 to-yellow-800 text-white overflow-hidden">
-        <div className="absolute inset-0 bg-black/30"></div>
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgdmlld0JveD0iMCAwIDEyMCAxMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImEiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiIHdpZHRoPSIxMjAiIGhlaWdodD0iMTIwIj48Y2lyY2xlIGN4PSI2MCIgY3k9IjYwIiByPSI0IiBmaWxsPSIjZmZmIiBmaWxsLW9wYWNpdHk9IjAuMDMiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMjAiIGhlaWdodD0iMTIwIiBmaWxsPSJ1cmwoI2EpIi8+PC9zdmc+')] opacity-20"></div>
-        <div className="absolute top-12 left-12 w-20 h-20 bg-orange-400/25 rounded-lg blur-2xl rotate-45"></div>
-        <div className="absolute bottom-12 right-12 w-24 h-24 bg-yellow-400/20 rounded-lg blur-3xl rotate-12"></div>
-        
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Breadcrumb */}
-          <nav className={`mb-8 transition-all duration-800 ease-out ${
-            heroVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-          }`}>
-            <div className="flex items-center space-x-2 text-white/70 text-sm">
-              <span>Beranda</span>
-              <ArrowRight className="w-4 h-4" />
-              <span className="text-white font-medium">Program Kursus</span>
-            </div>
-          </nav>
-
-          <div ref={heroRef} className="text-center">
-            <div className={`transition-all duration-1000 ease-out ${
-              heroVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
-            }`}>
-              <span className="inline-block mb-6 px-4 py-2 bg-white/20 backdrop-blur-sm text-white border border-white/30 rounded-full text-sm font-medium">
-                🎓 Program Kursus IT Terpopuler
-              </span>
-            </div>
-            
-            <h1 className={`text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight transition-all duration-1000 ease-out delay-200 ${
-              heroVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
-            }`}>
-              Kembangkan Skill IT Anda
-              <span className="block text-white/90 text-3xl md:text-4xl lg:text-5xl mt-2">
-                Dari Pemula Hingga Profesional
-              </span>
-            </h1>
-            
-            <p className={`text-xl md:text-2xl max-w-4xl mx-auto opacity-90 leading-relaxed mb-8 transition-all duration-1000 ease-out delay-400 ${
-              heroVisible ? 'opacity-90 translate-y-0' : 'opacity-0 translate-y-6'
-            }`}>
-              Pilih dari 4 kategori kursus unggulan dengan kurikulum yang selalu update, 
-              instruktur berpengalaman, dan sertifikat yang diakui industri.
-            </p>
-
-            {/* Quick Stats */}
-            <div className={`grid grid-cols-3 gap-4 sm:gap-8 max-w-lg sm:max-w-2xl mx-auto text-center transition-all duration-1000 ease-out delay-600 ${
-              heroVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
-            }`}>
-              <div>
-                <div className="text-xl sm:text-2xl md:text-3xl font-bold mb-1">750+</div>
-                <div className="text-xs sm:text-sm opacity-75">Alumni</div>
-              </div>
-              <div>
-                <div className="text-xl sm:text-2xl md:text-3xl font-bold mb-1">4.8/5</div>
-                <div className="text-xs sm:text-sm opacity-75">Rating</div>
-              </div>
-              <div>
-                <div className="text-xl sm:text-2xl md:text-3xl font-bold mb-1">85%</div>
-                <div className="text-xs sm:text-sm opacity-75">Job Rate</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* Enhanced Filter & Search Section */}
-      <section className="py-12 bg-gray-50">
+      <section className="py-12 mt-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-white rounded-2xl shadow-lg p-6">
             <div className="flex flex-col md:flex-row gap-4 md:gap-6 items-start md:items-center justify-between">

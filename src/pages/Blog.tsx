@@ -242,73 +242,9 @@ const OptimizedBlog = () => {
         }
       `}</style>
 
-      {/* Magazine-style Blog Hero Section */}
-      <section className="relative py-24 bg-gradient-to-r from-purple-900 via-violet-900 to-fuchsia-900 text-white overflow-hidden">
-        <div className="absolute inset-0 bg-black/25"></div>
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAiIGhlaWdodD0iODAiIHZpZXdCb3g9IjAgMCA4MCA4MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZGVmcz48cGF0dGVybiBpZD0iYSIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgd2lkdGg9IjgwIiBoZWlnaHQ9IjgwIj48cGF0aCBkPSJNMCAwaDQwdjQwSDB6IiBmaWxsPSIjZmZmIiBmaWxsLW9wYWNpdHk9IjAuMDQiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSI4MCIgaGVpZ2h0PSI4MCIgZmlsbD0idXJsKCNhKSIvPjwvc3ZnPg==')] opacity-15"></div>
-        <div className="absolute top-10 right-20 w-24 h-24 bg-purple-400/20 rounded-full blur-2xl animate-pulse"></div>
-        <div className="absolute bottom-10 left-20 w-36 h-36 bg-fuchsia-400/15 rounded-full blur-3xl"></div>
-        
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Breadcrumb */}
-          <nav className={`mb-8 transition-all duration-800 ease-out ${
-            heroVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-          }`}>
-            <div className="flex items-center space-x-2 text-white/70 text-sm">
-              <span>Beranda</span>
-              <ArrowRight className="w-4 h-4" />
-              <span className="text-white font-medium">Blog & Artikel</span>
-            </div>
-          </nav>
-
-          <div ref={heroRef} className="text-center">
-            <div className={`transition-all duration-1000 ease-out ${
-              heroVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
-            }`}>
-              <span className="inline-block mb-6 px-4 py-2 bg-white/20 backdrop-blur-sm text-white border border-white/30 rounded-full text-sm font-medium">
-                📚 Blog & Artikel IT Terbaru
-              </span>
-            </div>
-            
-            <h1 className={`text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight transition-all duration-1000 ease-out delay-200 ${
-              heroVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
-            }`}>
-              Wawasan & Tips IT
-              <span className="block text-white/90 text-3xl md:text-4xl lg:text-5xl mt-2">
-                Untuk Meningkatkan Skill Anda
-              </span>
-            </h1>
-            
-            <p className={`text-xl md:text-2xl max-w-4xl mx-auto opacity-90 leading-relaxed mb-8 transition-all duration-1000 ease-out delay-400 ${
-              heroVisible ? 'opacity-90 translate-y-0' : 'opacity-0 translate-y-6'
-            }`}>
-              Temukan artikel terbaru, tutorial praktis, tips karir IT, dan kisah sukses alumni 
-              yang akan menginspirasi perjalanan teknologi Anda.
-            </p>
-
-            {/* Blog Stats */}
-            <div className={`grid grid-cols-3 gap-4 sm:gap-8 max-w-lg sm:max-w-2xl mx-auto text-center transition-all duration-1000 ease-out delay-600 ${
-              heroVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
-            }`}>
-              <div>
-                <div className="text-xl sm:text-2xl md:text-3xl font-bold mb-1">50+</div>
-                <div className="text-xs sm:text-sm opacity-75">Artikel</div>
-              </div>
-              <div>
-                <div className="text-xl sm:text-2xl md:text-3xl font-bold mb-1">6</div>
-                <div className="text-xs sm:text-sm opacity-75">Kategori</div>
-              </div>
-              <div>
-                <div className="text-xl sm:text-2xl md:text-3xl font-bold mb-1">2x</div>
-                <div className="text-xs sm:text-sm opacity-75">Per Minggu</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* Enhanced Search & Filter Section */}
-      <section className="py-12 bg-gray-50">
+      <section className="py-12 mt-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-white rounded-2xl shadow-lg p-6">
             <div className="flex flex-col lg:flex-row gap-6 items-center justify-between">

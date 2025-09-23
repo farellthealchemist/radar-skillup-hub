@@ -198,73 +198,9 @@ const OptimizedContact = () => {
         </div>
       )}
 
-      {/* Communication-focused Contact Hero Section */}
-      <section className="relative py-24 bg-gradient-to-br from-emerald-900 via-teal-900 to-cyan-900 text-white overflow-hidden">
-        <div className="absolute inset-0 bg-black/25"></div>
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNiI+PGNpcmNsZSBjeD0iMzAiIGN5PSIzMCIgcj0iMyIvPjwvZz48L2c+PC9zdmc+')] opacity-25"></div>
-        <div className="absolute top-16 left-16 w-28 h-28 bg-emerald-400/20 rounded-full blur-2xl"></div>
-        <div className="absolute bottom-16 right-16 w-32 h-32 bg-cyan-400/15 rounded-full blur-3xl animate-pulse"></div>
-        
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Breadcrumb */}
-          <nav className={`mb-8 transition-all duration-800 ease-out ${
-            heroVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-          }`}>
-            <div className="flex items-center space-x-2 text-white/70 text-sm">
-              <span>Beranda</span>
-              <ArrowRight className="w-4 h-4" />
-              <span className="text-white font-medium">Hubungi Kami</span>
-            </div>
-          </nav>
-
-          <div ref={heroRef} className="text-center">
-            <div className={`transition-all duration-1000 ease-out ${
-              heroVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
-            }`}>
-              <span className="inline-block mb-6 px-4 py-2 bg-white/20 backdrop-blur-sm text-white border border-white/30 rounded-full text-sm font-medium">
-                💬 Konsultasi & Informasi
-              </span>
-            </div>
-            
-            <h1 className={`text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight transition-all duration-1000 ease-out delay-200 ${
-              heroVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
-            }`}>
-              Hubungi Kami
-              <span className="block text-white/90 text-3xl md:text-4xl lg:text-5xl mt-2">
-                Konsultasi Gratis untuk Anda
-              </span>
-            </h1>
-            
-            <p className={`text-xl md:text-2xl max-w-4xl mx-auto opacity-90 leading-relaxed mb-8 transition-all duration-1000 ease-out delay-400 ${
-              heroVisible ? 'opacity-90 translate-y-0' : 'opacity-0 translate-y-6'
-            }`}>
-              Punya pertanyaan tentang program kursus? Tim kami siap membantu Anda 
-              menemukan program yang tepat untuk mengembangkan skill IT impian Anda.
-            </p>
-
-            {/* Contact Stats */}
-            <div className={`grid grid-cols-3 gap-4 sm:gap-8 max-w-lg sm:max-w-2xl mx-auto text-center transition-all duration-1000 ease-out delay-600 ${
-              heroVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
-            }`}>
-              <div>
-                <div className="text-xl sm:text-2xl md:text-3xl font-bold mb-1">24/7</div>
-                <div className="text-xs sm:text-sm opacity-75">WhatsApp</div>
-              </div>
-              <div>
-                <div className="text-xl sm:text-2xl md:text-3xl font-bold mb-1">5 Min</div>
-                <div className="text-xs sm:text-sm opacity-75">Respon</div>
-              </div>
-              <div>
-                <div className="text-xl sm:text-2xl md:text-3xl font-bold mb-1">100%</div>
-                <div className="text-xs sm:text-sm opacity-75">Gratis</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* Contact Form & Info */}
-      <section ref={contactRef} className="py-20 bg-white">
+      <section ref={contactRef} className="py-20 mt-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
             {/* Contact Form */}

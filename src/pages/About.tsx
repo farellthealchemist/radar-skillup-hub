@@ -232,73 +232,9 @@ const OptimizedAbout = () => {
         }
       `}</style>
 
-      {/* Corporate About Hero Section */}
-      <section className="relative py-24 bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 text-white overflow-hidden">
-        <div className="absolute inset-0 bg-black/30"></div>
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgdmlld0JveD0iMCAwIDEwMCAxMDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImEiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIj48cGF0aCBkPSJNMCAwaDEwMHYxMDBIMHoiIGZpbGw9Im5vbmUiLz48cGF0aCBkPSJNMCAwaDUwdjUwSDB6IiBmaWxsPSIjZmZmIiBmaWxsLW9wYWNpdHk9IjAuMDMiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiBmaWxsPSJ1cmwoI2EpIi8+PC9zdmc+')] opacity-10"></div>
-        <div className="absolute top-20 left-10 w-32 h-32 bg-blue-500/10 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-20 right-10 w-40 h-40 bg-indigo-500/10 rounded-full blur-3xl"></div>
-        
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Breadcrumb */}
-          <nav className={`mb-8 transition-all duration-800 ease-out ${
-            heroVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-          }`}>
-            <div className="flex items-center space-x-2 text-white/70 text-sm">
-              <span>Beranda</span>
-              <ArrowRight className="w-4 h-4" />
-              <span className="text-white font-medium">Tentang Kami</span>
-            </div>
-          </nav>
-
-          <div ref={heroRef} className="text-center">
-            <div className={`transition-all duration-1000 ease-out ${
-              heroVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
-            }`}>
-              <span className="inline-block mb-6 px-4 py-2 bg-white/20 backdrop-blur-sm text-white border border-white/30 rounded-full text-sm font-medium">
-                🏢 Tentang RADAR Education Center
-              </span>
-            </div>
-            
-            <h1 className={`text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight transition-all duration-1000 ease-out delay-200 ${
-              heroVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
-            }`}>
-              Media Terdepan
-              <span className="block text-white/90 text-3xl md:text-4xl lg:text-5xl mt-2">
-                Meningkatkan Skill IT Indonesia
-              </span>
-            </h1>
-            
-            <p className={`text-xl md:text-2xl max-w-4xl mx-auto opacity-90 leading-relaxed mb-8 transition-all duration-1000 ease-out delay-400 ${
-              heroVisible ? 'opacity-90 translate-y-0' : 'opacity-0 translate-y-6'
-            }`}>
-              Sejak 2008, RADAR Education Center telah menjadi pionir pendidikan IT terpercaya, 
-              mengembangkan talenta teknologi dari tingkat pemula hingga profesional di seluruh Indonesia.
-            </p>
-
-            {/* Company Stats */}
-            <div className={`grid grid-cols-3 gap-4 sm:gap-8 max-w-lg sm:max-w-2xl mx-auto text-center transition-all duration-1000 ease-out delay-600 ${
-              heroVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
-            }`}>
-              <div>
-                <div className="text-xl sm:text-2xl md:text-3xl font-bold mb-1">2008</div>
-                <div className="text-xs sm:text-sm opacity-75">Didirikan</div>
-              </div>
-              <div>
-                <div className="text-xl sm:text-2xl md:text-3xl font-bold mb-1">50+</div>
-                <div className="text-xs sm:text-sm opacity-75">Program</div>
-              </div>
-              <div>
-                <div className="text-xl sm:text-2xl md:text-3xl font-bold mb-1">15+</div>
-                <div className="text-xs sm:text-sm opacity-75">Instruktur</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* Enhanced Company Story with better visual hierarchy */}
-      <section ref={storyRef} className="py-20 bg-white">
+      <section ref={storyRef} className="py-20 mt-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className={`transition-all duration-1000 ease-out ${
