@@ -195,7 +195,7 @@ const OptimizedAbout = () => {
   return (
     <div className="min-h-screen pt-16 overflow-x-hidden">
       {/* Optimized Styles */}
-      <style>{`
+      <style jsx>{`
         .hero-gradient {
           background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
         }

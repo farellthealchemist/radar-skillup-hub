@@ -1,4 +1,3 @@
-import FAQ from "@/components/FAQ";
 import React, { useState, useEffect, useRef } from 'react';
 import { 
   Code, 
@@ -99,35 +98,6 @@ const useCountAnimation = (targetValue, duration = 2000, isVisible = false) => {
 };
 
 const Homepage = () => {
-  // FAQ data
-  const faqs = [
-    {
-      question: "Bagaimana jika tidak memiliki latar belakang IT?",
-      answer: "Tidak masalah! Program kami dirancang untuk semua level, termasuk pemula tanpa latar belakang IT. Instruktur kami akan membantu Anda dari dasar hingga mahir."
-    },
-    {
-      question: "Apakah ada kelas FullStack Web Development?",
-      answer: "Saat ini kami fokus pada fundamental programming (Python, Java). Untuk FullStack development, Anda bisa mengikuti program programming terlebih dahulu sebagai foundation."
-    },
-    {
-      question: "Apakah pembayaran dapat dilakukan dengan cara mencicil?",
-      answer: "Ya, kami menyediakan sistem pembayaran cicilan yang fleksibel untuk memudahkan siswa mengikuti program kursus."
-    },
-    {
-      question: "Apakah ada kelas coding untuk anak SD?",
-      answer: "Ya! Kami memiliki program Scratch yang khusus dirancang untuk anak-anak SD. Program ini mengajarkan logika programming dengan cara yang menyenangkan dan mudah dipahami."
-    },
-    {
-      question: "Berapa lama durasi setiap kelas?",
-      answer: "Setiap sesi kelas berlangsung 2-3 jam dengan istirahat. Frekuensi kelas disesuaikan dengan program yang diambil."
-    },
-    {
-      question: "Apakah mendapat sertifikat setelah lulus?",
-      answer: "Ya, setiap peserta yang menyelesaikan program akan mendapat sertifikat resmi dari RADAR Education Center yang diakui industri."
-    }
-  ];
-
-  // Animation hooks
   const { ref: heroRef, isVisible: heroVisible } = useScrollAnimation({ delay: 200 });
   const { ref: servicesRef, visibleItems } = useStaggeredAnimation(4, 150, 300);
   const { ref: aboutRef, isVisible: aboutVisible } = useScrollAnimation({ threshold: 0.1, rootMargin: "-50px" });
@@ -771,33 +741,6 @@ const Homepage = () => {
               </div>
               <div className="text-xs sm:text-sm lg:text-base text-gray-600 leading-tight">Support Online</div>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* FAQ Section */}
-      <section className="py-12 sm:py-16 lg:py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
-          <div className="text-center mb-8 sm:mb-12 lg:mb-16">
-            <div className={`transition-all duration-800 ease-out ${
-              testimonialVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
-            }`}>
-              <span className="inline-block mb-3 sm:mb-4 px-3 sm:px-4 py-2 bg-red-50 text-red-600 rounded-full text-xs sm:text-sm font-medium">
-                FAQ
-              </span>
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-3 sm:mb-4 font-heading">
-                Pertanyaan yang Sering Diajukan
-              </h2>
-              <p className="text-gray-600 max-w-2xl mx-auto text-sm sm:text-base lg:text-lg leading-relaxed px-4">
-                Temukan jawaban untuk pertanyaan umum tentang program kursus kami
-              </p>
-            </div>
-          </div>
-          
-          <div className={`max-w-4xl mx-auto transition-all duration-800 ease-out delay-200 ${
-            testimonialVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
-          }`}>
-            <FAQ items={faqs} />
           </div>
         </div>
       </section>

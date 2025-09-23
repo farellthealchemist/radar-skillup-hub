@@ -46,49 +46,27 @@ const Navigation = () => {
             </span>
           </Link>
 
-        {/* Desktop Navigation - Staggered animation */}
-        <div className="hidden lg:flex items-center space-x-8">
-          {navItems.map((item, index) => (
-            <Link
-              key={item.path}
-              to={item.path}
-              className={`font-medium transition-all duration-500 ease-out hover:text-primary relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-primary after:scale-x-0 after:origin-left after:transition-transform after:duration-300 hover:after:scale-x-100 ${
-                isActive(item.path)
-                  ? "text-primary after:scale-x-100"
-                  : "text-foreground"
-              } ${
-                isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'
-              }`}
-              style={{ 
-                transitionDelay: `${200 + (index * 100)}ms` 
-              }}
-            >
-              {item.name}
-            </Link>
-          ))}
-        </div>
-
-        {/* Tablet Navigation - Medium screens */}
-        <div className="hidden md:flex lg:hidden items-center space-x-6">
-          {navItems.map((item, index) => (
-            <Link
-              key={item.path}
-              to={item.path}
-              className={`font-medium text-sm transition-all duration-500 ease-out hover:text-primary relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-primary after:scale-x-0 after:origin-left after:transition-transform after:duration-300 hover:after:scale-x-100 ${
-                isActive(item.path)
-                  ? "text-primary after:scale-x-100"
-                  : "text-foreground"
-              } ${
-                isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'
-              }`}
-              style={{ 
-                transitionDelay: `${200 + (index * 80)}ms` 
-              }}
-            >
-              {item.name}
-            </Link>
-          ))}
-        </div>
+          {/* Desktop Navigation - Staggered animation */}
+          <div className="hidden md:flex items-center space-x-8">
+            {navItems.map((item, index) => (
+              <Link
+                key={item.path}
+                to={item.path}
+                className={`font-medium transition-all duration-500 ease-out hover:text-primary relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-primary after:scale-x-0 after:origin-left after:transition-transform after:duration-300 hover:after:scale-x-100 ${
+                  isActive(item.path)
+                    ? "text-primary after:scale-x-100"
+                    : "text-foreground"
+                } ${
+                  isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'
+                }`}
+                style={{ 
+                  transitionDelay: `${200 + (index * 100)}ms` 
+                }}
+              >
+                {item.name}
+              </Link>
+            ))}
+          </div>
 
           {/* Contact Info & CTA - Delayed animation */}
           <div className={`hidden lg:flex items-center space-x-4 transition-all duration-700 ease-out ${
@@ -106,7 +84,7 @@ const Navigation = () => {
           {/* Mobile menu button - With animation */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className={`md:lg:hidden p-2 rounded-md text-foreground hover:text-primary hover:bg-muted transition-all duration-500 ease-out hover:scale-110 ${
+            className={`md:hidden p-2 rounded-md text-foreground hover:text-primary hover:bg-muted transition-all duration-500 ease-out hover:scale-110 ${
               isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'
             }`}
             style={{ transitionDelay: '600ms' }}
@@ -118,7 +96,7 @@ const Navigation = () => {
         </div>
 
         {/* Mobile Navigation - Smooth slide animation */}
-        <div className={`lg:hidden overflow-hidden transition-all duration-500 ease-out ${
+        <div className={`md:hidden overflow-hidden transition-all duration-500 ease-out ${
           isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
         }`}>
           <div className="py-4 border-t">
