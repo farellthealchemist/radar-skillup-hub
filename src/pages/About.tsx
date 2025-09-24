@@ -234,7 +234,7 @@ const OptimizedAbout = () => {
 
 
       {/* Enhanced Company Story with better visual hierarchy */}
-      <section ref={storyRef} className="py-20 mt-16 bg-white">
+      <section ref={storyRef} className="py-16 mt-1 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className={`transition-all duration-1000 ease-out ${

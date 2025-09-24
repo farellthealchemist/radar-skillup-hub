@@ -200,7 +200,7 @@ const OptimizedContact = () => {
 
 
       {/* Contact Form & Info */}
-      <section ref={contactRef} className="py-20 mt-16 bg-white">
+      <section ref={contactRef} className="py-20 mt-1 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
             {/* Contact Form */}

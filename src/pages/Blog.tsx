@@ -244,7 +244,7 @@ const OptimizedBlog = () => {
 
 
       {/* Enhanced Search & Filter Section */}
-      <section className="py-12 mt-16 bg-gray-50">
+      <section className="py-12 mt-1 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-white rounded-2xl shadow-lg p-6">
             <div className="flex flex-col lg:flex-row gap-6 items-center justify-between">

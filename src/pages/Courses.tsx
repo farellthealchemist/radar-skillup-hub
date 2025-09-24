@@ -263,8 +263,58 @@ const OptimizedCourses = () => {
       `}</style>
 
 
+      {/* Hero Section */}
+      <section ref={heroRef} className="py-16 mt-4 bg-white border-b border-gray-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className={`text-center transition-all duration-1000 ease-out ${
+            heroVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
+          }`}>
+            <div className="max-w-4xl mx-auto">
+              <span className="inline-block mb-4 px-4 py-2 bg-red-50 text-red-600 rounded-lg text-sm font-medium border border-red-100">
+                Program Kursus IT
+              </span>
+              
+              <h1 className="text-3xl md:text-5xl font-bold mb-6 text-gray-900 leading-tight">
+                Pilih Program Kursus 
+                <span className="gradient-text"> Sesuai Tujuan Karir Anda</span>
+              </h1>
+              
+              <p className="text-lg text-gray-600 mb-12 leading-relaxed">
+                Dari Programming hingga Network Administration, temukan program yang tepat untuk mengembangkan skill IT dan mempersiapkan masa depan profesional Anda.
+              </p>
+              
+              {/* Clean stats */}
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8">
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-red-600 mb-1">4+</div>
+                  <div className="text-sm text-gray-500">Program Tersedia</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-red-600 mb-1">750+</div>
+                  <div className="text-sm text-gray-500">Alumni Sukses</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-red-600 mb-1">85%</div>
+                  <div className="text-sm text-gray-500">Job Placement</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-red-600 mb-1">4.8/5</div>
+                  <div className="text-sm text-gray-500">Rating Siswa</div>
+                </div>
+              </div>
+              
+              <div className="bg-gray-50 rounded-lg p-4 max-w-2xl mx-auto">
+                <p className="text-sm text-gray-700">
+                  <strong>Cara Memilih:</strong> Gunakan filter kategori dan pencarian di bawah untuk menemukan program yang sesuai dengan minat dan level skill Anda.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Enhanced Filter & Search Section */}
-      <section className="py-12 mt-16 bg-gray-50">
+      <section className="py-12 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-white rounded-2xl shadow-lg p-6">
             <div className="flex flex-col md:flex-row gap-4 md:gap-6 items-start md:items-center justify-between">
