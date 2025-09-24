@@ -482,34 +482,43 @@ const Homepage = () => {
     <div className="min-h-screen overflow-x-hidden">
       <style dangerouslySetInnerHTML={{ __html: styles }} />
 
-      {/* Hero Section */}
-      <section ref={heroRef} className="relative pt-24 sm:pt-28 pb-24 sm:pb-28 overflow-hidden min-h-screen flex items-center hero-gradient hero-pattern">
-        <div className="absolute inset-0 hero-gradient"></div>
-        <div className="absolute inset-0 bg-black/20"></div>
-        <div 
-          className="absolute inset-0"
-          style={{
-            backgroundImage: "url(https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1200&h=800&fit=crop)",
-            backgroundSize: "cover",
-            backgroundPosition: "center center",
-            backgroundRepeat: "no-repeat",
-            backgroundAttachment: "scroll"
-          }}
-        ></div>
-        <div className="absolute inset-0 bg-red-600/80"></div>
+      {/* Hero Section - Mobile Responsive Background */}
+      <section ref={heroRef} className="relative pt-16 pb-20 sm:pt-24 sm:pb-28 lg:pt-28 lg:pb-32 overflow-hidden hero-gradient hero-pattern">
+        {/* Mobile Background - Smaller, Content-Adaptive */}
+        <div className="absolute inset-0 lg:hidden">
+          <div className="absolute inset-0 hero-gradient"></div>
+          <div className="absolute inset-0 bg-red-600/90"></div>
+        </div>
+        
+        {/* Desktop Background - Full Screen */}
+        <div className="absolute inset-0 hidden lg:block min-h-screen">
+          <div className="absolute inset-0 hero-gradient"></div>
+          <div className="absolute inset-0 bg-black/20"></div>
+          <div 
+            className="absolute inset-0"
+            style={{
+              backgroundImage: "url(https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1200&h=800&fit=crop)",
+              backgroundSize: "cover",
+              backgroundPosition: "center center",
+              backgroundRepeat: "no-repeat",
+              backgroundAttachment: "scroll"
+            }}
+          ></div>
+          <div className="absolute inset-0 bg-red-600/80"></div>
+        </div>
         
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-          <div className="grid lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 items-center">
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center lg:min-h-screen">
             <div className="text-white order-2 lg:order-1">
-              <div className={`transition-all duration-800 ease-out mt-4 sm:mt-6 ${
+              <div className={`transition-all duration-800 ease-out ${
                 heroVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
               }`}>
-                <span className="inline-block mb-4 sm:mb-6 px-3 sm:px-4 py-2 bg-white/20 text-white border border-white/30 rounded-full text-xs sm:text-sm font-medium">
+                <span className="inline-block mb-3 sm:mb-4 lg:mb-6 px-3 sm:px-4 py-1.5 sm:py-2 bg-white/20 text-white border border-white/30 rounded-full text-xs sm:text-sm font-medium">
                   🏆 #1 IT Training Center di Tangerang
                 </span>
               </div>
               
-              <h1 className={`text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-4 sm:mb-6 leading-tight transition-all duration-800 ease-out delay-200 ${
+              <h1 className={`text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold mb-3 sm:mb-4 lg:mb-6 leading-tight transition-all duration-800 ease-out delay-200 ${
                 heroVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
               }`}>
                 Media Meningkatkan
@@ -518,60 +527,60 @@ const Homepage = () => {
                 </span>
               </h1>
               
-              <p className={`text-sm sm:text-base lg:text-lg xl:text-xl opacity-90 mb-6 sm:mb-8 max-w-lg leading-relaxed transition-all duration-800 ease-out delay-400 ${
+              <p className={`text-sm sm:text-base lg:text-lg opacity-90 mb-4 sm:mb-6 lg:mb-8 max-w-lg leading-relaxed transition-all duration-800 ease-out delay-400 ${
                 heroVisible ? 'opacity-90 translate-y-0' : 'opacity-0 translate-y-4'
               }`}>
                 Bergabunglah dengan RADAR Education Center dan kembangkan skill IT Anda 
                 dari level pemula hingga profesional dengan kurikulum terkini dan instruktur berpengalaman.
               </p>
               
-              <div className={`flex flex-col gap-3 sm:gap-4 transition-all duration-800 ease-out delay-600 ${
+              <div className={`flex flex-col sm:flex-row gap-3 sm:gap-4 transition-all duration-800 ease-out delay-600 ${
                 heroVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
               }`}>
-                <button className="inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 bg-white text-red-600 font-semibold rounded-lg hover:bg-gray-100 hover:scale-105 smooth-transition btn-glow text-sm sm:text-base">
+                <button className="inline-flex items-center justify-center px-4 sm:px-6 lg:px-8 py-2.5 sm:py-3 lg:py-4 bg-white text-red-600 font-semibold rounded-lg hover:bg-gray-100 hover:scale-105 smooth-transition btn-glow text-sm sm:text-base">
                   <PlayCircle className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
                   Mulai Belajar Sekarang
                 </button>
-                <button className="inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 border-2 border-white text-white bg-transparent hover:bg-white hover:text-red-600 font-semibold rounded-lg hover:scale-105 smooth-transition text-sm sm:text-base">
+                <button className="inline-flex items-center justify-center px-4 sm:px-6 lg:px-8 py-2.5 sm:py-3 lg:py-4 border-2 border-white text-white bg-transparent hover:bg-white hover:text-red-600 font-semibold rounded-lg hover:scale-105 smooth-transition text-sm sm:text-base">
                   Lihat Program Kursus
                   <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 ml-2" />
                 </button>
               </div>
 
               {/* Instructor Cards - Mobile Only */}
-              <div className={`mt-16 sm:mt-20 mb-8 lg:hidden flex flex-col space-y-4 transition-all duration-1000 ease-out delay-800 ${
+              <div className={`mt-8 sm:mt-12 lg:hidden flex flex-col space-y-3 transition-all duration-1000 ease-out delay-800 ${
                 heroVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
               }`}>
-                <div className="w-full p-3 sm:p-4 bg-white hover-lift shadow-card hover:shadow-card-hover smooth-transition rounded-xl pulse-border">
-                  <div className="flex items-center gap-3 sm:gap-4">
+                <div className="w-full p-3 bg-white/95 backdrop-blur-sm hover-lift shadow-card hover:shadow-card-hover smooth-transition rounded-xl pulse-border">
+                  <div className="flex items-center gap-3">
                     <img 
                       src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&crop=face" 
                       alt="Asep Surahmat M.Kom" 
-                      className="w-12 h-12 rounded-full object-cover border-2 border-red-600/20 hover-scale smooth-transition flex-shrink-0"
+                      className="w-10 h-10 rounded-full object-cover border-2 border-red-600/20 hover-scale smooth-transition flex-shrink-0"
                     />
                     <div className="flex-1 min-w-0">
-                      <h3 className="font-semibold text-gray-900 smooth-transition text-sm sm:text-base truncate">Asep Surahmat M.Kom</h3>
-                      <p className="text-xs sm:text-sm text-gray-500 mb-2">Lead Instructor</p>
-                      <div className="flex items-center gap-2 px-2 py-1 bg-gradient-to-r from-red-50 to-red-100 rounded-full hover-scale smooth-transition">
-                        <MapPin className="w-3 h-3 text-red-600 animate-pulse-soft flex-shrink-0" />
+                      <h3 className="font-semibold text-gray-900 smooth-transition text-sm truncate">Asep Surahmat M.Kom</h3>
+                      <p className="text-xs text-gray-500 mb-1">Lead Instructor</p>
+                      <div className="flex items-center gap-2 px-2 py-0.5 bg-gradient-to-r from-red-50 to-red-100 rounded-full hover-scale smooth-transition">
+                        <MapPin className="w-2.5 h-2.5 text-red-600 animate-pulse-soft flex-shrink-0" />
                         <span className="text-xs text-red-700 font-medium truncate">15+ Tahun Exp</span>
                       </div>
                     </div>
                   </div>
                 </div>
 
-                <div className="w-full p-3 sm:p-4 bg-white hover-lift shadow-card hover:shadow-card-hover smooth-transition rounded-xl pulse-border">
-                  <div className="flex items-center gap-3 sm:gap-4">
+                <div className="w-full p-3 bg-white/95 backdrop-blur-sm hover-lift shadow-card hover:shadow-card-hover smooth-transition rounded-xl pulse-border">
+                  <div className="flex items-center gap-3">
                     <img 
                       src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&h=80&fit=crop&crop=face" 
                       alt="Rizqi Darmawan" 
-                      className="w-12 h-12 rounded-full object-cover border-2 border-red-600/20 hover-scale smooth-transition flex-shrink-0"
+                      className="w-10 h-10 rounded-full object-cover border-2 border-red-600/20 hover-scale smooth-transition flex-shrink-0"
                     />
                     <div className="flex-1 min-w-0">
-                      <h3 className="font-semibold text-gray-900 smooth-transition text-sm sm:text-base truncate">Rizqi Darmawan</h3>
-                      <p className="text-xs sm:text-sm text-gray-500 mb-2">Senior Instructor</p>
-                      <div className="flex items-center gap-2 px-2 py-1 bg-gray-100 rounded-full hover-scale smooth-transition">
-                        <Shield className="w-3 h-3 text-gray-500 flex-shrink-0" />
+                      <h3 className="font-semibold text-gray-900 smooth-transition text-sm truncate">Rizqi Darmawan</h3>
+                      <p className="text-xs text-gray-500 mb-1">Senior Instructor</p>
+                      <div className="flex items-center gap-2 px-2 py-0.5 bg-gray-100 rounded-full hover-scale smooth-transition">
+                        <Shield className="w-2.5 h-2.5 text-gray-500 flex-shrink-0" />
                         <span className="text-xs text-gray-700 truncate">Network Expert</span>
                       </div>
                     </div>
