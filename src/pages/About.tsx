@@ -193,7 +193,7 @@ const OptimizedAbout = () => {
   ];
 
   return (
-    <div className="min-h-screen pt-16 overflow-x-hidden bg-white">
+    <div className="min-h-screen pt-16 overflow-x-hidden">
       {/* Optimized Styles */}
       <style>{`
         .hero-gradient {
@@ -234,9 +234,9 @@ const OptimizedAbout = () => {
 
 
       {/* Enhanced Company Story with better visual hierarchy */}
-      <section ref={storyRef} className="py-12 sm:py-16 lg:py-20 bg-white">
+      <section ref={storyRef} className="py-20 mt-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className={`transition-all duration-1000 ease-out ${
               storyVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-6'
             }`}>
@@ -244,7 +244,7 @@ const OptimizedAbout = () => {
                 Cerita Kami
               </span>
               
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-4 sm:mb-6 gradient-text leading-tight">
+              <h2 className="text-3xl md:text-4xl font-bold mb-6 gradient-text leading-tight">
                 16 Tahun Dedikasi dalam Pendidikan IT
               </h2>
               
@@ -325,16 +325,16 @@ const OptimizedAbout = () => {
       </section>
 
       {/* Company Timeline - Mobile Responsive */}
-      <section ref={timelineRef} className="py-16 sm:py-20 lg:py-24 bg-gray-50">
+      <section ref={timelineRef} className="py-24 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12 sm:mb-16">
+          <div className="text-center mb-16">
             <span className="inline-block mb-4 px-4 py-2 bg-red-50 text-red-600 rounded-full text-sm font-medium">
               Perjalanan Kami
             </span>
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-4 gradient-text">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 gradient-text">
               Milestone RADAR Education Center
             </h2>
-            <p className="text-gray-600 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed">
+            <p className="text-gray-600 text-lg max-w-2xl mx-auto">
               Dari startup lokal hingga menjadi rujukan pendidikan IT terpercaya di Indonesia
             </p>
           </div>

@@ -230,7 +230,7 @@ const OptimizedCourses = () => {
   });
 
   return (
-    <div className="min-h-screen pt-16 overflow-x-hidden bg-white">
+    <div className="min-h-screen pt-16 overflow-x-hidden">
       {/* Consistent Styles with Homepage */}
       <style>{`
         .hero-gradient {
@@ -303,9 +303,9 @@ const OptimizedCourses = () => {
       </section>
 
       {/* Enhanced Courses Grid */}
-      <section className="py-16 sm:py-20 lg:py-24 bg-white">
+      <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div ref={coursesRef} className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 lg:gap-8">
+          <div ref={coursesRef} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {filteredCourses.map((course, index) => (
               <div 
                 key={course.id} 
