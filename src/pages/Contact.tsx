@@ -83,8 +83,7 @@ const OptimizedContact = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
     if (!formData.name || !formData.email || !formData.message) return;
     
     setIsSubmitting(true);
@@ -185,7 +184,7 @@ const OptimizedContact = () => {
         }
       `}</style>
 
-      {/* Success Toast - Mobile Responsive */}
+      {/* Success Toast */}
       {showSuccess && (
         <div className="fixed top-16 sm:top-20 right-2 sm:right-4 bg-green-600 text-white px-4 sm:px-6 py-3 sm:py-4 rounded-lg shadow-xl z-50 max-w-xs sm:max-w-sm">
           <div className="flex items-start gap-2 sm:gap-3">
@@ -198,9 +197,8 @@ const OptimizedContact = () => {
         </div>
       )}
 
-
       {/* Contact Form & Info */}
-      <section ref={contactRef} className="py-20 mt-1 bg-white">
+      <section ref={contactRef} className="py-20 mt-4 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
             {/* Contact Form */}
@@ -218,7 +216,7 @@ const OptimizedContact = () => {
                   </div>
                 </div>
                 
-                <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
+                <div className="space-y-4 sm:space-y-6">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-sm font-semibold mb-2 text-gray-700">Nama Lengkap *</label>
@@ -288,7 +286,7 @@ const OptimizedContact = () => {
                   </div>
 
                   <button 
-                    type="submit"
+                    onClick={handleSubmit}
                     className="w-full hero-gradient text-white py-3 sm:py-4 rounded-lg font-semibold hover:scale-105 smooth-transition btn-glow disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base"
                     disabled={isSubmitting}
                   >
@@ -304,7 +302,7 @@ const OptimizedContact = () => {
                       </div>
                     )}
                   </button>
-                </form>
+                </div>
               </div>
             </div>
 
