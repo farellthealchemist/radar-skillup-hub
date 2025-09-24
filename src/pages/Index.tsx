@@ -23,11 +23,19 @@ import {
 } from "lucide-react";
 
 // FAQ Component
+// FAQ Component - Enhanced with Smoother Animations
 const FAQ = ({ items }) => {
   const [openIndex, setOpenIndex] = useState(null);
+  const [isAnimating, setIsAnimating] = useState(false);
 
   const toggleItem = (index) => {
+    if (isAnimating) return; // Prevent multiple clicks during animation
+    
+    setIsAnimating(true);
     setOpenIndex(openIndex === index ? null : index);
+    
+    // Reset animation lock after transition completes
+    setTimeout(() => setIsAnimating(false), 400);
   };
 
   const sampleItems = [
@@ -54,41 +62,79 @@ const FAQ = ({ items }) => {
         {displayItems.map((item, index) => (
           <div
             key={index}
-            className="group bg-white rounded-xl border border-gray-200 shadow-card hover:shadow-card-hover hover-lift smooth-transition overflow-hidden pulse-border"
+            className={`group bg-white rounded-xl border border-gray-200 shadow-card hover:shadow-card-hover hover-lift overflow-hidden pulse-border transition-all duration-500 ease-out ${
+              openIndex === index ? 'ring-2 ring-red-100 border-red-200 shadow-lg' : ''
+            }`}
           >
             <button
               onClick={() => toggleItem(index)}
-              className="w-full p-6 text-left focus:outline-none focus:ring-4 focus:ring-red-100 smooth-transition"
+              disabled={isAnimating}
+              className="w-full p-6 text-left focus:outline-none focus:ring-4 focus:ring-red-100 transition-all duration-300 ease-out"
             >
               <div className="flex items-center justify-between">
                 <div className="flex items-start gap-4 flex-1">
-                  <div className="flex-shrink-0 w-10 h-10 bg-red-50 rounded-full flex items-center justify-center group-hover:bg-red-100 smooth-transition">
-                    <HelpCircle className="w-5 h-5 text-red-600" />
+                  <div className={`flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center transition-all duration-400 ease-out ${
+                    openIndex === index 
+                      ? 'bg-red-100 scale-110 rotate-6' 
+                      : 'bg-red-50 group-hover:bg-red-100 group-hover:scale-105'
+                  }`}>
+                    <HelpCircle className={`w-5 h-5 transition-all duration-400 ease-out ${
+                      openIndex === index 
+                        ? 'text-red-600 scale-110' 
+                        : 'text-red-600 group-hover:scale-105'
+                    }`} />
                   </div>
-                  <h3 className="font-bold text-lg text-gray-900 group-hover:text-red-600 smooth-transition leading-tight">
+                  <h3 className={`font-bold text-lg leading-tight transition-all duration-400 ease-out ${
+                    openIndex === index 
+                      ? 'text-red-600 scale-105' 
+                      : 'text-gray-900 group-hover:text-red-600'
+                  }`}>
                     {item.question}
                   </h3>
                 </div>
-                <div className={`flex-shrink-0 ml-4 p-2 rounded-full smooth-transition ${
+                <div className={`flex-shrink-0 ml-4 p-2 rounded-full transition-all duration-500 ease-out ${
                   openIndex === index 
-                    ? 'bg-red-100 rotate-180' 
-                    : 'bg-gray-100 group-hover:bg-red-50'
+                    ? 'bg-red-100 rotate-180 scale-110' 
+                    : 'bg-gray-100 group-hover:bg-red-50 group-hover:scale-105'
                 }`}>
-                  <ChevronDown className={`w-5 h-5 smooth-transition ${
+                  <ChevronDown className={`w-5 h-5 transition-all duration-500 ease-out ${
                     openIndex === index ? 'text-red-600' : 'text-gray-500 group-hover:text-red-500'
                   }`} />
                 </div>
               </div>
             </button>
             
-            <div className={`overflow-hidden smooth-transition ${
-              openIndex === index ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+            {/* Enhanced collapse animation with smoother transitions */}
+            <div className={`overflow-hidden transition-all duration-500 ease-out ${
+              openIndex === index 
+                ? 'max-h-96 opacity-100' 
+                : 'max-h-0 opacity-0'
             }`}>
-              <div className="px-6 pb-6">
-                <div className="ml-14 pt-2 border-t border-gray-100">
-                  <p className="text-gray-600 leading-relaxed text-base mt-4">
-                    {item.answer}
-                  </p>
+              <div className={`px-6 pb-6 transition-all duration-400 ease-out delay-75 ${
+                openIndex === index ? 'transform translate-y-0' : 'transform -translate-y-2'
+              }`}>
+                <div className="ml-14 pt-2">
+                  {/* Animated border with gradient effect */}
+                  <div className={`border-t transition-all duration-500 ease-out ${
+                    openIndex === index 
+                      ? 'border-red-200 bg-gradient-to-r from-red-50 to-transparent' 
+                      : 'border-gray-100'
+                  } rounded-sm`}></div>
+                  
+                  {/* Answer text with staggered reveal animation */}
+                  <div className={`mt-4 transition-all duration-600 ease-out delay-150 ${
+                    openIndex === index 
+                      ? 'opacity-100 transform translate-y-0' 
+                      : 'opacity-0 transform translate-y-4'
+                  }`}>
+                    <p className="text-gray-600 leading-relaxed text-base relative">
+                      {/* Subtle background glow effect */}
+                      <span className={`absolute inset-0 bg-gradient-to-r from-red-50/20 to-transparent rounded-lg transition-opacity duration-500 ${
+                        openIndex === index ? 'opacity-100' : 'opacity-0'
+                      }`}></span>
+                      <span className="relative z-10">{item.answer}</span>
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -96,40 +142,48 @@ const FAQ = ({ items }) => {
         ))}
       </div>
 
-      {/* CTA Section */}
-      <div className="bg-gray-50 rounded-2xl p-6 sm:p-8 text-center mt-8">
-        <div className="max-w-2xl mx-auto">
+      {/* Enhanced CTA Section */}
+      <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl p-6 sm:p-8 text-center mt-8 relative overflow-hidden">
+        {/* Subtle animated background pattern */}
+        <div className="absolute inset-0 opacity-30">
+          <div className="absolute top-0 left-0 w-20 h-20 bg-red-100 rounded-full blur-xl animate-pulse"></div>
+          <div className="absolute bottom-0 right-0 w-32 h-32 bg-red-50 rounded-full blur-2xl animate-pulse delay-1000"></div>
+        </div>
+        
+        <div className="max-w-2xl mx-auto relative z-10">
           <div className="flex justify-center mb-4">
-            <div className="p-3 bg-red-100 rounded-full">
+            <div className="p-3 bg-gradient-to-br from-red-100 to-red-200 rounded-full animate-float">
               <MessageCircle className="w-8 h-8 text-red-600" />
             </div>
           </div>
           
-          <h3 className="text-2xl font-bold text-gray-900 mb-4">
+          <h3 className="text-2xl font-bold text-gray-900 mb-4 animate-fade-in">
             Masih Ada Pertanyaan?
           </h3>
-          <p className="text-gray-600 mb-6 leading-relaxed">
+          <p className="text-gray-600 mb-6 leading-relaxed animate-fade-in delay-200">
             Tim kami siap membantu Anda menemukan program kursus yang tepat sesuai kebutuhan dan tujuan karir Anda.
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <button className="inline-flex items-center justify-center px-6 py-3 hero-gradient text-white font-semibold rounded-lg hover:scale-105 smooth-transition btn-glow text-sm sm:text-base">
-              <Phone className="w-4 h-4 mr-2" />
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-in delay-400">
+            <button className="inline-flex items-center justify-center px-6 py-3 hero-gradient text-white font-semibold rounded-lg hover:scale-105 hover:shadow-xl transition-all duration-300 ease-out btn-glow text-sm sm:text-base group">
+              <Phone className="w-4 h-4 mr-2 group-hover:animate-bounce" />
               Hubungi WhatsApp
             </button>
-            <button className="inline-flex items-center justify-center px-6 py-3 border border-red-600 text-red-600 font-semibold rounded-lg hover:bg-red-600 hover:text-white hover:scale-105 smooth-transition text-sm sm:text-base">
-              <MessageCircle className="w-4 h-4 mr-2" />
+            <button className="inline-flex items-center justify-center px-6 py-3 border border-red-600 text-red-600 font-semibold rounded-lg hover:bg-red-600 hover:text-white hover:scale-105 hover:shadow-xl transition-all duration-300 ease-out text-sm sm:text-base group">
+              <MessageCircle className="w-4 h-4 mr-2 group-hover:animate-pulse" />
               Chat Live Support
             </button>
           </div>
           
-          <div className="mt-6 pt-6 border-t border-gray-200">
-            <p className="text-sm text-gray-500 mb-2">
-              <strong>Jam Operasional:</strong> Senin - Sabtu, 09:00 - 17:00 WIB
-            </p>
-            <p className="text-sm text-gray-500">
-              <strong>Response Time:</strong> Maksimal 2 jam pada jam kerja
-            </p>
+          <div className="mt-6 pt-6 border-t border-gray-200 animate-fade-in delay-600">
+            <div className="grid sm:grid-cols-2 gap-2 text-center">
+              <p className="text-sm text-gray-500 hover:text-gray-700 transition-colors duration-300">
+                <strong>Jam Operasional:</strong><br />Senin - Sabtu, 09:00 - 17:00 WIB
+              </p>
+              <p className="text-sm text-gray-500 hover:text-gray-700 transition-colors duration-300">
+                <strong>Response Time:</strong><br />Maksimal 2 jam pada jam kerja
+              </p>
+            </div>
           </div>
         </div>
       </div>
@@ -482,43 +536,34 @@ const Homepage = () => {
     <div className="min-h-screen overflow-x-hidden">
       <style dangerouslySetInnerHTML={{ __html: styles }} />
 
-      {/* Hero Section - Mobile Responsive Background */}
-      <section ref={heroRef} className="relative pt-16 pb-20 sm:pt-24 sm:pb-28 lg:pt-28 lg:pb-32 overflow-hidden hero-gradient hero-pattern">
-        {/* Mobile Background - Smaller, Content-Adaptive */}
-        <div className="absolute inset-0 lg:hidden">
-          <div className="absolute inset-0 hero-gradient"></div>
-          <div className="absolute inset-0 bg-red-600/90"></div>
-        </div>
-        
-        {/* Desktop Background - Full Screen */}
-        <div className="absolute inset-0 hidden lg:block min-h-screen">
-          <div className="absolute inset-0 hero-gradient"></div>
-          <div className="absolute inset-0 bg-black/20"></div>
-          <div 
-            className="absolute inset-0"
-            style={{
-              backgroundImage: "url(https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1200&h=800&fit=crop)",
-              backgroundSize: "cover",
-              backgroundPosition: "center center",
-              backgroundRepeat: "no-repeat",
-              backgroundAttachment: "scroll"
-            }}
-          ></div>
-          <div className="absolute inset-0 bg-red-600/80"></div>
-        </div>
+      {/* Hero Section */}
+      <section ref={heroRef} className="relative pt-24 sm:pt-28 pb-24 sm:pb-28 overflow-hidden min-h-screen flex items-center hero-gradient hero-pattern">
+        <div className="absolute inset-0 hero-gradient"></div>
+        <div className="absolute inset-0 bg-black/20"></div>
+        <div 
+          className="absolute inset-0"
+          style={{
+            backgroundImage: "url(https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1200&h=800&fit=crop)",
+            backgroundSize: "cover",
+            backgroundPosition: "center center",
+            backgroundRepeat: "no-repeat",
+            backgroundAttachment: "scroll"
+          }}
+        ></div>
+        <div className="absolute inset-0 bg-red-600/80"></div>
         
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center lg:min-h-screen">
+          <div className="grid lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 items-center">
             <div className="text-white order-2 lg:order-1">
-              <div className={`transition-all duration-800 ease-out ${
+              <div className={`transition-all duration-800 ease-out mt-4 sm:mt-6 ${
                 heroVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
               }`}>
-                <span className="inline-block mb-3 sm:mb-4 lg:mb-6 px-3 sm:px-4 py-1.5 sm:py-2 bg-white/20 text-white border border-white/30 rounded-full text-xs sm:text-sm font-medium">
+                <span className="inline-block mb-4 sm:mb-6 px-3 sm:px-4 py-2 bg-white/20 text-white border border-white/30 rounded-full text-xs sm:text-sm font-medium">
                   🏆 #1 IT Training Center di Tangerang
                 </span>
               </div>
               
-              <h1 className={`text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold mb-3 sm:mb-4 lg:mb-6 leading-tight transition-all duration-800 ease-out delay-200 ${
+              <h1 className={`text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-4 sm:mb-6 leading-tight transition-all duration-800 ease-out delay-200 ${
                 heroVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
               }`}>
                 Media Meningkatkan
@@ -527,60 +572,60 @@ const Homepage = () => {
                 </span>
               </h1>
               
-              <p className={`text-sm sm:text-base lg:text-lg opacity-90 mb-4 sm:mb-6 lg:mb-8 max-w-lg leading-relaxed transition-all duration-800 ease-out delay-400 ${
+              <p className={`text-sm sm:text-base lg:text-lg xl:text-xl opacity-90 mb-6 sm:mb-8 max-w-lg leading-relaxed transition-all duration-800 ease-out delay-400 ${
                 heroVisible ? 'opacity-90 translate-y-0' : 'opacity-0 translate-y-4'
               }`}>
                 Bergabunglah dengan RADAR Education Center dan kembangkan skill IT Anda 
                 dari level pemula hingga profesional dengan kurikulum terkini dan instruktur berpengalaman.
               </p>
               
-              <div className={`flex flex-col sm:flex-row gap-3 sm:gap-4 transition-all duration-800 ease-out delay-600 ${
+              <div className={`flex flex-col gap-3 sm:gap-4 transition-all duration-800 ease-out delay-600 ${
                 heroVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
               }`}>
-                <button className="inline-flex items-center justify-center px-4 sm:px-6 lg:px-8 py-2.5 sm:py-3 lg:py-4 bg-white text-red-600 font-semibold rounded-lg hover:bg-gray-100 hover:scale-105 smooth-transition btn-glow text-sm sm:text-base">
+                <button className="inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 bg-white text-red-600 font-semibold rounded-lg hover:bg-gray-100 hover:scale-105 smooth-transition btn-glow text-sm sm:text-base">
                   <PlayCircle className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
                   Mulai Belajar Sekarang
                 </button>
-                <button className="inline-flex items-center justify-center px-4 sm:px-6 lg:px-8 py-2.5 sm:py-3 lg:py-4 border-2 border-white text-white bg-transparent hover:bg-white hover:text-red-600 font-semibold rounded-lg hover:scale-105 smooth-transition text-sm sm:text-base">
+                <button className="inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 border-2 border-white text-white bg-transparent hover:bg-white hover:text-red-600 font-semibold rounded-lg hover:scale-105 smooth-transition text-sm sm:text-base">
                   Lihat Program Kursus
                   <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 ml-2" />
                 </button>
               </div>
 
               {/* Instructor Cards - Mobile Only */}
-              <div className={`mt-8 sm:mt-12 lg:hidden flex flex-col space-y-3 transition-all duration-1000 ease-out delay-800 ${
+              <div className={`mt-16 sm:mt-20 mb-8 lg:hidden flex flex-col space-y-4 transition-all duration-1000 ease-out delay-800 ${
                 heroVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
               }`}>
-                <div className="w-full p-3 bg-white/95 backdrop-blur-sm hover-lift shadow-card hover:shadow-card-hover smooth-transition rounded-xl pulse-border">
-                  <div className="flex items-center gap-3">
+                <div className="w-full p-3 sm:p-4 bg-white hover-lift shadow-card hover:shadow-card-hover smooth-transition rounded-xl pulse-border">
+                  <div className="flex items-center gap-3 sm:gap-4">
                     <img 
                       src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&crop=face" 
                       alt="Asep Surahmat M.Kom" 
-                      className="w-10 h-10 rounded-full object-cover border-2 border-red-600/20 hover-scale smooth-transition flex-shrink-0"
+                      className="w-12 h-12 rounded-full object-cover border-2 border-red-600/20 hover-scale smooth-transition flex-shrink-0"
                     />
                     <div className="flex-1 min-w-0">
-                      <h3 className="font-semibold text-gray-900 smooth-transition text-sm truncate">Asep Surahmat M.Kom</h3>
-                      <p className="text-xs text-gray-500 mb-1">Lead Instructor</p>
-                      <div className="flex items-center gap-2 px-2 py-0.5 bg-gradient-to-r from-red-50 to-red-100 rounded-full hover-scale smooth-transition">
-                        <MapPin className="w-2.5 h-2.5 text-red-600 animate-pulse-soft flex-shrink-0" />
+                      <h3 className="font-semibold text-gray-900 smooth-transition text-sm sm:text-base truncate">Asep Surahmat M.Kom</h3>
+                      <p className="text-xs sm:text-sm text-gray-500 mb-2">Lead Instructor</p>
+                      <div className="flex items-center gap-2 px-2 py-1 bg-gradient-to-r from-red-50 to-red-100 rounded-full hover-scale smooth-transition">
+                        <MapPin className="w-3 h-3 text-red-600 animate-pulse-soft flex-shrink-0" />
                         <span className="text-xs text-red-700 font-medium truncate">15+ Tahun Exp</span>
                       </div>
                     </div>
                   </div>
                 </div>
 
-                <div className="w-full p-3 bg-white/95 backdrop-blur-sm hover-lift shadow-card hover:shadow-card-hover smooth-transition rounded-xl pulse-border">
-                  <div className="flex items-center gap-3">
+                <div className="w-full p-3 sm:p-4 bg-white hover-lift shadow-card hover:shadow-card-hover smooth-transition rounded-xl pulse-border">
+                  <div className="flex items-center gap-3 sm:gap-4">
                     <img 
                       src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&h=80&fit=crop&crop=face" 
                       alt="Rizqi Darmawan" 
-                      className="w-10 h-10 rounded-full object-cover border-2 border-red-600/20 hover-scale smooth-transition flex-shrink-0"
+                      className="w-12 h-12 rounded-full object-cover border-2 border-red-600/20 hover-scale smooth-transition flex-shrink-0"
                     />
                     <div className="flex-1 min-w-0">
-                      <h3 className="font-semibold text-gray-900 smooth-transition text-sm truncate">Rizqi Darmawan</h3>
-                      <p className="text-xs text-gray-500 mb-1">Senior Instructor</p>
-                      <div className="flex items-center gap-2 px-2 py-0.5 bg-gray-100 rounded-full hover-scale smooth-transition">
-                        <Shield className="w-2.5 h-2.5 text-gray-500 flex-shrink-0" />
+                      <h3 className="font-semibold text-gray-900 smooth-transition text-sm sm:text-base truncate">Rizqi Darmawan</h3>
+                      <p className="text-xs sm:text-sm text-gray-500 mb-2">Senior Instructor</p>
+                      <div className="flex items-center gap-2 px-2 py-1 bg-gray-100 rounded-full hover-scale smooth-transition">
+                        <Shield className="w-3 h-3 text-gray-500 flex-shrink-0" />
                         <span className="text-xs text-gray-700 truncate">Network Expert</span>
                       </div>
                     </div>
