@@ -203,7 +203,7 @@ const OptimizedBlog = () => {
   };
 
   return (
-    <div className="min-h-screen pt-16 overflow-x-hidden">
+    <div className="min-h-screen pt-16 overflow-x-hidden bg-white">
       {/* Consistent Styles */}
       <style>{`
         .hero-gradient {
@@ -243,38 +243,55 @@ const OptimizedBlog = () => {
       `}</style>
 
 
+      {/* Blog Header */}
+      <section className="py-12 sm:py-16 lg:py-20 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <span className="inline-block mb-4 px-4 py-2 bg-red-50 text-red-600 rounded-full text-sm font-medium">
+            Blog & Artikel
+          </span>
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold mb-4 sm:mb-6 gradient-text leading-tight">
+            Tips & Insights Dunia IT
+          </h1>
+          <p className="text-gray-600 text-base sm:text-lg max-w-3xl mx-auto leading-relaxed">
+            Dapatkan wawasan terbaru tentang teknologi, tips belajar programming, 
+            dan panduan karir di industri IT dari para ahli kami.
+          </p>
+        </div>
+      </section>
+
       {/* Enhanced Search & Filter Section */}
-      <section className="py-12 mt-16 bg-gray-50">
+      <section className="py-8 sm:py-12 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-white rounded-2xl shadow-lg p-6">
-            <div className="flex flex-col lg:flex-row gap-6 items-center justify-between">
+          <div className="bg-white rounded-2xl shadow-lg p-4 sm:p-6">
+            <div className="flex flex-col lg:flex-row gap-4 sm:gap-6 items-center justify-between">
               {/* Search */}
-              <div className="relative flex-1 max-w-md">
-                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+              <div className="relative flex-1 w-full max-w-md">
+                <Search className="absolute left-3 sm:left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4 sm:w-5 sm:h-5" />
                 <input
                   type="text"
                   placeholder="Cari artikel atau topik..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent smooth-transition"
+                  className="w-full pl-10 sm:pl-12 pr-4 py-2 sm:py-3 text-sm sm:text-base border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent smooth-transition"
                 />
               </div>
 
               {/* Categories */}
-              <div className="flex flex-wrap gap-3">
+              <div className="flex flex-wrap gap-2 sm:gap-3 w-full lg:w-auto">
                 {updatedCategories.map((category) => (
                   <button
                     key={category.name}
                     onClick={() => setActiveCategory(category.name)}
-                    className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium smooth-transition hover-lift ${
+                    className={`flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm rounded-lg font-medium smooth-transition hover-lift ${
                       activeCategory === category.name
                         ? 'bg-red-600 text-white shadow-lg'
                         : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                     }`}
                   >
-                    {category.icon}
+                    <div className="w-3 h-3 sm:w-4 sm:h-4">{category.icon}</div>
                     <span className="hidden sm:inline">{category.name}</span>
-                    <span className={`text-xs px-1.5 py-0.5 rounded-full ${
+                    <span className="sm:hidden">{category.name.length > 8 ? category.name.slice(0, 8) + '...' : category.name}</span>
+                    <span className={`text-xs px-1 sm:px-1.5 py-0.5 rounded-full ${
                       activeCategory === category.name 
                         ? 'bg-white/20 text-white' 
                         : 'bg-white text-gray-600'
@@ -291,13 +308,13 @@ const OptimizedBlog = () => {
 
       {/* Featured Article - Show conditionally */}
       {showFeaturedPost && (
-        <section ref={featuredRef} className="py-20 bg-white">
+        <section ref={featuredRef} className="py-16 sm:py-20 bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-12">
+            <div className="text-center mb-8 sm:mb-12">
               <span className="inline-block mb-4 px-4 py-2 bg-red-50 text-red-600 rounded-full text-sm font-medium">
                 Artikel Pilihan
               </span>
-              <h2 className="text-3xl md:text-4xl font-bold gradient-text">
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold gradient-text">
                 Artikel Terbaru & Terpopuler
               </h2>
             </div>
@@ -314,46 +331,46 @@ const OptimizedBlog = () => {
                       className="w-full h-full object-cover hover:scale-105 smooth-transition"
                       loading="lazy"
                     />
-                    <div className="absolute top-4 left-4">
-                      <span className="px-3 py-1 bg-red-600 text-white text-sm font-medium rounded-full">
+                    <div className="absolute top-3 sm:top-4 left-3 sm:left-4">
+                      <span className="px-2 sm:px-3 py-1 bg-red-600 text-white text-xs sm:text-sm font-medium rounded-full">
                         Featured
                       </span>
                     </div>
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 hover:opacity-100 smooth-transition"></div>
                   </div>
                   
-                  <div className="p-8 lg:p-12 flex flex-col justify-center">
-                    <div className="flex items-center gap-2 mb-4">
+                  <div className="p-6 sm:p-8 lg:p-12 flex flex-col justify-center">
+                    <div className="flex items-center gap-2 mb-3 sm:mb-4">
                       {getCategoryIcon(featuredPost.category)}
-                      <span className="px-3 py-1 bg-gray-100 text-gray-700 text-sm font-medium rounded-full">
+                      <span className="px-2 sm:px-3 py-1 bg-gray-100 text-gray-700 text-xs sm:text-sm font-medium rounded-full">
                         {featuredPost.category}
                       </span>
                     </div>
                     
-                    <h3 className="text-2xl lg:text-3xl font-bold mb-4 leading-tight gradient-text hover:scale-105 smooth-transition">
+                    <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold mb-3 sm:mb-4 leading-tight gradient-text hover:scale-105 smooth-transition">
                       {featuredPost.title}
                     </h3>
                     
-                    <p className="text-gray-600 text-lg mb-6 leading-relaxed">
+                    <p className="text-gray-600 text-sm sm:text-base lg:text-lg mb-4 sm:mb-6 leading-relaxed">
                       {featuredPost.excerpt}
                     </p>
                     
-                    <div className="flex items-center gap-6 text-sm text-gray-500 mb-6">
-                      <div className="flex items-center gap-2">
-                        <User className="w-4 h-4" />
-                        {featuredPost.author}
+                    <div className="flex flex-wrap items-center gap-3 sm:gap-6 text-xs sm:text-sm text-gray-500 mb-4 sm:mb-6">
+                      <div className="flex items-center gap-1 sm:gap-2">
+                        <User className="w-3 h-3 sm:w-4 sm:h-4" />
+                        <span className="truncate">{featuredPost.author}</span>
                       </div>
-                      <div className="flex items-center gap-2">
-                        <Calendar className="w-4 h-4" />
-                        {featuredPost.date}
+                      <div className="flex items-center gap-1 sm:gap-2">
+                        <Calendar className="w-3 h-3 sm:w-4 sm:h-4" />
+                        <span>{featuredPost.date}</span>
                       </div>
-                      <div className="flex items-center gap-2">
-                        <Clock className="w-4 h-4" />
-                        {featuredPost.readTime}
+                      <div className="flex items-center gap-1 sm:gap-2">
+                        <Clock className="w-3 h-3 sm:w-4 sm:h-4" />
+                        <span>{featuredPost.readTime}</span>
                       </div>
                     </div>
                     
-                    <button className="inline-flex items-center justify-center px-6 py-3 hero-gradient text-white font-semibold rounded-lg hover:scale-105 smooth-transition btn-glow">
+                    <button className="inline-flex items-center justify-center px-4 sm:px-6 py-2.5 sm:py-3 hero-gradient text-white font-semibold rounded-lg hover:scale-105 smooth-transition btn-glow text-sm sm:text-base">
                       Baca Artikel
                       <ArrowRight className="w-4 h-4 ml-2" />
                     </button>
@@ -366,14 +383,14 @@ const OptimizedBlog = () => {
       )}
 
       {/* Blog Posts Grid */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-16 sm:py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Results info */}
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold gradient-text mb-4">
+          <div className="text-center mb-8 sm:mb-12">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold gradient-text mb-4">
               {activeCategory === "Semua" ? "Semua Artikel" : `Artikel ${activeCategory}`}
             </h2>
-            <p className="text-gray-600 text-lg">
+            <p className="text-gray-600 text-sm sm:text-base lg:text-lg">
               {searchTerm ? (
                 <>Menampilkan hasil pencarian untuk "<strong>{searchTerm}</strong>" dalam kategori <strong>{activeCategory}</strong></>
               ) : (
@@ -383,7 +400,7 @@ const OptimizedBlog = () => {
           </div>
 
           {filteredBlogPosts.length > 0 ? (
-            <div ref={postsRef} className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div ref={postsRef} className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
               {filteredBlogPosts.map((post, index) => (
                 <article 
                   key={post.id} 

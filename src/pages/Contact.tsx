@@ -151,7 +151,7 @@ const OptimizedContact = () => {
   ];
 
   return (
-    <div className="min-h-screen pt-16 overflow-x-hidden">
+    <div className="min-h-screen pt-16 overflow-x-hidden bg-white">
       {/* Consistent Styles */}
       <style>{`
         .hero-gradient {
@@ -198,11 +198,23 @@ const OptimizedContact = () => {
         </div>
       )}
 
-
-      {/* Contact Form & Info */}
-      <section ref={contactRef} className="py-20 mt-16 bg-white">
+      {/* Main Contact Section */}
+      <section className="py-12 sm:py-16 lg:py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
+          <div className="text-center mb-12 sm:mb-16">
+            <span className="inline-block mb-4 px-4 py-2 bg-red-50 text-red-600 rounded-full text-sm font-medium">
+              Hubungi Kami
+            </span>
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold mb-4 sm:mb-6 gradient-text leading-tight">
+              Mari Diskusikan Kebutuhan Belajar Anda
+            </h1>
+            <p className="text-gray-600 text-base sm:text-lg max-w-3xl mx-auto leading-relaxed">
+              Tim kami siap membantu Anda memilih program yang tepat dan memberikan informasi lengkap 
+              tentang metode pembelajaran di RADAR Education Center.
+            </p>
+          </div>
+
+          <div ref={contactRef} className="grid lg:grid-cols-2 gap-8 lg:gap-12">
             {/* Contact Form */}
             <div className={`transition-all duration-1000 ease-out ${
               contactVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-6'
