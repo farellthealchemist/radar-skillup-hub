@@ -207,10 +207,10 @@ const OptimizedBlog = () => {
       {/* Consistent Styles */}
       <style>{`
         .hero-gradient {
-          background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+          background: linear-gradient(135deg, #14b8a6 0%, #0d9488 100%);
         }
         .gradient-text {
-          background: linear-gradient(45deg, #ef4444, #dc2626, #b91c1c);
+          background: linear-gradient(45deg, #14b8a6, #0d9488, #0f766e);
           background-clip: text;
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
@@ -226,7 +226,7 @@ const OptimizedBlog = () => {
           transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .btn-glow:hover {
-          box-shadow: 0 0 20px rgba(239, 68, 68, 0.4);
+          box-shadow: 0 0 20px rgba(20, 184, 166, 0.4);
         }
         .line-clamp-2 {
           display: -webkit-box;
@@ -256,7 +256,7 @@ const OptimizedBlog = () => {
                   placeholder="Cari artikel atau topik..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent smooth-transition"
+                  className="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent smooth-transition"
                 />
               </div>
 
@@ -268,7 +268,7 @@ const OptimizedBlog = () => {
                     onClick={() => setActiveCategory(category.name)}
                     className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium smooth-transition hover-lift ${
                       activeCategory === category.name
-                        ? 'bg-red-600 text-white shadow-lg'
+                        ? 'bg-teal-600 text-white shadow-lg'
                         : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                     }`}
                   >
@@ -294,7 +294,7 @@ const OptimizedBlog = () => {
         <section ref={featuredRef} className="py-20 bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
-              <span className="inline-block mb-4 px-4 py-2 bg-red-50 text-red-600 rounded-full text-sm font-medium">
+              <span className="inline-block mb-4 px-4 py-2 bg-teal-50 text-teal-600 rounded-full text-sm font-medium">
                 Artikel Pilihan
               </span>
               <h2 className="text-3xl md:text-4xl font-bold gradient-text">
@@ -315,7 +315,7 @@ const OptimizedBlog = () => {
                       loading="lazy"
                     />
                     <div className="absolute top-4 left-4">
-                      <span className="px-3 py-1 bg-red-600 text-white text-sm font-medium rounded-full">
+                      <span className="px-3 py-1 bg-teal-600 text-white text-sm font-medium rounded-full">
                         Featured
                       </span>
                     </div>
@@ -414,7 +414,7 @@ const OptimizedBlog = () => {
                       <span className="text-xs text-gray-500">{post.readTime}</span>
                     </div>
                     
-                    <h3 className="font-bold text-lg mb-3 line-clamp-2 group-hover:text-red-600 smooth-transition">
+                    <h3 className="font-bold text-lg mb-3 line-clamp-2 group-hover:text-teal-600 smooth-transition">
                       {post.title}
                     </h3>
                     

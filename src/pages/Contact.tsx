@@ -108,7 +108,7 @@ const OptimizedContact = () => {
 
   const contactInfo = [
     {
-      icon: <MapPin className="w-6 h-6 text-red-600" />,
+      icon: <MapPin className="w-6 h-6 text-teal-600" />,
       title: "Alamat Lengkap",
       details: [
         "Jl. Pinang-Kunciran No.114, RT.003/RW.005",
@@ -118,7 +118,7 @@ const OptimizedContact = () => {
       action: "Buka Maps"
     },
     {
-      icon: <Phone className="w-6 h-6 text-red-600" />,
+      icon: <Phone className="w-6 h-6 text-teal-600" />,
       title: "Telepon & WhatsApp",
       details: [
         "0857-8276-3529",
@@ -128,7 +128,7 @@ const OptimizedContact = () => {
       action: "Hubungi Sekarang"
     },
     {
-      icon: <Mail className="w-6 h-6 text-red-600" />,
+      icon: <Mail className="w-6 h-6 text-teal-600" />,
       title: "Email Resmi",
       details: [
         "asep@radarteknologikomputer.id",
@@ -138,7 +138,7 @@ const OptimizedContact = () => {
       action: "Kirim Email"
     },
     {
-      icon: <Clock className="w-6 h-6 text-red-600" />,
+      icon: <Clock className="w-6 h-6 text-teal-600" />,
       title: "Jam Operasional",
       details: [
         "Senin - Jumat: 10:00 - 20:00",
@@ -154,10 +154,10 @@ const OptimizedContact = () => {
       {/* Consistent Styles */}
       <style>{`
         .hero-gradient {
-          background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+          background: linear-gradient(135deg, #14b8a6 0%, #0d9488 100%);
         }
         .gradient-text {
-          background: linear-gradient(45deg, #ef4444, #dc2626, #b91c1c);
+          background: linear-gradient(45deg, #14b8a6, #0d9488, #0f766e);
           background-clip: text;
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
@@ -173,7 +173,7 @@ const OptimizedContact = () => {
           transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .btn-glow:hover {
-          box-shadow: 0 0 20px rgba(239, 68, 68, 0.4);
+          box-shadow: 0 0 20px rgba(20, 184, 166, 0.4);
         }
         .animate-spin {
           animation: spin 1s linear infinite;
@@ -207,8 +207,8 @@ const OptimizedContact = () => {
             }`}>
               <div className="bg-white rounded-2xl shadow-xl border p-6 sm:p-8 hover-lift smooth-transition">
                 <div className="flex items-center gap-3 mb-6">
-                  <div className="w-10 sm:w-12 h-10 sm:h-12 bg-red-100 rounded-xl flex items-center justify-center">
-                    <Send className="w-5 sm:w-6 h-5 sm:h-6 text-red-600" />
+                  <div className="w-10 sm:w-12 h-10 sm:h-12 bg-teal-100 rounded-xl flex items-center justify-center">
+                    <Send className="w-5 sm:w-6 h-5 sm:h-6 text-teal-600" />
                   </div>
                   <div>
                     <h2 className="text-xl sm:text-2xl font-bold gradient-text">Kirim Pesan</h2>
@@ -226,7 +226,7 @@ const OptimizedContact = () => {
                         value={formData.name}
                         onChange={handleChange}
                         placeholder="Masukkan nama lengkap"
-                        className="w-full px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent smooth-transition"
+                        className="w-full px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent smooth-transition"
                         required
                       />
                     </div>
@@ -238,7 +238,7 @@ const OptimizedContact = () => {
                         value={formData.email}
                         onChange={handleChange}
                         placeholder="nama@email.com"
-                        className="w-full px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent smooth-transition"
+                        className="w-full px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent smooth-transition"
                         required
                       />
                     </div>
@@ -253,7 +253,7 @@ const OptimizedContact = () => {
                         value={formData.phone}
                         onChange={handleChange}
                         placeholder="08xx-xxxx-xxxx"
-                        className="w-full px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent smooth-transition"
+                        className="w-full px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent smooth-transition"
                       />
                     </div>
                     <div>
@@ -262,7 +262,7 @@ const OptimizedContact = () => {
                         name="course"
                         value={formData.course}
                         onChange={handleChange}
-                        className="w-full px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent smooth-transition"
+                        className="w-full px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent smooth-transition"
                       >
                         <option value="">Pilih Program</option>
                         <option value="programming">Programming Fundamentals</option>
@@ -280,7 +280,7 @@ const OptimizedContact = () => {
                       value={formData.message}
                       onChange={handleChange}
                       placeholder="Tulis pertanyaan atau pesan Anda di sini..."
-                      className="w-full px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent resize-none h-24 sm:h-32 smooth-transition"
+                      className="w-full px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent resize-none h-24 sm:h-32 smooth-transition"
                       required
                     />
                   </div>
@@ -321,7 +321,7 @@ const OptimizedContact = () => {
                       }`}
                     >
                       <div className="flex items-start gap-3 sm:gap-4">
-                        <div className="flex-shrink-0 w-10 sm:w-12 h-10 sm:h-12 bg-red-50 rounded-xl flex items-center justify-center">
+                        <div className="flex-shrink-0 w-10 sm:w-12 h-10 sm:h-12 bg-teal-50 rounded-xl flex items-center justify-center">
                           {info.icon}
                         </div>
                         <div className="flex-1 min-w-0">
@@ -363,16 +363,16 @@ const OptimizedContact = () => {
                   
                   <a 
                     href="tel:+6285782763529" 
-                    className="flex items-center gap-3 sm:gap-4 p-3 sm:p-4 rounded-xl border-2 border-red-200 hover:bg-red-50 hover:border-red-400 smooth-transition group"
+                    className="flex items-center gap-3 sm:gap-4 p-3 sm:p-4 rounded-xl border-2 border-teal-200 hover:bg-teal-50 hover:border-teal-400 smooth-transition group"
                   >
-                    <div className="w-10 sm:w-12 h-10 sm:h-12 bg-red-100 rounded-xl flex items-center justify-center group-hover:scale-110 smooth-transition flex-shrink-0">
-                      <Phone className="w-5 sm:w-6 h-5 sm:h-6 text-red-600" />
+                    <div className="w-10 sm:w-12 h-10 sm:h-12 bg-teal-100 rounded-xl flex items-center justify-center group-hover:scale-110 smooth-transition flex-shrink-0">
+                      <Phone className="w-5 sm:w-6 h-5 sm:h-6 text-teal-600" />
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="font-semibold text-sm sm:text-base text-gray-900">Telepon Langsung</div>
                       <div className="text-xs sm:text-sm text-gray-600">0857-8276-3529</div>
                     </div>
-                    <ArrowRight className="w-3 sm:w-4 h-3 sm:h-4 text-red-600 flex-shrink-0" />
+                    <ArrowRight className="w-3 sm:w-4 h-3 sm:h-4 text-teal-600 flex-shrink-0" />
                   </a>
                 </div>
               </div>
