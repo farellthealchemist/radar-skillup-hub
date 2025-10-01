@@ -37,14 +37,11 @@ const Footer = () => {
             <div className="flex items-center gap-2 mb-6">
               {/* Updated logo dengan URL baru */}
               <img 
-                src="https://radarteknologikomputer.id/upload/01HH6SVBHE39X68755WZ5ZP8YV.png" 
-                alt="RADAR Logo" 
-                className="w-8 h-8 object-contain"
+              src="https://cdn.ahsakreatif.com/radar/img/logo/radar-edu.png" 
+              alt="RADAR Logo" 
+              className="h-14 w-auto object-contain transition-transform duration-300 hover:scale-105"
                 style={{ background: 'transparent', border: 'none', boxShadow: 'none', padding: 0 }}
               />
-              <span className="font-heading font-bold text-xl">
-                RADAR Education Center
-              </span>
             </div>
             <p className="text-gray-300 mb-6 leading-relaxed">
               Media meningkatkan skill dalam bidang IT. Bergabunglah dengan ribuan alumni 
