@@ -387,7 +387,7 @@ const OptimizedContact = () => {
                   <a href="#" className="w-10 sm:w-12 h-10 sm:h-12 bg-blue-600 rounded-xl flex items-center justify-center text-white hover:scale-110 smooth-transition">
                     <Facebook className="w-5 sm:w-6 h-5 sm:h-6" />
                   </a>
-                  <a href="#" className="w-10 sm:w-12 h-10 sm:h-12 bg-red-600 rounded-xl flex items-center justify-center text-white hover:scale-110 smooth-transition">
+                  <a href="#" className="w-10 sm:w-12 h-10 sm:h-12 bg-teal-600 rounded-xl flex items-center justify-center text-white hover:scale-110 smooth-transition">
                     <Youtube className="w-5 sm:w-6 h-5 sm:h-6" />
                   </a>
                 </div>
@@ -404,7 +404,7 @@ const OptimizedContact = () => {
           <div className={`text-center mb-12 transition-all duration-1000 ease-out ${
             mapVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
           }`}>
-            <span className="inline-block mb-4 px-4 py-2 bg-red-50 text-red-600 rounded-full text-sm font-medium">
+            <span className="inline-block mb-4 px-4 py-2 bg-teal-50 text-teal-600 rounded-full text-sm font-medium">
               Lokasi
             </span>
             <h2 className="text-3xl md:text-4xl font-bold mb-4 gradient-text">Kunjungi Kantor Kami</h2>
@@ -418,8 +418,8 @@ const OptimizedContact = () => {
           }`}>
             <div className="aspect-video bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center relative">
               <div className="text-center p-8">
-                <div className="w-20 h-20 bg-red-100 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                  <MapPin className="w-10 h-10 text-red-600" />
+                <div className="w-20 h-20 bg-teal-100 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                  <MapPin className="w-10 h-10 text-teal-600" />
                 </div>
                 <h3 className="font-bold text-2xl mb-3 gradient-text">RADAR Education Center</h3>
                 <div className="text-gray-600 leading-relaxed mb-6 max-w-md mx-auto">
@@ -436,7 +436,7 @@ const OptimizedContact = () => {
                     Buka di Google Maps
                   </button>
                   <button 
-                    className="inline-flex items-center justify-center px-6 py-3 border-2 border-red-600 text-red-600 rounded-lg font-semibold hover:bg-red-600 hover:text-white hover:scale-105 smooth-transition"
+                    className="inline-flex items-center justify-center px-6 py-3 border-2 border-teal-600 text-teal-600 rounded-lg font-semibold hover:bg-teal-600 hover:text-white hover:scale-105 smooth-transition"
                     onClick={() => window.open('https://wa.me/6285782763529?text=Halo, saya ingin berkunjung ke kantor RADAR Education Center. Bisa info jam operasional?', '_blank')}
                   >
                     <Phone className="w-5 h-5 mr-2" />
@@ -451,7 +451,7 @@ const OptimizedContact = () => {
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
                   <h4 className="font-semibold text-gray-900 mb-3 flex items-center gap-2">
-                    <Clock className="w-5 h-5 text-red-600" />
+                    <Clock className="w-5 h-5 text-teal-600" />
                     Jam Operasional
                   </h4>
                   <div className="space-y-2 text-sm text-gray-600">
@@ -465,14 +465,14 @@ const OptimizedContact = () => {
                     </div>
                     <div className="flex justify-between">
                       <span>Minggu</span>
-                      <span className="font-medium text-red-600">Tutup</span>
+                      <span className="font-medium text-teal-600">Tutup</span>
                     </div>
                   </div>
                 </div>
                 
                 <div>
                   <h4 className="font-semibold text-gray-900 mb-3 flex items-center gap-2">
-                    <Building className="w-5 h-5 text-red-600" />
+                    <Building className="w-5 h-5 text-teal-600" />
                     Petunjuk Arah
                   </h4>
                   <div className="space-y-2 text-sm text-gray-600">

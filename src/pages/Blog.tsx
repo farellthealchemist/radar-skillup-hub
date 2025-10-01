@@ -433,7 +433,7 @@ const OptimizedBlog = () => {
                       </div>
                     </div>
                     
-                    <button className="inline-flex items-center text-red-600 hover:text-red-700 font-medium text-sm group-hover:scale-105 smooth-transition">
+                    <button className="inline-flex items-center text-teal-600 hover:text-teal-700 font-medium text-sm group-hover:scale-105 smooth-transition">
                       Baca Selengkapnya
                       <ArrowRight className="w-3 h-3 ml-1" />
                     </button>
@@ -463,7 +463,7 @@ const OptimizedBlog = () => {
           {/* Load More Button - only show if there are results */}
           {filteredBlogPosts.length > 0 && (
             <div className="text-center mt-12">
-              <button className="px-8 py-3 border-2 border-red-600 text-red-600 font-semibold rounded-lg hover:bg-red-600 hover:text-white hover:scale-105 smooth-transition">
+              <button className="px-8 py-3 border-2 border-teal-600 text-teal-600 font-semibold rounded-lg hover:bg-teal-600 hover:text-white hover:scale-105 smooth-transition">
                 Muat Lebih Banyak Artikel
               </button>
             </div>
@@ -477,7 +477,7 @@ const OptimizedBlog = () => {
           <div className={`transition-all duration-1000 ease-out ${
             newsletterVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
           }`}>
-            <div className="bg-gradient-to-r from-red-600 to-red-700 rounded-3xl p-12 text-white relative overflow-hidden">
+            <div className="bg-gradient-to-r from-teal-600 to-teal-700 rounded-3xl p-12 text-white relative overflow-hidden">
               <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4xIj48Y2lyY2xlIGN4PSIzMCIgY3k9IjMwIiByPSIyIi8+PC9nPjwvZz48L3N2Zz4=')] opacity-20"></div>
               
               <div className="relative z-10">
@@ -496,7 +496,7 @@ const OptimizedBlog = () => {
                     placeholder="Masukkan email Anda"
                     className="flex-1 px-4 py-3 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-white"
                   />
-                  <button className="px-8 py-3 bg-white text-red-600 font-semibold rounded-lg hover:bg-gray-100 hover:scale-105 smooth-transition">
+                  <button className="px-8 py-3 bg-white text-teal-600 font-semibold rounded-lg hover:bg-gray-100 hover:scale-105 smooth-transition">
                     Berlangganan
                   </button>
                 </div>
@@ -529,7 +529,7 @@ const OptimizedBlog = () => {
                 Lihat Program Kursus
                 <ArrowRight className="w-5 h-5 ml-2" />
               </button>
-              <button className="inline-flex items-center justify-center px-8 py-4 border-2 border-red-600 text-red-600 font-semibold rounded-lg hover:bg-red-600 hover:text-white hover:scale-105 smooth-transition">
+              <button className="inline-flex items-center justify-center px-8 py-4 border-2 border-teal-600 text-teal-600 font-semibold rounded-lg hover:bg-teal-600 hover:text-white hover:scale-105 smooth-transition">
                 Konsultasi Gratis
               </button>
             </div>
