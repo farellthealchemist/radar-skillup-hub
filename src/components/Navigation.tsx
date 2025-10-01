@@ -69,11 +69,9 @@ const Navigation = () => {
           <div className={`hidden lg:flex items-center transition-all duration-700 ease-out ${
             isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'
           }`} style={{ transitionDelay: '700ms' }}>
-            <Link to="/contact">
-              <Button size="sm" className="bg-gradient-to-r from-teal-600 to-teal-700 hover:from-teal-700 hover:to-teal-800 text-white hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-teal-500/50">
-                Daftar Sekarang
-              </Button>
-            </Link>
+            <Button size="sm" className="bg-gradient-to-r from-teal-600 to-teal-700 hover:from-teal-700 hover:to-teal-800 text-white hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-teal-500/50">
+              Daftar Sekarang
+            </Button>
           </div>
 
           {/* Mobile menu button - With animation */}
@@ -114,11 +112,9 @@ const Navigation = () => {
               <div className={`pt-4 border-t transition-all duration-500 ease-out ${
                 isOpen ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
               }`} style={{ transitionDelay: '250ms' }}>
-                <Link to="/contact" className="w-full">
-                  <Button size="sm" className="bg-gradient-to-r from-teal-600 to-teal-700 hover:from-teal-700 hover:to-teal-800 text-white w-full hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-teal-500/50">
-                    Daftar Sekarang
-                  </Button>
-                </Link>
+                <Button size="sm" className="bg-gradient-to-r from-teal-600 to-teal-700 hover:from-teal-700 hover:to-teal-800 text-white w-full hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-teal-500/50">
+                  Daftar Sekarang
+                </Button>
               </div>
             </div>
           </div>

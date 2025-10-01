@@ -283,6 +283,26 @@ const OptimizedCourses = () => {
                 Dari Programming hingga Network Administration, temukan program yang tepat untuk mengembangkan skill IT dan mempersiapkan masa depan profesional Anda.
               </p>
               
+              {/* Clean stats */}
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8">
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-red-600 mb-1">4+</div>
+                  <div className="text-sm text-gray-500">Program Tersedia</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-red-600 mb-1">750+</div>
+                  <div className="text-sm text-gray-500">Alumni Sukses</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-red-600 mb-1">85%</div>
+                  <div className="text-sm text-gray-500">Job Placement</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-red-600 mb-1">4.8/5</div>
+                  <div className="text-sm text-gray-500">Rating Siswa</div>
+                </div>
+              </div>
+              
               <div className="bg-gray-50 rounded-lg p-4 max-w-2xl mx-auto">
                 <p className="text-sm text-gray-700">
                   <strong>Cara Memilih:</strong> Gunakan filter kategori dan pencarian di bawah untuk menemukan program yang sesuai dengan minat dan level skill Anda.
