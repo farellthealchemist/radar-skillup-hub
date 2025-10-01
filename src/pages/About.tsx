@@ -9,7 +9,6 @@ import {
   MapPin,
   Phone,
   Mail,
-  Calendar,
   CheckCircle,
   Star,
   ArrowRight,
@@ -80,45 +79,45 @@ const OptimizedAbout = () => {
   const { ref: achievementsRef, isVisible: achievementsVisible } = useScrollAnimation({ threshold: 0.2 });
   const { ref: ctaRef, isVisible: ctaVisible } = useScrollAnimation();
 
-  // Enhanced company values with more comprehensive coverage
+  // Enhanced company values with teal theme
   const values = [
     {
-      icon: <Users className="w-8 h-8 text-red-600" />,  
+      icon: <Users className="w-8 h-8 text-teal-600" />,  
       title: "Untuk Semua Kalangan",
       subtitle: "SD - Perguruan Tinggi",
       description: "Program pembelajaran komprehensif untuk semua tingkatan pendidikan, dari siswa SD hingga mahasiswa perguruan tinggi",
       highlight: "All Ages Welcome"
     },
     {
-      icon: <Award className="w-8 h-8 text-red-600" />,
+      icon: <Award className="w-8 h-8 text-teal-600" />,
       title: "Sertifikat Terakreditasi", 
       subtitle: "Industry Recognition",
       description: "Sertifikat resmi yang diakui industri dan institusi pendidikan, meningkatkan kredibilitas profesional Anda",
       highlight: "Certified Programs"
     },
     {
-      icon: <Clock className="w-8 h-8 text-red-600" />,
+      icon: <Clock className="w-8 h-8 text-teal-600" />,
       title: "Jadwal Fleksibel",
       subtitle: "Sesuai Kebutuhan Anda",
       description: "Pembelajaran adaptif dengan jadwal pagi, siang, dan malam. Akses materi 24/7 melalui platform digital",
       highlight: "24/7 Access"
     },
     {
-      icon: <BookOpen className="w-8 h-8 text-red-600" />,
+      icon: <BookOpen className="w-8 h-8 text-teal-600" />,
       title: "Kurikulum Terkini",
       subtitle: "Industry-Aligned",
       description: "Materi pembelajaran yang selalu diperbarui mengikuti perkembangan teknologi dan kebutuhan pasar kerja",
       highlight: "Updated Monthly"
     },
     {
-      icon: <Target className="w-8 h-8 text-red-600" />,
+      icon: <Target className="w-8 h-8 text-teal-600" />,
       title: "Praktek Intensif",
       subtitle: "70% Hands-On",
       description: "Fokus pada penerapan praktis dengan rasio 70% praktek dan 30% teori untuk hasil pembelajaran optimal",
       highlight: "Project-Based"
     },
     {
-      icon: <Shield className="w-8 h-8 text-red-600" />,
+      icon: <Shield className="w-8 h-8 text-teal-600" />,
       title: "Garansi Pembelajaran",
       subtitle: "Money Back Guarantee",
       description: "Jaminan kualitas dengan opsi mengulang kelas gratis jika belum menguasai materi sepenuhnya",
@@ -194,13 +193,13 @@ const OptimizedAbout = () => {
 
   return (
     <div className="min-h-screen pt-16 overflow-x-hidden">
-      {/* Optimized Styles */}
+      {/* Optimized Styles with Teal Theme */}
       <style>{`
         .hero-gradient {
-          background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+          background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%);
         }
         .gradient-text {
-          background: linear-gradient(45deg, #ef4444, #dc2626, #b91c1c);
+          background: linear-gradient(45deg, #14b8a6, #0d9488, #0f766e);
           background-clip: text;
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
@@ -216,7 +215,7 @@ const OptimizedAbout = () => {
           transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .timeline-line {
-          background: linear-gradient(to bottom, #ef4444, #dc2626, #b91c1c);
+          background: linear-gradient(to bottom, #14b8a6, #0d9488, #0f766e);
         }
         .glass-effect {
           background: rgba(255, 255, 255, 0.95);
@@ -226,21 +225,23 @@ const OptimizedAbout = () => {
         .animate-float {
           animation: float 6s ease-in-out infinite;
         }
+        .btn-glow:hover {
+          box-shadow: 0 0 20px rgba(13, 148, 136, 0.4);
+        }
         @keyframes float {
           0%, 100% { transform: translateY(0px); }
           50% { transform: translateY(-8px); }
         }
       `}</style>
 
-
-      {/* Enhanced Company Story with better visual hierarchy */}
+      {/* Enhanced Company Story with teal theme */}
       <section ref={storyRef} className="py-16 mt-1 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className={`transition-all duration-1000 ease-out ${
               storyVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-6'
             }`}>
-              <span className="inline-block mb-4 px-4 py-2 bg-red-50 text-red-600 rounded-full text-sm font-medium">
+              <span className="inline-block mb-4 px-4 py-2 bg-teal-50 text-teal-600 rounded-full text-sm font-medium">
                 Cerita Kami
               </span>
               
@@ -256,8 +257,8 @@ const OptimizedAbout = () => {
                 </p>
                 
                 <p>
-                  Dengan pendekatan pembelajaran yang <strong className="text-red-600">70% praktek</strong> dan 
-                  <strong className="text-red-600"> 30% teori</strong>, kami memastikan setiap siswa tidak hanya 
+                  Dengan pendekatan pembelajaran yang <strong className="text-teal-600">70% praktek</strong> dan 
+                  <strong className="text-teal-600"> 30% teori</strong>, kami memastikan setiap siswa tidak hanya 
                   memahami konsep, tetapi juga mampu mengimplementasikan skill dalam dunia kerja nyata.
                 </p>
                 
@@ -297,11 +298,11 @@ const OptimizedAbout = () => {
                 />
                 
                 {/* Floating achievement card */}
-                <div className={`absolute -bottom-6 -left-6 bg-white text-red-600 p-4 rounded-2xl shadow-xl hover-lift animate-float transition-all duration-800 ease-out delay-600 ${
+                <div className={`absolute -bottom-6 -left-6 bg-white text-teal-600 p-4 rounded-2xl shadow-xl hover-lift animate-float transition-all duration-800 ease-out delay-600 ${
                   storyVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
                 }`}>
                   <div className="text-center">
-                    <Award className="w-6 h-6 mx-auto mb-1 text-red-600" />
+                    <Award className="w-6 h-6 mx-auto mb-1 text-teal-600" />
                     <div className="text-xl font-bold gradient-text">16+</div>
                     <div className="text-xs text-gray-700 font-medium">Tahun Pengalaman</div>
                     <div className="text-xs text-gray-500">Terpercaya</div>
@@ -328,7 +329,7 @@ const OptimizedAbout = () => {
       <section ref={timelineRef} className="py-24 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <span className="inline-block mb-4 px-4 py-2 bg-red-50 text-red-600 rounded-full text-sm font-medium">
+            <span className="inline-block mb-4 px-4 py-2 bg-teal-50 text-teal-600 rounded-full text-sm font-medium">
               Perjalanan Kami
             </span>
             <h2 className="text-3xl md:text-4xl font-bold mb-4 gradient-text">
@@ -354,7 +355,7 @@ const OptimizedAbout = () => {
                   style={{ transitionDelay: `${index * 200}ms` }}
                 >
                   {/* Timeline dot */}
-                  <div className="absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-red-600 rounded-full border-4 border-white shadow-lg z-10"></div>
+                  <div className="absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-teal-600 rounded-full border-4 border-white shadow-lg z-10"></div>
                   
                   {/* Content */}
                   <div className={`w-1/2 ${index % 2 === 0 ? 'pr-12 text-right' : 'pl-12'}`}>
@@ -362,13 +363,13 @@ const OptimizedAbout = () => {
                       <div className="flex items-center gap-3 mb-3">
                         {index % 2 === 0 ? (
                           <>
-                            <div className="text-red-600">{item.icon}</div>
-                            <span className="text-red-600 font-bold text-lg">{item.year}</span>
+                            <div className="text-teal-600">{item.icon}</div>
+                            <span className="text-teal-600 font-bold text-lg">{item.year}</span>
                           </>
                         ) : (
                           <>
-                            <span className="text-red-600 font-bold text-lg">{item.year}</span>
-                            <div className="text-red-600">{item.icon}</div>
+                            <span className="text-teal-600 font-bold text-lg">{item.year}</span>
+                            <div className="text-teal-600">{item.icon}</div>
                           </>
                         )}
                       </div>
@@ -384,7 +385,7 @@ const OptimizedAbout = () => {
           {/* Mobile Timeline */}
           <div className="md:hidden relative">
             {/* Mobile timeline line */}
-            <div className="absolute left-6 top-0 w-0.5 bg-red-600 h-full rounded-full"></div>
+            <div className="absolute left-6 top-0 w-0.5 bg-teal-600 h-full rounded-full"></div>
             
             <div className="space-y-8">
               {timeline.map((item, index) => (
@@ -396,14 +397,14 @@ const OptimizedAbout = () => {
                   style={{ transitionDelay: `${index * 200}ms` }}
                 >
                   {/* Mobile timeline dot */}
-                  <div className="w-3 h-3 bg-red-600 rounded-full border-2 border-white shadow-lg z-10 mt-2 flex-shrink-0"></div>
+                  <div className="w-3 h-3 bg-teal-600 rounded-full border-2 border-white shadow-lg z-10 mt-2 flex-shrink-0"></div>
                   
                   {/* Mobile content */}
                   <div className="ml-6 flex-1">
                     <div className="bg-white p-4 rounded-lg shadow-md hover-lift smooth-transition">
                       <div className="flex items-center gap-2 mb-2">
-                        <div className="text-red-600">{item.icon}</div>
-                        <span className="text-red-600 font-bold text-base">{item.year}</span>
+                        <div className="text-teal-600">{item.icon}</div>
+                        <span className="text-teal-600 font-bold text-base">{item.year}</span>
                       </div>
                       <h3 className="font-bold text-base mb-2 text-gray-900">{item.title}</h3>
                       <p className="text-gray-600 text-sm leading-relaxed">{item.description}</p>
@@ -420,7 +421,7 @@ const OptimizedAbout = () => {
       <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <span className="inline-block mb-4 px-4 py-2 bg-red-50 text-red-600 rounded-full text-sm font-medium">
+            <span className="inline-block mb-4 px-4 py-2 bg-teal-50 text-teal-600 rounded-full text-sm font-medium">
               Keunggulan Kami
             </span>
             <h2 className="text-3xl md:text-4xl font-bold mb-4 gradient-text">
@@ -435,12 +436,12 @@ const OptimizedAbout = () => {
             {values.map((value, index) => (
               <div 
                 key={index} 
-                className={`group relative p-8 bg-white rounded-2xl border border-gray-100 hover:border-red-200 hover:shadow-xl hover-lift smooth-transition transition-all duration-800 ease-out ${
+                className={`group relative p-8 bg-white rounded-2xl border border-gray-100 hover:border-teal-200 hover:shadow-xl hover-lift smooth-transition transition-all duration-800 ease-out ${
                   valueItems.includes(index) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
                 }`}
               >
                 {/* Highlight badge */}
-                <div className="absolute top-4 right-4 px-2 py-1 bg-red-100 text-red-600 text-xs font-medium rounded-full opacity-0 group-hover:opacity-100 smooth-transition">
+                <div className="absolute top-4 right-4 px-2 py-1 bg-teal-100 text-teal-600 text-xs font-medium rounded-full opacity-0 group-hover:opacity-100 smooth-transition">
                   {value.highlight}
                 </div>
                 
@@ -448,11 +449,11 @@ const OptimizedAbout = () => {
                   {value.icon}
                 </div>
                 
-                <h3 className="font-bold text-xl mb-2 text-gray-900 group-hover:text-red-600 smooth-transition">
+                <h3 className="font-bold text-xl mb-2 text-gray-900 group-hover:text-teal-600 smooth-transition">
                   {value.title}
                 </h3>
                 
-                <div className="text-red-600 font-medium text-sm mb-4">
+                <div className="text-teal-600 font-medium text-sm mb-4">
                   {value.subtitle}
                 </div>
                 
@@ -469,7 +470,7 @@ const OptimizedAbout = () => {
       <section className="py-24 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <span className="inline-block mb-4 px-4 py-2 bg-red-50 text-red-600 rounded-full text-sm font-medium">
+            <span className="inline-block mb-4 px-4 py-2 bg-teal-50 text-teal-600 rounded-full text-sm font-medium">
               Tim Pengajar
             </span>
             <h2 className="text-3xl md:text-4xl font-bold mb-4 gradient-text">
@@ -507,11 +508,11 @@ const OptimizedAbout = () => {
                 </div>
                 
                 <div className="p-6">
-                  <h3 className="font-bold text-xl mb-1 text-gray-900 group-hover:text-red-600 smooth-transition">
+                  <h3 className="font-bold text-xl mb-1 text-gray-900 group-hover:text-teal-600 smooth-transition">
                     {instructor.name}
                   </h3>
                   
-                  <div className="inline-block px-2 py-1 bg-red-100 text-red-700 text-xs rounded-md mb-3 font-medium">
+                  <div className="inline-block px-2 py-1 bg-teal-100 text-teal-700 text-xs rounded-md mb-3 font-medium">
                     {instructor.title}
                   </div>
                   
@@ -519,7 +520,7 @@ const OptimizedAbout = () => {
                     <strong>Spesialisasi:</strong> {instructor.specialization}
                   </p>
                   
-                  <p className="text-sm text-red-600 font-medium mb-3">
+                  <p className="text-sm text-teal-600 font-medium mb-3">
                     {instructor.experience}
                   </p>
                   
@@ -547,7 +548,7 @@ const OptimizedAbout = () => {
       </section>
 
       {/* Achievements Section */}
-      <section ref={achievementsRef} className="py-20 bg-red-600 text-white">
+      <section ref={achievementsRef} className="py-20 hero-gradient text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className={`text-3xl md:text-4xl font-bold mb-4 transition-all duration-1000 ease-out ${
@@ -585,7 +586,7 @@ const OptimizedAbout = () => {
       {/* Enhanced Contact CTA */}
       <section ref={ctaRef} className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-gradient-to-r from-red-600 to-red-700 rounded-3xl p-12 text-white text-center relative overflow-hidden">
+          <div className="bg-gradient-to-r from-teal-600 to-teal-700 rounded-3xl p-12 text-white text-center relative overflow-hidden">
             <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4xIj48Y2lyY2xlIGN4PSIzMCIgY3k9IjMwIiByPSIyIi8+PC9nPjwvZz48L3N2Zz4=')] opacity-20"></div>
             
             <div className="relative z-10">
@@ -607,21 +608,21 @@ const OptimizedAbout = () => {
                 ctaVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
               }`}>
                 <div className="glass-effect text-gray-900 p-4 sm:p-6 rounded-xl hover-lift smooth-transition">
-                  <Phone className="w-5 sm:w-6 h-5 sm:h-6 text-red-600 mx-auto mb-2 sm:mb-3" />
+                  <Phone className="w-5 sm:w-6 h-5 sm:h-6 text-teal-600 mx-auto mb-2 sm:mb-3" />
                   <h3 className="font-semibold mb-1 sm:mb-2 text-sm sm:text-base">Telepon & WhatsApp</h3>
                   <p className="text-xs sm:text-sm">0857-8276-3529</p>
                   <p className="text-xs text-gray-500 mt-1">Respon cepat via WA</p>
                 </div>
                 
                 <div className="glass-effect text-gray-900 p-4 sm:p-6 rounded-xl hover-lift smooth-transition">
-                  <Mail className="w-5 sm:w-6 h-5 sm:h-6 text-red-600 mx-auto mb-2 sm:mb-3" />
+                  <Mail className="w-5 sm:w-6 h-5 sm:h-6 text-teal-600 mx-auto mb-2 sm:mb-3" />
                   <h3 className="font-semibold mb-1 sm:mb-2 text-sm sm:text-base">Email Resmi</h3>
                   <p className="text-xs sm:text-sm">asep@radarteknologikomputer.id</p>
                   <p className="text-xs text-gray-500 mt-1">Info lengkap via email</p>
                 </div>
                 
                 <div className="glass-effect text-gray-900 p-4 sm:p-6 rounded-xl hover-lift smooth-transition">
-                  <MapPin className="w-5 sm:w-6 h-5 sm:h-6 text-red-600 mx-auto mb-2 sm:mb-3" />
+                  <MapPin className="w-5 sm:w-6 h-5 sm:h-6 text-teal-600 mx-auto mb-2 sm:mb-3" />
                   <h3 className="font-semibold mb-1 sm:mb-2 text-sm sm:text-base">Lokasi Kursus</h3>
                   <p className="text-xs sm:text-sm">Tangerang, Banten</p>
                   <p className="text-xs text-gray-500 mt-1">Mudah dijangkau</p>
@@ -631,11 +632,11 @@ const OptimizedAbout = () => {
               <div className={`flex flex-col sm:flex-row gap-4 justify-center transition-all duration-1000 ease-out delay-600 ${
                 ctaVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
               }`}>
-                <button className="inline-flex items-center justify-center px-8 py-4 bg-white text-red-600 font-semibold rounded-lg hover:bg-gray-100 hover:scale-105 smooth-transition shadow-lg">
+                <button className="inline-flex items-center justify-center px-8 py-4 bg-white text-teal-600 font-semibold rounded-lg hover:bg-gray-100 hover:scale-105 smooth-transition shadow-lg btn-glow">
                   <Phone className="w-5 h-5 mr-2" />
                   Konsultasi Gratis
                 </button>
-                <button className="inline-flex items-center justify-center px-8 py-4 border-2 border-white text-white font-semibold rounded-lg hover:bg-white hover:text-red-600 hover:scale-105 smooth-transition">
+                <button className="inline-flex items-center justify-center px-8 py-4 border-2 border-white text-white font-semibold rounded-lg hover:bg-white hover:text-teal-600 hover:scale-105 smooth-transition">
                   Lihat Program Kursus
                   <ArrowRight className="w-5 h-5 ml-2" />
                 </button>

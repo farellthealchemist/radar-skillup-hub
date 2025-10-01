@@ -202,19 +202,19 @@ const OptimizedCourses = () => {
 
   const guaranteeFeatures = [
     { 
-      icon: <Shield className="w-8 h-8 text-red-600" />, 
+      icon: <Shield className="w-8 h-8 text-teal-600" />, 
       title: "Garansi Mengulang", 
       description: "Bisa mengulang kelas GRATIS jika belum menguasai materi",
       highlight: "100% Guarantee"
     },
     { 
-      icon: <Users className="w-8 h-8 text-red-600" />, 
+      icon: <Users className="w-8 h-8 text-teal-600" />, 
       title: "Kelas Kecil", 
       description: "Maksimal 12 siswa per kelas untuk perhatian personal optimal",
       highlight: "Personal Attention"
     },
     { 
-      icon: <Target className="w-8 h-8 text-red-600" />, 
+      icon: <Target className="w-8 h-8 text-teal-600" />, 
       title: "Job Assistance", 
       description: "Bantuan penempatan kerja dan career guidance setelah lulus",
       highlight: "85% Job Rate"
@@ -234,10 +234,10 @@ const OptimizedCourses = () => {
       {/* Consistent Styles with Homepage */}
       <style>{`
         .hero-gradient {
-          background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+          background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%);
         }
         .gradient-text {
-          background: linear-gradient(45deg, #ef4444, #dc2626, #b91c1c);
+          background: linear-gradient(45deg, #14b8a6, #0d9488, #0f766e);
           background-clip: text;
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
@@ -258,19 +258,18 @@ const OptimizedCourses = () => {
           border: 1px solid rgba(255, 255, 255, 0.2);
         }
         .btn-glow:hover {
-          box-shadow: 0 0 20px rgba(239, 68, 68, 0.4);
+          box-shadow: 0 0 20px rgba(13, 148, 136, 0.4);
         }
       `}</style>
 
-
-      {/* Hero Section */}
+      {/* Hero Section - Simplified without stats */}
       <section ref={heroRef} className="py-16 mt-4 bg-white border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className={`text-center transition-all duration-1000 ease-out ${
             heroVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
           }`}>
             <div className="max-w-4xl mx-auto">
-              <span className="inline-block mb-4 px-4 py-2 bg-red-50 text-red-600 rounded-lg text-sm font-medium border border-red-100">
+              <span className="inline-block mb-4 px-4 py-2 bg-teal-50 text-teal-600 rounded-lg text-sm font-medium border border-teal-100">
                 Program Kursus IT
               </span>
               
@@ -279,29 +278,9 @@ const OptimizedCourses = () => {
                 <span className="gradient-text"> Sesuai Tujuan Karir Anda</span>
               </h1>
               
-              <p className="text-lg text-gray-600 mb-12 leading-relaxed">
+              <p className="text-lg text-gray-600 mb-8 leading-relaxed">
                 Dari Programming hingga Network Administration, temukan program yang tepat untuk mengembangkan skill IT dan mempersiapkan masa depan profesional Anda.
               </p>
-              
-              {/* Clean stats */}
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8">
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-red-600 mb-1">4+</div>
-                  <div className="text-sm text-gray-500">Program Tersedia</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-red-600 mb-1">750+</div>
-                  <div className="text-sm text-gray-500">Alumni Sukses</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-red-600 mb-1">85%</div>
-                  <div className="text-sm text-gray-500">Job Placement</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-red-600 mb-1">4.8/5</div>
-                  <div className="text-sm text-gray-500">Rating Siswa</div>
-                </div>
-              </div>
               
               <div className="bg-gray-50 rounded-lg p-4 max-w-2xl mx-auto">
                 <p className="text-sm text-gray-700">
@@ -326,7 +305,7 @@ const OptimizedCourses = () => {
                   placeholder="Cari kursus..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-10 md:pl-12 pr-4 py-2 md:py-3 text-sm md:text-base border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent smooth-transition"
+                  className="w-full pl-10 md:pl-12 pr-4 py-2 md:py-3 text-sm md:text-base border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent smooth-transition"
                 />
               </div>
 
@@ -338,7 +317,7 @@ const OptimizedCourses = () => {
                     onClick={() => setActiveCategory(category.name)}
                     className={`px-3 md:px-6 py-1.5 md:py-2 text-xs md:text-sm rounded-lg font-medium smooth-transition hover-lift ${
                       activeCategory === category.name
-                        ? 'bg-red-600 text-white shadow-lg'
+                        ? 'bg-teal-600 text-white shadow-lg'
                         : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                     }`}
                   >
@@ -386,12 +365,12 @@ const OptimizedCourses = () => {
 
                   <div className="absolute top-2 sm:top-3 right-2 sm:right-3 flex flex-col gap-1">
                     {course.popular && (
-                      <span className="px-1.5 sm:px-2 py-0.5 sm:py-1 bg-red-600 text-white text-xs font-medium rounded-md">
+                      <span className="px-1.5 sm:px-2 py-0.5 sm:py-1 bg-teal-600 text-white text-xs font-medium rounded-md">
                         Popular
                       </span>
                     )}
                     {course.discount && (
-                      <span className="px-1.5 sm:px-2 py-0.5 sm:py-1 bg-red-600 text-white text-xs font-bold rounded-md">
+                      <span className="px-1.5 sm:px-2 py-0.5 sm:py-1 bg-teal-600 text-white text-xs font-bold rounded-md">
                         -{course.discount}
                       </span>
                     )}
@@ -417,15 +396,15 @@ const OptimizedCourses = () => {
                   {/* Course Stats */}
                   <div className="grid grid-cols-3 gap-1 sm:gap-2 mb-3 sm:mb-4 py-2 sm:py-3 bg-gray-50 rounded-lg">
                     <div className="text-center">
-                      <Clock className="w-3 h-3 mx-auto mb-1 text-red-600" />
+                      <Clock className="w-3 h-3 mx-auto mb-1 text-teal-600" />
                       <div className="text-xs font-medium">{course.duration}</div>
                     </div>
                     <div className="text-center">
-                      <Users className="w-3 h-3 mx-auto mb-1 text-red-600" />
+                      <Users className="w-3 h-3 mx-auto mb-1 text-teal-600" />
                       <div className="text-xs font-medium">{course.students}</div>
                     </div>
                     <div className="text-center">
-                      <Award className="w-3 h-3 mx-auto mb-1 text-red-600" />
+                      <Award className="w-3 h-3 mx-auto mb-1 text-teal-600" />
                       <div className="text-xs font-medium">Sertifikat</div>
                     </div>
                   </div>
@@ -433,7 +412,7 @@ const OptimizedCourses = () => {
                   {/* Key Features */}
                   <div className="mb-3 sm:mb-4">
                     <h4 className="font-medium text-xs sm:text-sm mb-2 flex items-center gap-2">
-                      <BookOpen className="w-3 h-3 text-red-600" />
+                      <BookOpen className="w-3 h-3 text-teal-600" />
                       <span className="hidden sm:inline">Materi Utama:</span>
                       <span className="sm:hidden">Materi:</span>
                     </h4>
@@ -455,7 +434,7 @@ const OptimizedCourses = () => {
                     <div className="flex items-center justify-between mb-2 sm:mb-3">
                       <div>
                         <div className="flex items-center gap-1">
-                          <span className="text-base sm:text-lg font-bold text-red-600">{course.price}</span>
+                          <span className="text-base sm:text-lg font-bold text-teal-600">{course.price}</span>
                           {course.originalPrice && (
                             <span className="text-xs sm:text-sm text-gray-400 line-through">{course.originalPrice}</span>
                           )}
@@ -468,7 +447,7 @@ const OptimizedCourses = () => {
                     </div>
                     
                     <div className="grid grid-cols-2 gap-2">
-                      <button className="px-2 sm:px-3 py-1.5 sm:py-2 border border-red-600 text-red-600 font-medium rounded-md hover:bg-red-50 smooth-transition text-xs sm:text-sm">
+                      <button className="px-2 sm:px-3 py-1.5 sm:py-2 border border-teal-600 text-teal-600 font-medium rounded-md hover:bg-teal-50 smooth-transition text-xs sm:text-sm">
                         Detail
                       </button>
                       <button className="px-2 sm:px-3 py-1.5 sm:py-2 hero-gradient text-white font-medium rounded-md hover:scale-105 smooth-transition btn-glow text-xs sm:text-sm">
@@ -484,10 +463,10 @@ const OptimizedCourses = () => {
       </section>
 
       {/* Learning Guarantee */}
-      <section ref={guaranteeRef} className="py-20 bg-gray-50">
+      <section className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <span className="inline-block mb-4 px-4 py-2 bg-red-50 text-red-600 rounded-full text-sm font-medium">
+            <span className="inline-block mb-4 px-4 py-2 bg-teal-50 text-teal-600 rounded-full text-sm font-medium">
               Jaminan Pembelajaran
             </span>
             <h2 className="text-3xl md:text-4xl font-bold mb-4 gradient-text">
@@ -498,7 +477,7 @@ const OptimizedCourses = () => {
             </p>
           </div>
           
-          <div className="grid md:grid-cols-3 gap-8">
+          <div ref={guaranteeRef} className="grid md:grid-cols-3 gap-8">
             {guaranteeFeatures.map((feature, index) => (
               <div 
                 key={index}
@@ -506,16 +485,16 @@ const OptimizedCourses = () => {
                   guaranteeItems.includes(index) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
                 }`}
               >
-                <div className="w-16 h-16 mx-auto mb-6 bg-red-50 rounded-2xl flex items-center justify-center group-hover:scale-110 smooth-transition">
+                <div className="w-16 h-16 mx-auto mb-6 bg-teal-50 rounded-2xl flex items-center justify-center group-hover:scale-110 smooth-transition">
                   {feature.icon}
                 </div>
-                <h3 className="font-bold text-xl mb-3 group-hover:text-red-600 smooth-transition">
+                <h3 className="font-bold text-xl mb-3 group-hover:text-teal-600 smooth-transition">
                   {feature.title}
                 </h3>
                 <p className="text-gray-600 leading-relaxed mb-4">
                   {feature.description}
                 </p>
-                <div className="inline-block px-3 py-1 bg-red-100 text-red-600 text-xs font-medium rounded-full">
+                <div className="inline-block px-3 py-1 bg-teal-100 text-teal-600 text-xs font-medium rounded-full">
                   {feature.highlight}
                 </div>
               </div>
@@ -527,7 +506,7 @@ const OptimizedCourses = () => {
       {/* Enhanced CTA Section */}
       <section ref={ctaRef} className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-gradient-to-r from-red-600 to-red-700 rounded-3xl p-12 text-white text-center relative overflow-hidden">
+          <div className="bg-gradient-to-r from-teal-600 to-teal-700 rounded-3xl p-12 text-white text-center relative overflow-hidden">
             <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4xIj48Y2lyY2xlIGN4PSIzMCIgY3k9IjMwIiByPSIyIi8+PC9nPjwvZz48L3N2Zz4=')] opacity-20"></div>
             
             <div className="relative z-10">
@@ -547,11 +526,11 @@ const OptimizedCourses = () => {
               <div className={`flex flex-col sm:flex-row gap-4 justify-center mb-8 transition-all duration-1000 ease-out delay-400 ${
                 ctaVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
               }`}>
-                <button className="inline-flex items-center justify-center px-8 py-4 bg-white text-red-600 font-semibold rounded-lg hover:bg-gray-100 hover:scale-105 smooth-transition btn-glow">
+                <button className="inline-flex items-center justify-center px-8 py-4 bg-white text-teal-600 font-semibold rounded-lg hover:bg-gray-100 hover:scale-105 smooth-transition btn-glow">
                   <Phone className="w-5 h-5 mr-2" />
                   Konsultasi Via WhatsApp
                 </button>
-                <button className="inline-flex items-center justify-center px-8 py-4 border-2 border-white text-white font-semibold rounded-lg hover:bg-white hover:text-red-600 hover:scale-105 smooth-transition">
+                <button className="inline-flex items-center justify-center px-8 py-4 border-2 border-white text-white font-semibold rounded-lg hover:bg-white hover:text-teal-600 hover:scale-105 smooth-transition">
                   <Download className="w-5 h-5 mr-2" />
                   Download Brosur Program
                 </button>
