@@ -387,7 +387,7 @@ const OptimizedContact = () => {
                   <a href="#" className="w-10 sm:w-12 h-10 sm:h-12 bg-blue-600 rounded-xl flex items-center justify-center text-white hover:scale-110 smooth-transition">
                     <Facebook className="w-5 sm:w-6 h-5 sm:h-6" />
                   </a>
-                  <a href="#" className="w-10 sm:w-12 h-10 sm:h-12 bg-teal-600 rounded-xl flex items-center justify-center text-white hover:scale-110 smooth-transition">
+                  <a href="#" className="w-10 sm:w-12 h-10 sm:h-12 bg-red-600 rounded-xl flex items-center justify-center text-white hover:scale-110 smooth-transition">
                     <Youtube className="w-5 sm:w-6 h-5 sm:h-6" />
                   </a>
                 </div>
