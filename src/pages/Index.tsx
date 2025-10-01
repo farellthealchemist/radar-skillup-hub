@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { Link } from "react-router-dom";
 import { 
   Code, 
   Palette, 
@@ -571,14 +572,14 @@ const Homepage = () => {
               <div className={`flex flex-col gap-3 sm:gap-4 transition-all duration-800 ease-out delay-600 ${
                 heroVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
               }`}>
-                <button className="inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 bg-white text-teal-600 font-semibold rounded-lg hover:bg-gray-100 hover:scale-105 smooth-transition btn-glow text-sm sm:text-base">
+                <Link to="/courses" className="inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 bg-white text-teal-600 font-semibold rounded-lg hover:bg-gray-100 hover:scale-105 smooth-transition btn-glow text-sm sm:text-base">
                   <PlayCircle className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
                   Mulai Belajar Sekarang
-                </button>
-                <button className="inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 border-2 border-white text-white bg-transparent hover:bg-white hover:text-teal-600 font-semibold rounded-lg hover:scale-105 smooth-transition text-sm sm:text-base">
+                </Link>
+                <Link to="/courses" className="inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 border-2 border-white text-white bg-transparent hover:bg-white hover:text-teal-600 font-semibold rounded-lg hover:scale-105 smooth-transition text-sm sm:text-base">
                   Lihat Program Kursus
                   <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 ml-2" />
-                </button>
+                </Link>
               </div>
 
               {/* Instructor Cards - Mobile Only */}
@@ -741,9 +742,9 @@ const Homepage = () => {
                     <span className="text-gray-500">{service.duration}</span>
                   </div>
                   
-                  <button className="w-full py-2 sm:py-2.5 text-xs sm:text-sm border border-teal-600 text-teal-600 rounded-lg hover:bg-teal-600 hover:text-white smooth-transition btn-glow font-medium">
+                  <Link to="/courses" className="w-full py-2 sm:py-2.5 text-xs sm:text-sm border border-teal-600 text-teal-600 rounded-lg hover:bg-teal-600 hover:text-white smooth-transition btn-glow font-medium text-center block">
                     Pelajari Lebih Lanjut
-                  </button>
+                  </Link>
                 </div>
               </div>
             ))}
@@ -811,13 +812,13 @@ const Homepage = () => {
               <div className={`flex flex-col sm:flex-row gap-3 sm:gap-4 transition-all duration-800 ease-out delay-1000 ${
                 aboutVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
               }`}>
-                <button className="inline-flex items-center justify-center px-5 sm:px-6 py-2.5 sm:py-3 hero-gradient text-white rounded-lg hover:scale-105 smooth-transition btn-glow text-sm sm:text-base">
+                <Link to="/about" className="inline-flex items-center justify-center px-5 sm:px-6 py-2.5 sm:py-3 hero-gradient text-white rounded-lg hover:scale-105 smooth-transition btn-glow text-sm sm:text-base">
                   Pelajari Lebih Lanjut
                   <ArrowRight className="w-4 h-4 ml-2" />
-                </button>
-                <button className="inline-flex items-center justify-center px-5 sm:px-6 py-2.5 sm:py-3 border border-teal-600 text-teal-600 rounded-lg hover:bg-teal-600 hover:text-white hover:scale-105 smooth-transition text-sm sm:text-base">
+                </Link>
+                <Link to="/contact" className="inline-flex items-center justify-center px-5 sm:px-6 py-2.5 sm:py-3 border border-teal-600 text-teal-600 rounded-lg hover:bg-teal-600 hover:text-white hover:scale-105 smooth-transition text-sm sm:text-base">
                   Konsultasi Gratis
-                </button>
+                </Link>
               </div>
             </div>
           </div>
@@ -1014,9 +1015,9 @@ const Homepage = () => {
                   Diskusikan kebutuhan dan tujuan karir Anda dengan tim kami
                 </p>
                 <div className="flex flex-col gap-3 sm:gap-4">
-                  <button className="px-6 sm:px-8 py-3 sm:py-4 border-2 border-white text-white font-semibold rounded-lg hover:bg-white hover:text-teal-600 hover:scale-105 smooth-transition text-sm sm:text-base">
+                  <Link to="/courses" className="px-6 sm:px-8 py-3 sm:py-4 border-2 border-white text-white font-semibold rounded-lg hover:bg-white hover:text-teal-600 hover:scale-105 smooth-transition text-sm sm:text-base block text-center">
                     Lihat Semua Kursus
-                  </button>
+                  </Link>
                 </div>
               </div>
             </div>

@@ -17,7 +17,7 @@ All colors MUST be HSL.
     --popover: 0 0% 100%;
     --popover-foreground: 220 15% 15%;
 
-    --primary: 0 84% 55%;
+    --primary: 173 80% 40%;
     --primary-foreground: 0 0% 98%;
 
     --secondary: 220 10% 96%;
@@ -26,7 +26,7 @@ All colors MUST be HSL.
     --muted: 220 10% 95%;
     --muted-foreground: 220 8% 46%;
 
-    --accent: 0 65% 50%;
+    --accent: 173 65% 45%;
     --accent-foreground: 0 0% 98%;
 
     --destructive: 0 84.2% 60.2%;
@@ -34,20 +34,20 @@ All colors MUST be HSL.
 
     --border: 220 13% 91%;
     --input: 220 13% 91%;
-    --ring: 0 84% 55%;
+    --ring: 173 80% 40%;
 
-    /* Educational brand colors */
-    --education-red: 0 84% 55%;
-    --education-red-light: 0 84% 65%;
-    --education-red-dark: 0 84% 45%;
+    /* Educational brand colors - Teal Theme */
+    --education-teal: 173 80% 40%;
+    --education-teal-light: 173 65% 55%;
+    --education-teal-dark: 173 80% 30%;
     --education-gray: 220 10% 50%;
     --education-gray-light: 220 10% 95%;
     --education-gray-dark: 220 15% 25%;
 
     /* Gradients */
-    --gradient-hero: linear-gradient(135deg, hsl(var(--education-red)), hsl(var(--education-red-dark)));
+    --gradient-hero: linear-gradient(135deg, hsl(var(--education-teal)), hsl(var(--education-teal-dark)));
     --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(220 10% 98%));
-    --gradient-accent: linear-gradient(120deg, hsl(var(--education-red)), hsl(15 84% 60%));
+    --gradient-accent: linear-gradient(120deg, hsl(var(--education-teal)), hsl(173 70% 50%));
 
     /* Shadows */
     --shadow-card: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
@@ -83,7 +83,7 @@ All colors MUST be HSL.
     --popover: 220 15% 10%;
     --popover-foreground: 0 0% 95%;
 
-    --primary: 0 84% 65%;
+    --primary: 173 70% 50%;
     --primary-foreground: 220 15% 8%;
 
     --secondary: 220 15% 15%;
@@ -92,7 +92,7 @@ All colors MUST be HSL.
     --muted: 220 15% 15%;
     --muted-foreground: 220 8% 65%;
 
-    --accent: 0 65% 60%;
+    --accent: 173 65% 55%;
     --accent-foreground: 220 15% 8%;
 
     --destructive: 0 62.8% 30.6%;
@@ -100,12 +100,12 @@ All colors MUST be HSL.
 
     --border: 220 15% 15%;
     --input: 220 15% 15%;
-    --ring: 0 84% 65%;
+    --ring: 173 70% 50%;
 
-    /* Dark mode educational colors */
-    --education-red: 0 84% 65%;
-    --education-red-light: 0 84% 75%;
-    --education-red-dark: 0 84% 55%;
+    /* Dark mode educational colors - Teal Theme */
+    --education-teal: 173 70% 50%;
+    --education-teal-light: 173 65% 65%;
+    --education-teal-dark: 173 80% 40%;
     --education-gray: 220 10% 60%;
     --education-gray-light: 220 15% 15%;
     --education-gray-dark: 220 15% 85%;
