@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect, useRef } from 'react';
 import { 
   User, 
   Mail, 
@@ -11,10 +10,67 @@ import {
   ArrowRight,
   Clock,
   Award,
-  Users
+  Users,
+  Shield,
+  Target,
+  TrendingUp,
+  Sparkles
 } from "lucide-react";
 
-const Register = () => {
+// Animation Hooks from Courses page
+const useScrollAnimation = ({ delay = 0, threshold = 0.1, rootMargin = "0px" } = {}) => {
+  const [isVisible, setIsVisible] = useState(false);
+  const ref = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => setIsVisible(true), delay);
+        }
+      },
+      { threshold, rootMargin }
+    );
+
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
+
+    return () => observer.disconnect();
+  }, [delay, threshold, rootMargin]);
+
+  return { ref, isVisible };
+};
+
+const useStaggeredAnimation = (itemCount, staggerDelay = 120, initialDelay = 200) => {
+  const [visibleItems, setVisibleItems] = useState([]);
+  const ref = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          for (let i = 0; i < itemCount; i++) {
+            setTimeout(() => {
+              setVisibleItems(prev => [...prev, i]);
+            }, initialDelay + i * staggerDelay);
+          }
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
+
+    return () => observer.disconnect();
+  }, [itemCount, staggerDelay, initialDelay]);
+
+  return { ref, visibleItems };
+};
+
+const EnhancedRegister = () => {
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -27,13 +83,17 @@ const Register = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const { ref: heroRef, isVisible: heroVisible } = useScrollAnimation({ delay: 300 });
+  const { ref: formRef, isVisible: formVisible } = useScrollAnimation({ delay: 200 });
+  const { ref: benefitsRef, visibleItems: benefitItems } = useStaggeredAnimation(4, 100, 200);
+  const { ref: guaranteeRef, visibleItems: guaranteeItems } = useStaggeredAnimation(3, 120, 250);
+
+  const handleSubmit = (e) => {
     e.preventDefault();
     if (!formData.fullName || !formData.email || !formData.phone || !formData.course) return;
     
     setIsSubmitting(true);
     
-    // Simulate form submission
     setTimeout(() => {
       setShowSuccess(true);
       setFormData({ 
@@ -47,12 +107,11 @@ const Register = () => {
       });
       setIsSubmitting(false);
       
-      // Hide success message after 5 seconds
       setTimeout(() => setShowSuccess(false), 5000);
     }, 1500);
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+  const handleChange = (e) => {
     setFormData(prev => ({
       ...prev,
       [e.target.name]: e.target.value
@@ -60,31 +119,101 @@ const Register = () => {
   };
 
   const courses = [
-    { value: "programming", label: "Programming Fundamentals", duration: "3 Bulan", price: "Rp 3.500.000" },
-    { value: "scratch", label: "Scratch Programming untuk Anak", duration: "2 Bulan", price: "Rp 2.000.000" },
-    { value: "office", label: "Microsoft Office Professional", duration: "1.5 Bulan", price: "Rp 1.500.000" },
-    { value: "networking", label: "Network Administration", duration: "3 Bulan", price: "Rp 3.800.000" }
+    { 
+      value: "programming", 
+      label: "Programming Fundamentals", 
+      duration: "3-6 Bulan", 
+      price: "Rp 2.500.000",
+      originalPrice: "Rp 3.000.000",
+      discount: "17%",
+      category: "Programming",
+      popular: true
+    },
+    { 
+      value: "scratch", 
+      label: "Scratch Visual Programming", 
+      duration: "2-3 Bulan", 
+      price: "Rp 750.000",
+      originalPrice: "Rp 900.000",
+      discount: "17%",
+      category: "Programming",
+      popular: false
+    },
+    { 
+      value: "office", 
+      label: "Microsoft Office Mastery", 
+      duration: "2-4 Bulan", 
+      price: "Rp 1.200.000",
+      originalPrice: "Rp 1.500.000",
+      discount: "20%",
+      category: "Office",
+      popular: true
+    },
+    { 
+      value: "networking", 
+      label: "Network Administration", 
+      duration: "4-6 Bulan", 
+      price: "Rp 3.500.000",
+      originalPrice: "Rp 4.200.000",
+      discount: "17%",
+      category: "Networking",
+      popular: false
+    }
   ];
 
   const schedules = [
-    { value: "weekday-morning", label: "Senin-Jumat (09:00-12:00)" },
-    { value: "weekday-afternoon", label: "Senin-Jumat (13:00-16:00)" },
-    { value: "weekday-evening", label: "Senin-Jumat (17:00-20:00)" },
-    { value: "weekend", label: "Sabtu-Minggu (10:00-16:00)" }
+    { value: "weekday-morning", label: "Senin-Jumat (09:00-12:00)", icon: "🌅" },
+    { value: "weekday-afternoon", label: "Senin-Jumat (13:00-16:00)", icon: "☀️" },
+    { value: "weekday-evening", label: "Senin-Jumat (17:00-20:00)", icon: "🌆" },
+    { value: "weekend", label: "Sabtu-Minggu (10:00-16:00)", icon: "📅" }
   ];
 
   const benefits = [
-    { icon: <Award className="w-5 h-5" />, text: "Sertifikat Resmi" },
-    { icon: <Users className="w-5 h-5" />, text: "Instruktur Berpengalaman" },
-    { icon: <Clock className="w-5 h-5" />, text: "Jadwal Fleksibel" },
-    { icon: <BookOpen className="w-5 h-5" />, text: "Modul Lengkap" }
+    { 
+      icon: <Award className="w-6 h-6" />, 
+      text: "Sertifikat Resmi",
+      desc: "Tersertifikasi & diakui industri"
+    },
+    { 
+      icon: <Users className="w-6 h-6" />, 
+      text: "Instruktur Expert",
+      desc: "Pengalaman 10+ tahun"
+    },
+    { 
+      icon: <Clock className="w-6 h-6" />, 
+      text: "Jadwal Fleksibel",
+      desc: "Pilihan waktu beragam"
+    },
+    { 
+      icon: <BookOpen className="w-6 h-6" />, 
+      text: "Modul Lengkap",
+      desc: "Materi terstruktur & praktis"
+    }
+  ];
+
+  const guaranteeFeatures = [
+    { 
+      icon: <Shield className="w-8 h-8 text-teal-600" />, 
+      title: "Garansi Mengulang", 
+      description: "Bisa mengulang kelas GRATIS jika belum menguasai materi"
+    },
+    { 
+      icon: <Target className="w-8 h-8 text-teal-600" />, 
+      title: "Job Assistance", 
+      description: "Bantuan penempatan kerja setelah lulus program"
+    },
+    { 
+      icon: <TrendingUp className="w-8 h-8 text-teal-600" />, 
+      title: "Kelas Kecil", 
+      description: "Maksimal 12 siswa untuk perhatian personal optimal"
+    }
   ];
 
   return (
-    <div className="min-h-screen pt-16 overflow-x-hidden bg-gray-50">
+    <div className="min-h-screen pt-16 overflow-x-hidden">
       <style>{`
         .hero-gradient {
-          background: linear-gradient(135deg, #14b8a6 0%, #0d9488 100%);
+          background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%);
         }
         .gradient-text {
           background: linear-gradient(45deg, #14b8a6, #0d9488, #0f766e);
@@ -92,11 +221,18 @@ const Register = () => {
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
         }
+        .hover-lift {
+          transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .hover-lift:hover {
+          transform: translateY(-4px);
+          box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.15);
+        }
         .smooth-transition {
           transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .btn-glow:hover {
-          box-shadow: 0 0 20px rgba(20, 184, 166, 0.4);
+          box-shadow: 0 0 20px rgba(13, 148, 136, 0.4);
         }
         .animate-spin {
           animation: spin 1s linear infinite;
@@ -104,6 +240,13 @@ const Register = () => {
         @keyframes spin {
           from { transform: rotate(0deg); }
           to { transform: rotate(360deg); }
+        }
+        @keyframes fade-in {
+          from { opacity: 0; transform: translateY(-10px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+          animation: fade-in 0.3s ease-out;
         }
       `}</style>
 
@@ -120,41 +263,36 @@ const Register = () => {
         </div>
       )}
 
-      {/* Hero Section */}
-      <section className="hero-gradient text-white py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">
-              Daftar Kursus Sekarang
+      {/* Simple Hero Section */}
+      <section ref={heroRef} className="py-12 mt-4 bg-white border-b border-gray-100">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className={`text-center transition-all duration-1000 ease-out ${
+            heroVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
+          }`}>
+            <h1 className="text-3xl md:text-4xl font-bold mb-3 text-gray-900">
+              Formulir <span className="gradient-text">Pendaftaran Kursus</span>
             </h1>
-            <p className="text-lg md:text-xl text-teal-50 mb-6 max-w-2xl mx-auto">
-              Mulai perjalanan belajar Anda bersama instruktur profesional dan kurikulum terstruktur
+            <p className="text-gray-600">
+              Lengkapi data di bawah ini untuk mendaftar
             </p>
-            <div className="flex flex-wrap justify-center gap-4 md:gap-6">
-              {benefits.map((benefit, index) => (
-                <div key={index} className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full">
-                  {benefit.icon}
-                  <span className="text-sm md:text-base">{benefit.text}</span>
-                </div>
-              ))}
-            </div>
           </div>
         </div>
       </section>
 
       {/* Registration Form */}
-      <section className="py-12 md:py-20">
+      <section className="py-12 bg-gray-50">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-white rounded-2xl shadow-xl p-6 md:p-10">
-            <div className="mb-8">
-              <h2 className="text-2xl md:text-3xl font-bold gradient-text mb-2">Formulir Pendaftaran</h2>
-              <p className="text-gray-600">Lengkapi data di bawah ini untuk mendaftar kursus</p>
-            </div>
+          <div 
+            ref={formRef}
+            className={`bg-white rounded-2xl shadow-xl p-6 md:p-10 border border-gray-100 transition-all duration-1000 ease-out ${
+              formVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+            }`}
+          >
 
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="space-y-6">
               {/* Personal Information */}
               <div className="space-y-4">
-                <h3 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
+                <h3 className="text-lg font-semibold text-gray-900 flex items-center gap-2 pb-2 border-b">
                   <User className="w-5 h-5 text-teal-600" />
                   Data Pribadi
                 </h3>
@@ -168,7 +306,6 @@ const Register = () => {
                     onChange={handleChange}
                     placeholder="Masukkan nama lengkap Anda"
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent smooth-transition"
-                    required
                   />
                 </div>
 
@@ -184,7 +321,6 @@ const Register = () => {
                         onChange={handleChange}
                         placeholder="nama@email.com"
                         className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent smooth-transition"
-                        required
                       />
                     </div>
                   </div>
@@ -200,7 +336,6 @@ const Register = () => {
                         onChange={handleChange}
                         placeholder="08xx-xxxx-xxxx"
                         className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent smooth-transition"
-                        required
                       />
                     </div>
                   </div>
@@ -209,47 +344,96 @@ const Register = () => {
 
               {/* Course Selection */}
               <div className="space-y-4 pt-6 border-t">
-                <h3 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
+                <h3 className="text-lg font-semibold text-gray-900 flex items-center gap-2 pb-2 border-b">
                   <BookOpen className="w-5 h-5 text-teal-600" />
                   Pilihan Kursus
                 </h3>
                 
                 <div>
-                  <label className="block text-sm font-semibold mb-2 text-gray-700">Program Kursus *</label>
-                  <select
-                    name="course"
-                    value={formData.course}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent smooth-transition"
-                    required
-                  >
-                    <option value="">Pilih Program Kursus</option>
+                  <label className="block text-sm font-semibold mb-3 text-gray-700">Program Kursus *</label>
+                  <div className="space-y-3">
                     {courses.map((course) => (
-                      <option key={course.value} value={course.value}>
-                        {course.label} - {course.duration} ({course.price})
-                      </option>
+                      <label 
+                        key={course.value}
+                        className={`block p-4 border-2 rounded-lg cursor-pointer smooth-transition hover:border-teal-500 hover:bg-teal-50 ${
+                          formData.course === course.value ? 'border-teal-600 bg-teal-50' : 'border-gray-200 bg-white'
+                        }`}
+                      >
+                        <div className="flex items-start gap-3">
+                          <input
+                            type="radio"
+                            name="course"
+                            value={course.value}
+                            checked={formData.course === course.value}
+                            onChange={handleChange}
+                            className="mt-1 w-4 h-4 text-teal-600 focus:ring-teal-500"
+                          />
+                          <div className="flex-1">
+                            <div className="flex items-center justify-between mb-1 flex-wrap gap-2">
+                              <div className="flex items-center gap-2 flex-wrap">
+                                <span className="font-semibold text-gray-900">{course.label}</span>
+                                {course.popular && (
+                                  <span className="px-2 py-0.5 bg-teal-600 text-white text-xs font-medium rounded">
+                                    Popular
+                                  </span>
+                                )}
+                                {course.discount && (
+                                  <span className="px-2 py-0.5 bg-orange-100 text-orange-700 text-xs font-bold rounded">
+                                    Hemat {course.discount}
+                                  </span>
+                                )}
+                              </div>
+                              <span className={`text-xs px-2 py-1 rounded ${
+                                course.category === 'Programming' ? 'bg-blue-100 text-blue-800' :
+                                course.category === 'Office' ? 'bg-green-100 text-green-800' :
+                                'bg-purple-100 text-purple-800'
+                              }`}>
+                                {course.category}
+                              </span>
+                            </div>
+                            <div className="flex items-center gap-4 text-sm text-gray-600 mb-2">
+                              <span className="flex items-center gap-1">
+                                <Clock className="w-4 h-4" />
+                                {course.duration}
+                              </span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <span className="text-lg font-bold text-teal-600">{course.price}</span>
+                              {course.originalPrice && (
+                                <span className="text-sm text-gray-400 line-through">{course.originalPrice}</span>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      </label>
                     ))}
-                  </select>
+                  </div>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold mb-2 text-gray-700">Jadwal Kursus *</label>
-                  <div className="relative">
-                    <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-                    <select
-                      name="schedule"
-                      value={formData.schedule}
-                      onChange={handleChange}
-                      className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent smooth-transition"
-                      required
-                    >
-                      <option value="">Pilih Jadwal</option>
-                      {schedules.map((schedule) => (
-                        <option key={schedule.value} value={schedule.value}>
-                          {schedule.label}
-                        </option>
-                      ))}
-                    </select>
+                  <label className="block text-sm font-semibold mb-3 text-gray-700">Jadwal Kursus *</label>
+                  <div className="grid md:grid-cols-2 gap-3">
+                    {schedules.map((schedule) => (
+                      <label 
+                        key={schedule.value}
+                        className={`flex items-center p-3 border-2 rounded-lg cursor-pointer smooth-transition hover:border-teal-500 hover:bg-teal-50 ${
+                          formData.schedule === schedule.value ? 'border-teal-600 bg-teal-50' : 'border-gray-200 bg-white'
+                        }`}
+                      >
+                        <input
+                          type="radio"
+                          name="schedule"
+                          value={schedule.value}
+                          checked={formData.schedule === schedule.value}
+                          onChange={handleChange}
+                          className="w-4 h-4 text-teal-600 focus:ring-teal-500"
+                        />
+                        <div className="ml-3 flex items-center gap-2">
+                          <span className="text-lg">{schedule.icon}</span>
+                          <span className="text-sm font-medium">{schedule.label}</span>
+                        </div>
+                      </label>
+                    ))}
                   </div>
                 </div>
 
@@ -288,7 +472,7 @@ const Register = () => {
               {/* Submit Button */}
               <div className="pt-6 border-t">
                 <button 
-                  type="submit"
+                  onClick={handleSubmit}
                   className="w-full hero-gradient text-white py-4 rounded-lg font-semibold hover:scale-105 smooth-transition btn-glow disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                   disabled={isSubmitting}
                 >
@@ -307,45 +491,17 @@ const Register = () => {
                 </button>
                 
                 <p className="text-center text-sm text-gray-600 mt-4">
-                  Dengan mendaftar, Anda menyetujui{" "}
-                  <Link to="/contact" className="text-teal-600 hover:text-teal-700 font-medium">
-                    Syarat & Ketentuan
-                  </Link>{" "}
-                  kami
+                  Dengan mendaftar, Anda menyetujui Syarat & Ketentuan kami
                 </p>
               </div>
-            </form>
-          </div>
-
-          {/* Help Section */}
-          <div className="mt-8 bg-teal-50 border border-teal-200 rounded-xl p-6">
-            <h3 className="font-semibold text-gray-900 mb-3">Butuh Bantuan?</h3>
-            <p className="text-gray-700 mb-4">
-              Tim kami siap membantu Anda dalam proses pendaftaran. Hubungi kami melalui:
-            </p>
-            <div className="flex flex-wrap gap-3">
-              <a 
-                href="https://wa.me/6285782763529"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 smooth-transition"
-              >
-                <Phone className="w-4 h-4" />
-                WhatsApp: 0857-8276-3529
-              </a>
-              <a 
-                href="mailto:info@radarteknologikomputer.id"
-                className="inline-flex items-center gap-2 px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 smooth-transition"
-              >
-                <Mail className="w-4 h-4" />
-                Email Kami
-              </a>
             </div>
           </div>
         </div>
       </section>
+
+
     </div>
   );
 };
 
-export default Register;
+export default EnhancedRegister;

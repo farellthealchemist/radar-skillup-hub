@@ -543,8 +543,7 @@ const OptimizedCourses = () => {
                   Konsultasi Via WhatsApp
                 </a>
                 <a 
-                  href="https://wa.me/6285782763529?text=Halo%2C%20saya%20ingin%20mendapatkan%20brosur%20program%20kursus%20RADAR%20Education%20Center"
-                  target="_blank"
+                  href="#"
                   rel="noopener noreferrer"
                   className="inline-flex items-center justify-center px-8 py-4 border-2 border-white text-white font-semibold rounded-lg hover:bg-white hover:text-teal-600 hover:scale-105 smooth-transition"
                 >

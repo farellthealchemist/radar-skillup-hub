@@ -355,7 +355,7 @@ const OptimizedBlog = () => {
                     </div>
                     
                     <Link 
-                      to="/courses"
+                      to="#"
                       className="inline-flex items-center justify-center px-6 py-3 hero-gradient text-white font-semibold rounded-lg hover:scale-105 smooth-transition btn-glow"
                     >
                       Baca Artikel
@@ -438,7 +438,7 @@ const OptimizedBlog = () => {
                     </div>
                     
                     <Link 
-                      to="/courses"
+                      to="#"
                       className="inline-flex items-center text-teal-600 hover:text-teal-700 font-medium text-sm group-hover:scale-105 smooth-transition"
                     >
                       Baca Selengkapnya
