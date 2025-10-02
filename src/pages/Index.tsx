@@ -165,7 +165,9 @@ const Homepage = () => {
       courses: ["Python Basics", "Java OOP", "Web Development"],
       image: "https://images.unsplash.com/photo-1517180102446-f3ece451e9d8?w=400&h=250&fit=crop",
       popular: true,
-      price: "Mulai 500K",
+      price: "Rp 2.500.000",
+      originalPrice: "Rp 3.000.000",
+      discount: "17%",
       duration: "3-6 bulan"
     },
     {
@@ -175,7 +177,9 @@ const Homepage = () => {
       courses: ["Scratch Basics", "Game Creation", "Interactive Stories"],
       image: "https://images.unsplash.com/photo-1596496050827-8299e0220de1?w=400&h=250&fit=crop",
       popular: false,
-      price: "Mulai 300K",
+      price: "Rp 750.000",
+      originalPrice: "Rp 900.000",
+      discount: "17%",
       duration: "2-3 bulan"
     },
     {
@@ -185,7 +189,9 @@ const Homepage = () => {
       courses: ["Word Advanced", "Excel Mastery", "PowerPoint Design"],
       image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=250&fit=crop",
       popular: false,
-      price: "Mulai 400K",
+      price: "Rp 1.200.000",
+      originalPrice: "Rp 1.500.000",
+      discount: "20%",
       duration: "2-4 bulan"
     },
     {
@@ -195,7 +201,9 @@ const Homepage = () => {
       courses: ["Network Fundamentals", "Cisco Config", "Security Basics"],
       image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=400&h=250&fit=crop",
       popular: false,
-      price: "Mulai 600K",
+      price: "Rp 3.500.000",
+      originalPrice: "Rp 4.200.000",
+      discount: "17%",
       duration: "4-6 bulan"
     }
   ];

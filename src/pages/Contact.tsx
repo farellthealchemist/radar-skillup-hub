@@ -303,6 +303,62 @@ const OptimizedContact = () => {
                     )}
                   </button>
                 </div>
+
+                {/* Next Steps Section */}
+                <div className="mt-6 sm:mt-8 pt-6 sm:pt-8 border-t border-gray-200">
+                  <h3 className="font-bold text-base sm:text-lg mb-4 text-gray-900 flex items-center gap-2">
+                    <CheckCircle className="w-5 h-5 text-teal-600" />
+                    Apa yang Terjadi Selanjutnya?
+                  </h3>
+                  <div className="space-y-3 sm:space-y-4">
+                    <div className="flex gap-3 sm:gap-4">
+                      <div className="flex-shrink-0 w-8 h-8 bg-teal-100 rounded-full flex items-center justify-center text-teal-600 font-bold text-sm">
+                        1
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-sm sm:text-base text-gray-900 mb-1">Tim Kami Review Pesan Anda</h4>
+                        <p className="text-xs sm:text-sm text-gray-600">Maksimal dalam 24 jam kerja, kami akan membaca dan memahami kebutuhan Anda</p>
+                      </div>
+                    </div>
+                    
+                    <div className="flex gap-3 sm:gap-4">
+                      <div className="flex-shrink-0 w-8 h-8 bg-teal-100 rounded-full flex items-center justify-center text-teal-600 font-bold text-sm">
+                        2
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-sm sm:text-base text-gray-900 mb-1">Kami Hubungi Via Email/WhatsApp</h4>
+                        <p className="text-xs sm:text-sm text-gray-600">Tim akan menghubungi Anda untuk diskusi lebih detail tentang program yang sesuai</p>
+                      </div>
+                    </div>
+                    
+                    <div className="flex gap-3 sm:gap-4">
+                      <div className="flex-shrink-0 w-8 h-8 bg-teal-100 rounded-full flex items-center justify-center text-teal-600 font-bold text-sm">
+                        3
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-sm sm:text-base text-gray-900 mb-1">Konsultasi Program yang Sesuai</h4>
+                        <p className="text-xs sm:text-sm text-gray-600">Kami bantu Anda memilih program kursus yang tepat sesuai tujuan dan level skill</p>
+                      </div>
+                    </div>
+                    
+                    <div className="flex gap-3 sm:gap-4">
+                      <div className="flex-shrink-0 w-8 h-8 bg-teal-100 rounded-full flex items-center justify-center text-teal-600 font-bold text-sm">
+                        4
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-sm sm:text-base text-gray-900 mb-1">Jadwalkan Kunjungan (Opsional)</h4>
+                        <p className="text-xs sm:text-sm text-gray-600">Jika ingin, Anda bisa mengunjungi kantor kami untuk melihat fasilitas pembelajaran</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="mt-6 p-4 bg-teal-50 rounded-lg border border-teal-100">
+                    <p className="text-xs sm:text-sm text-teal-800 flex items-start gap-2">
+                      <CheckCircle className="w-4 h-4 text-teal-600 flex-shrink-0 mt-0.5" />
+                      <span><strong>Catatan:</strong> Untuk respon lebih cepat (5 menit), Anda bisa langsung hubungi kami via WhatsApp di tombol "Kontak Cepat" di sebelah kanan.</span>
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
 
