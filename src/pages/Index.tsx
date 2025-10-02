@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import { 
   Code, 
   Palette, 
@@ -423,14 +424,14 @@ const Homepage = () => {
               <div className={`flex flex-col gap-3 sm:gap-4 transition-all duration-800 ease-out delay-600 ${
                 heroVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
               }`}>
-                <button className="inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 bg-white text-teal-600 font-semibold rounded-lg hover:bg-gray-100 hover:scale-105 smooth-transition btn-glow text-sm sm:text-base">
+                <Link to="/register" className="inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 bg-white text-teal-600 font-semibold rounded-lg hover:bg-gray-100 hover:scale-105 smooth-transition btn-glow text-sm sm:text-base">
                   <PlayCircle className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
                   Mulai Belajar Sekarang
-                </button>
-                <button className="inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 border-2 border-white text-white bg-transparent hover:bg-white hover:text-teal-600 font-semibold rounded-lg hover:scale-105 smooth-transition text-sm sm:text-base">
+                </Link>
+                <Link to="/courses" className="inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 border-2 border-white text-white bg-transparent hover:bg-white hover:text-teal-600 font-semibold rounded-lg hover:scale-105 smooth-transition text-sm sm:text-base">
                   Lihat Program Kursus
                   <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 ml-2" />
-                </button>
+                </Link>
               </div>
 
               {/* Instructor Cards - Mobile Only */}
@@ -593,9 +594,9 @@ const Homepage = () => {
                     <span className="text-gray-500">{service.duration}</span>
                   </div>
                   
-                  <button className="w-full py-2 sm:py-2.5 text-xs sm:text-sm border border-teal-600 text-teal-600 rounded-lg hover:bg-teal-600 hover:text-white smooth-transition btn-glow font-medium">
+                  <Link to="/courses" className="w-full py-2 sm:py-2.5 text-xs sm:text-sm border border-teal-600 text-teal-600 rounded-lg hover:bg-teal-600 hover:text-white smooth-transition btn-glow font-medium flex items-center justify-center">
                     Pelajari Lebih Lanjut
-                  </button>
+                  </Link>
                 </div>
               </div>
             ))}
@@ -663,13 +664,18 @@ const Homepage = () => {
               <div className={`flex flex-col sm:flex-row gap-3 sm:gap-4 transition-all duration-800 ease-out delay-1000 ${
                 aboutVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
               }`}>
-                <button className="inline-flex items-center justify-center px-5 sm:px-6 py-2.5 sm:py-3 hero-gradient text-white rounded-lg hover:scale-105 smooth-transition btn-glow text-sm sm:text-base">
+                <Link to="/about" className="inline-flex items-center justify-center px-5 sm:px-6 py-2.5 sm:py-3 hero-gradient text-white rounded-lg hover:scale-105 smooth-transition btn-glow text-sm sm:text-base">
                   Pelajari Lebih Lanjut
                   <ArrowRight className="w-4 h-4 ml-2" />
-                </button>
-                <button className="inline-flex items-center justify-center px-5 sm:px-6 py-2.5 sm:py-3 border border-teal-600 text-teal-600 rounded-lg hover:bg-teal-600 hover:text-white hover:scale-105 smooth-transition text-sm sm:text-base">
+                </Link>
+                <a 
+                  href="https://wa.me/6285782763529?text=Halo%2C%20saya%20ingin%20konsultasi%20tentang%20program%20kursus%20di%20RADAR%20Education%20Center"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center px-5 sm:px-6 py-2.5 sm:py-3 border border-teal-600 text-teal-600 rounded-lg hover:bg-teal-600 hover:text-white hover:scale-105 smooth-transition text-sm sm:text-base"
+                >
                   Konsultasi Gratis
-                </button>
+                </a>
               </div>
             </div>
           </div>
@@ -923,14 +929,22 @@ const Homepage = () => {
                   </p>
                   
                   <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-in delay-400">
-                    <button className="inline-flex items-center justify-center px-6 py-3 hero-gradient text-white font-semibold rounded-lg hover:scale-105 hover:shadow-xl transition-all duration-300 ease-out btn-glow text-sm sm:text-base group">
+                    <a 
+                      href="https://wa.me/6285782763529?text=Halo%2C%20saya%20ingin%20bertanya%20tentang%20program%20kursus%20di%20RADAR%20Education%20Center"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center justify-center px-6 py-3 hero-gradient text-white font-semibold rounded-lg hover:scale-105 hover:shadow-xl transition-all duration-300 ease-out btn-glow text-sm sm:text-base group"
+                    >
                       <Phone className="w-4 h-4 mr-2 group-hover:animate-bounce" />
                       Hubungi WhatsApp
-                    </button>
-                    <button className="inline-flex items-center justify-center px-6 py-3 border border-teal-600 text-teal-600 font-semibold rounded-lg hover:bg-teal-600 hover:text-white hover:scale-105 hover:shadow-xl transition-all duration-300 ease-out text-sm sm:text-base group">
+                    </a>
+                    <Link 
+                      to="/contact"
+                      className="inline-flex items-center justify-center px-6 py-3 border border-teal-600 text-teal-600 font-semibold rounded-lg hover:bg-teal-600 hover:text-white hover:scale-105 hover:shadow-xl transition-all duration-300 ease-out text-sm sm:text-base group"
+                    >
                       <MessageCircle className="w-4 h-4 mr-2 group-hover:animate-pulse" />
                       Chat Live Support
-                    </button>
+                    </Link>
                   </div>
                   
                   <div className="mt-6 pt-6 border-t border-gray-200 animate-fade-in delay-600">
@@ -999,9 +1013,13 @@ const Homepage = () => {
                   Diskusikan kebutuhan dan tujuan karir Anda dengan tim kami
                 </p>
                 <div className="flex flex-col gap-3 sm:gap-4">
-                  <button className="px-6 sm:px-8 py-3 sm:py-4 border-2 border-white text-white font-semibold rounded-lg hover:bg-white hover:text-teal-600 hover:scale-105 smooth-transition text-sm sm:text-base">
+                  <Link 
+                    to="/courses"
+                    className="px-6 sm:px-8 py-3 sm:py-4 border-2 border-white text-white font-semibold rounded-lg hover:bg-white hover:text-teal-600 hover:scale-105 smooth-transition text-sm sm:text-base flex items-center justify-center"
+                  >
                     Lihat Semua Kursus
-                  </button>
+                    <ArrowRight className="w-4 h-4 ml-2" />
+                  </Link>
                 </div>
               </div>
             </div>

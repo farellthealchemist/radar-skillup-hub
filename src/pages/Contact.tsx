@@ -381,13 +381,13 @@ const OptimizedContact = () => {
               <div className="bg-white rounded-xl shadow-md border p-4 sm:p-6">
                 <h3 className="font-bold text-base sm:text-lg mb-3 sm:mb-4 gradient-text">Ikuti Media Sosial Kami</h3>
                 <div className="flex gap-3 sm:gap-4">
-                  <a href="#" className="w-10 sm:w-12 h-10 sm:h-12 bg-gradient-to-br from-pink-500 to-orange-400 rounded-xl flex items-center justify-center text-white hover:scale-110 smooth-transition">
+                  <a href="https://www.instagram.com/radareducenter" target="_blank" rel="noopener noreferrer" className="w-10 sm:w-12 h-10 sm:h-12 bg-gradient-to-br from-pink-500 to-orange-400 rounded-xl flex items-center justify-center text-white hover:scale-110 smooth-transition">
                     <Instagram className="w-5 sm:w-6 h-5 sm:h-6" />
                   </a>
-                  <a href="#" className="w-10 sm:w-12 h-10 sm:h-12 bg-blue-600 rounded-xl flex items-center justify-center text-white hover:scale-110 smooth-transition">
+                  <a href="https://facebook.com/radareducenter" target="_blank" rel="noopener noreferrer" className="w-10 sm:w-12 h-10 sm:h-12 bg-blue-600 rounded-xl flex items-center justify-center text-white hover:scale-110 smooth-transition">
                     <Facebook className="w-5 sm:w-6 h-5 sm:h-6" />
                   </a>
-                  <a href="#" className="w-10 sm:w-12 h-10 sm:h-12 bg-red-600 rounded-xl flex items-center justify-center text-white hover:scale-110 smooth-transition">
+                  <a href="https://youtube.com/@radareducenter" target="_blank" rel="noopener noreferrer" className="w-10 sm:w-12 h-10 sm:h-12 bg-red-600 rounded-xl flex items-center justify-center text-white hover:scale-110 smooth-transition">
                     <Youtube className="w-5 sm:w-6 h-5 sm:h-6" />
                   </a>
                 </div>

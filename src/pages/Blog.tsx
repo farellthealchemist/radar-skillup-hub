@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import { 
   Calendar, 
   User, 
@@ -353,10 +354,13 @@ const OptimizedBlog = () => {
                       </div>
                     </div>
                     
-                    <button className="inline-flex items-center justify-center px-6 py-3 hero-gradient text-white font-semibold rounded-lg hover:scale-105 smooth-transition btn-glow">
+                    <Link 
+                      to="/courses"
+                      className="inline-flex items-center justify-center px-6 py-3 hero-gradient text-white font-semibold rounded-lg hover:scale-105 smooth-transition btn-glow"
+                    >
                       Baca Artikel
                       <ArrowRight className="w-4 h-4 ml-2" />
-                    </button>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -433,10 +437,13 @@ const OptimizedBlog = () => {
                       </div>
                     </div>
                     
-                    <button className="inline-flex items-center text-teal-600 hover:text-teal-700 font-medium text-sm group-hover:scale-105 smooth-transition">
+                    <Link 
+                      to="/courses"
+                      className="inline-flex items-center text-teal-600 hover:text-teal-700 font-medium text-sm group-hover:scale-105 smooth-transition"
+                    >
                       Baca Selengkapnya
                       <ArrowRight className="w-3 h-3 ml-1" />
-                    </button>
+                    </Link>
                   </div>
                 </article>
               ))}
@@ -525,13 +532,21 @@ const OptimizedBlog = () => {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button className="inline-flex items-center justify-center px-8 py-4 hero-gradient text-white font-semibold rounded-lg hover:scale-105 smooth-transition btn-glow">
+              <Link 
+                to="/courses"
+                className="inline-flex items-center justify-center px-8 py-4 hero-gradient text-white font-semibold rounded-lg hover:scale-105 smooth-transition btn-glow"
+              >
                 Lihat Program Kursus
                 <ArrowRight className="w-5 h-5 ml-2" />
-              </button>
-              <button className="inline-flex items-center justify-center px-8 py-4 border-2 border-teal-600 text-teal-600 font-semibold rounded-lg hover:bg-teal-600 hover:text-white hover:scale-105 smooth-transition">
+              </Link>
+              <a 
+                href="https://wa.me/6285782763529?text=Halo%2C%20saya%20ingin%20konsultasi%20tentang%20program%20kursus%20di%20RADAR%20Education%20Center"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center px-8 py-4 border-2 border-teal-600 text-teal-600 font-semibold rounded-lg hover:bg-teal-600 hover:text-white hover:scale-105 smooth-transition"
+              >
                 Konsultasi Gratis
-              </button>
+              </a>
             </div>
           </div>
         </div>

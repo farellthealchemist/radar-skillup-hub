@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import { 
   Clock, 
   Users, 
@@ -447,12 +448,18 @@ const OptimizedCourses = () => {
                     </div>
                     
                     <div className="grid grid-cols-2 gap-2">
-                      <button className="px-2 sm:px-3 py-1.5 sm:py-2 border border-teal-600 text-teal-600 font-medium rounded-md hover:bg-teal-50 smooth-transition text-xs sm:text-sm">
+                      <Link 
+                        to="/courses" 
+                        className="px-2 sm:px-3 py-1.5 sm:py-2 border border-teal-600 text-teal-600 font-medium rounded-md hover:bg-teal-50 smooth-transition text-xs sm:text-sm flex items-center justify-center"
+                      >
                         Detail
-                      </button>
-                      <button className="px-2 sm:px-3 py-1.5 sm:py-2 hero-gradient text-white font-medium rounded-md hover:scale-105 smooth-transition btn-glow text-xs sm:text-sm">
+                      </Link>
+                      <Link 
+                        to="/register"
+                        className="px-2 sm:px-3 py-1.5 sm:py-2 hero-gradient text-white font-medium rounded-md hover:scale-105 smooth-transition btn-glow text-xs sm:text-sm flex items-center justify-center"
+                      >
                         Daftar
-                      </button>
+                      </Link>
                     </div>
                   </div>
                 </div>
@@ -526,14 +533,24 @@ const OptimizedCourses = () => {
               <div className={`flex flex-col sm:flex-row gap-4 justify-center mb-8 transition-all duration-1000 ease-out delay-400 ${
                 ctaVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
               }`}>
-                <button className="inline-flex items-center justify-center px-8 py-4 bg-white text-teal-600 font-semibold rounded-lg hover:bg-gray-100 hover:scale-105 smooth-transition btn-glow">
+                <a 
+                  href="https://wa.me/6285782763529?text=Halo%2C%20saya%20ingin%20konsultasi%20tentang%20program%20kursus%20di%20RADAR%20Education%20Center"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center px-8 py-4 bg-white text-teal-600 font-semibold rounded-lg hover:bg-gray-100 hover:scale-105 smooth-transition btn-glow"
+                >
                   <Phone className="w-5 h-5 mr-2" />
                   Konsultasi Via WhatsApp
-                </button>
-                <button className="inline-flex items-center justify-center px-8 py-4 border-2 border-white text-white font-semibold rounded-lg hover:bg-white hover:text-teal-600 hover:scale-105 smooth-transition">
+                </a>
+                <a 
+                  href="https://wa.me/6285782763529?text=Halo%2C%20saya%20ingin%20mendapatkan%20brosur%20program%20kursus%20RADAR%20Education%20Center"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center px-8 py-4 border-2 border-white text-white font-semibold rounded-lg hover:bg-white hover:text-teal-600 hover:scale-105 smooth-transition"
+                >
                   <Download className="w-5 h-5 mr-2" />
                   Download Brosur Program
-                </button>
+                </a>
               </div>
 
               {/* Quick contact info */}

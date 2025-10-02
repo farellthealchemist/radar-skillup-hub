@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import { 
   Users, 
   Award, 
@@ -632,14 +633,22 @@ const OptimizedAbout = () => {
               <div className={`flex flex-col sm:flex-row gap-4 justify-center transition-all duration-1000 ease-out delay-600 ${
                 ctaVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
               }`}>
-                <button className="inline-flex items-center justify-center px-8 py-4 bg-white text-teal-600 font-semibold rounded-lg hover:bg-gray-100 hover:scale-105 smooth-transition shadow-lg btn-glow">
+                <a 
+                  href="https://wa.me/6285782763529?text=Halo%2C%20saya%20ingin%20konsultasi%20tentang%20program%20kursus%20di%20RADAR%20Education%20Center"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center px-8 py-4 bg-white text-teal-600 font-semibold rounded-lg hover:bg-gray-100 hover:scale-105 smooth-transition shadow-lg btn-glow"
+                >
                   <Phone className="w-5 h-5 mr-2" />
                   Konsultasi Gratis
-                </button>
-                <button className="inline-flex items-center justify-center px-8 py-4 border-2 border-white text-white font-semibold rounded-lg hover:bg-white hover:text-teal-600 hover:scale-105 smooth-transition">
+                </a>
+                <Link 
+                  to="/courses"
+                  className="inline-flex items-center justify-center px-8 py-4 border-2 border-white text-white font-semibold rounded-lg hover:bg-white hover:text-teal-600 hover:scale-105 smooth-transition"
+                >
                   Lihat Program Kursus
                   <ArrowRight className="w-5 h-5 ml-2" />
-                </button>
+                </Link>
               </div>
             </div>
           </div>

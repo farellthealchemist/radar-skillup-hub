@@ -308,7 +308,7 @@ const Register = () => {
                 
                 <p className="text-center text-sm text-gray-600 mt-4">
                   Dengan mendaftar, Anda menyetujui{" "}
-                  <Link to="#" className="text-teal-600 hover:text-teal-700 font-medium">
+                  <Link to="/contact" className="text-teal-600 hover:text-teal-700 font-medium">
                     Syarat & Ketentuan
                   </Link>{" "}
                   kami
