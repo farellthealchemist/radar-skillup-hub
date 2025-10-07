@@ -831,7 +831,7 @@ const Homepage = () => {
                 {faqs.map((item, index) => (
                   <div
                     key={index}
-                    className={`group bg-white rounded-xl border border-gray-200 shadow-card hover:shadow-card-hover hover-lift overflow-hidden pulse-border transition-all duration-500 ease-out ${
+                    className={`bg-white rounded-xl border border-gray-200 shadow-card overflow-hidden transition-all duration-500 ease-out ${
                       openFaqIndex === index ? 'ring-2 ring-red-100 border-red-200 shadow-lg' : ''
                     }`}
                   >
@@ -845,18 +845,18 @@ const Homepage = () => {
                           <div className={`flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center transition-all duration-400 ease-out ${
                             openFaqIndex === index 
                               ? 'bg-red-100 scale-110 rotate-6' 
-                              : 'bg-red-50 group-hover:bg-red-100 group-hover:scale-105'
+                              : 'bg-red-50'
                           }`}>
                             <HelpCircle className={`w-5 h-5 transition-all duration-400 ease-out ${
                               openFaqIndex === index 
                                 ? 'text-red-600 scale-110' 
-                                : 'text-red-600 group-hover:scale-105'
+                                : 'text-red-600'
                             }`} />
                           </div>
                           <h3 className={`font-bold text-lg leading-tight transition-all duration-400 ease-out ${
                             openFaqIndex === index 
                               ? 'text-red-600 scale-105' 
-                              : 'text-gray-900 group-hover:text-red-600'
+                              : 'text-gray-900'
                           }`}>
                             {item.question}
                           </h3>
@@ -864,10 +864,10 @@ const Homepage = () => {
                         <div className={`flex-shrink-0 ml-4 p-2 rounded-full transition-all duration-500 ease-out ${
                           openFaqIndex === index 
                             ? 'bg-red-100 rotate-180 scale-110' 
-                            : 'bg-gray-100 group-hover:bg-red-50 group-hover:scale-105'
+                            : 'bg-gray-100'
                         }`}>
                           <ChevronDown className={`w-5 h-5 transition-all duration-500 ease-out ${
-                            openFaqIndex === index ? 'text-red-600' : 'text-gray-500 group-hover:text-red-500'
+                            openFaqIndex === index ? 'text-red-600' : 'text-gray-500'
                           }`} />
                         </div>
                       </div>
@@ -941,26 +941,26 @@ const Homepage = () => {
                       href="https://wa.me/6285782763529?text=Halo%2C%20saya%20ingin%20bertanya%20tentang%20program%20kursus%20di%20RADAR%20Education%20Center"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center justify-center px-6 py-3 hero-gradient text-white font-semibold rounded-lg hover:scale-105 hover:shadow-xl transition-all duration-300 ease-out btn-glow text-sm sm:text-base group"
+                      className="inline-flex items-center justify-center px-6 py-3 hero-gradient text-white font-semibold rounded-lg transition-all duration-300 ease-out text-sm sm:text-base"
                     >
-                      <Phone className="w-4 h-4 mr-2 group-hover:animate-bounce" />
+                      <Phone className="w-4 h-4 mr-2" />
                       Hubungi WhatsApp
                     </a>
                     <Link 
                       to="/contact"
-                      className="inline-flex items-center justify-center px-6 py-3 border border-red-600 text-red-600 font-semibold rounded-lg hover:bg-red-600 hover:text-white hover:scale-105 hover:shadow-xl transition-all duration-300 ease-out text-sm sm:text-base group"
+                      className="inline-flex items-center justify-center px-6 py-3 border border-red-600 text-red-600 font-semibold rounded-lg transition-all duration-300 ease-out text-sm sm:text-base"
                     >
-                      <MessageCircle className="w-4 h-4 mr-2 group-hover:animate-pulse" />
+                      <MessageCircle className="w-4 h-4 mr-2" />
                       Chat Live Support
                     </Link>
                   </div>
                   
                   <div className="mt-6 pt-6 border-t border-gray-200 animate-fade-in delay-600">
                     <div className="grid sm:grid-cols-2 gap-2 text-center">
-                      <p className="text-sm text-gray-500 hover:text-gray-700 transition-colors duration-300">
+                      <p className="text-sm text-gray-500 transition-colors duration-300">
                         <strong>Jam Operasional:</strong><br />Senin - Sabtu, 09:00 - 17:00 WIB
                       </p>
-                      <p className="text-sm text-gray-500 hover:text-gray-700 transition-colors duration-300">
+                      <p className="text-sm text-gray-500 transition-colors duration-300">
                         <strong>Response Time:</strong><br />Maksimal 2 jam pada jam kerja
                       </p>
                     </div>
