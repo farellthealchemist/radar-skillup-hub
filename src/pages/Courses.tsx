@@ -294,7 +294,7 @@ const OptimizedCourses = () => {
       </section>
 
       {/* Enhanced Filter & Search Section */}
-      <section className="py-12 bg-gray-50">
+      <section className="py-1 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-white rounded-2xl shadow-lg p-6">
             <div className="flex flex-col md:flex-row gap-4 md:gap-6 items-start md:items-center justify-between">
