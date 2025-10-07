@@ -108,7 +108,7 @@ const OptimizedContact = () => {
 
   const contactInfo = [
     {
-      icon: <MapPin className="w-6 h-6 text-teal-600" />,
+      icon: <MapPin className="w-6 h-6 text-red-600" />,
       title: "Alamat Lengkap",
       details: [
         "Jl. Pinang-Kunciran No.114, RT.003/RW.005",
@@ -118,7 +118,7 @@ const OptimizedContact = () => {
       action: "Buka Maps"
     },
     {
-      icon: <Phone className="w-6 h-6 text-teal-600" />,
+      icon: <Phone className="w-6 h-6 text-red-600" />,
       title: "Telepon & WhatsApp",
       details: [
         "0857-8276-3529",
@@ -128,7 +128,7 @@ const OptimizedContact = () => {
       action: "Hubungi Sekarang"
     },
     {
-      icon: <Mail className="w-6 h-6 text-teal-600" />,
+      icon: <Mail className="w-6 h-6 text-red-600" />,
       title: "Email Resmi",
       details: [
         "asep@radarteknologikomputer.id",
@@ -138,7 +138,7 @@ const OptimizedContact = () => {
       action: "Kirim Email"
     },
     {
-      icon: <Clock className="w-6 h-6 text-teal-600" />,
+      icon: <Clock className="w-6 h-6 text-red-600" />,
       title: "Jam Operasional",
       details: [
         "Senin - Jumat: 10:00 - 20:00",
@@ -154,10 +154,10 @@ const OptimizedContact = () => {
       {/* Consistent Styles */}
       <style>{`
         .hero-gradient {
-          background: linear-gradient(135deg, #14b8a6 0%, #0d9488 100%);
+          background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
         }
         .gradient-text {
-          background: linear-gradient(45deg, #14b8a6, #0d9488, #0f766e);
+          background: linear-gradient(45deg, #ef4444, #dc2626, #b91c1c);
           background-clip: text;
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
@@ -173,7 +173,7 @@ const OptimizedContact = () => {
           transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .btn-glow:hover {
-          box-shadow: 0 0 20px rgba(20, 184, 166, 0.4);
+          box-shadow: 0 0 20px rgba(220, 38, 38, 0.4);
         }
         .animate-spin {
           animation: spin 1s linear infinite;
@@ -207,8 +207,8 @@ const OptimizedContact = () => {
             }`}>
               <div className="bg-white rounded-2xl shadow-xl border p-6 sm:p-8 hover-lift smooth-transition">
                 <div className="flex items-center gap-3 mb-6">
-                  <div className="w-10 sm:w-12 h-10 sm:h-12 bg-teal-100 rounded-xl flex items-center justify-center">
-                    <Send className="w-5 sm:w-6 h-5 sm:h-6 text-teal-600" />
+                  <div className="w-10 sm:w-12 h-10 sm:h-12 bg-red-100 rounded-xl flex items-center justify-center">
+                    <Send className="w-5 sm:w-6 h-5 sm:h-6 text-red-600" />
                   </div>
                   <div>
                     <h2 className="text-xl sm:text-2xl font-bold gradient-text">Kirim Pesan</h2>
@@ -226,7 +226,7 @@ const OptimizedContact = () => {
                         value={formData.name}
                         onChange={handleChange}
                         placeholder="Masukkan nama lengkap"
-                        className="w-full px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent smooth-transition"
+                        className="w-full px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent smooth-transition"
                         required
                       />
                     </div>
@@ -238,7 +238,7 @@ const OptimizedContact = () => {
                         value={formData.email}
                         onChange={handleChange}
                         placeholder="nama@email.com"
-                        className="w-full px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent smooth-transition"
+                        className="w-full px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent smooth-transition"
                         required
                       />
                     </div>
@@ -253,7 +253,7 @@ const OptimizedContact = () => {
                         value={formData.phone}
                         onChange={handleChange}
                         placeholder="08xx-xxxx-xxxx"
-                        className="w-full px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent smooth-transition"
+                        className="w-full px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent smooth-transition"
                       />
                     </div>
                     <div>
@@ -262,7 +262,7 @@ const OptimizedContact = () => {
                         name="course"
                         value={formData.course}
                         onChange={handleChange}
-                        className="w-full px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent smooth-transition"
+                        className="w-full px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent smooth-transition"
                       >
                         <option value="">Pilih Program</option>
                         <option value="programming">Programming Fundamentals</option>
@@ -280,7 +280,7 @@ const OptimizedContact = () => {
                       value={formData.message}
                       onChange={handleChange}
                       placeholder="Tulis pertanyaan atau pesan Anda di sini..."
-                      className="w-full px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent resize-none h-24 sm:h-32 smooth-transition"
+                      className="w-full px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent resize-none h-24 sm:h-32 smooth-transition"
                       required
                     />
                   </div>
@@ -307,12 +307,12 @@ const OptimizedContact = () => {
                 {/* Next Steps Section */}
                 <div className="mt-6 sm:mt-8 pt-6 sm:pt-8 border-t border-gray-200">
                   <h3 className="font-bold text-base sm:text-lg mb-4 text-gray-900 flex items-center gap-2">
-                    <CheckCircle className="w-5 h-5 text-teal-600" />
+                    <CheckCircle className="w-5 h-5 text-red-600" />
                     Apa yang Terjadi Selanjutnya?
                   </h3>
                   <div className="space-y-3 sm:space-y-4">
                     <div className="flex gap-3 sm:gap-4">
-                      <div className="flex-shrink-0 w-8 h-8 bg-teal-100 rounded-full flex items-center justify-center text-teal-600 font-bold text-sm">
+                      <div className="flex-shrink-0 w-8 h-8 bg-red-100 rounded-full flex items-center justify-center text-red-600 font-bold text-sm">
                         1
                       </div>
                       <div>
@@ -322,7 +322,7 @@ const OptimizedContact = () => {
                     </div>
                     
                     <div className="flex gap-3 sm:gap-4">
-                      <div className="flex-shrink-0 w-8 h-8 bg-teal-100 rounded-full flex items-center justify-center text-teal-600 font-bold text-sm">
+                      <div className="flex-shrink-0 w-8 h-8 bg-red-100 rounded-full flex items-center justify-center text-red-600 font-bold text-sm">
                         2
                       </div>
                       <div>
@@ -332,7 +332,7 @@ const OptimizedContact = () => {
                     </div>
                     
                     <div className="flex gap-3 sm:gap-4">
-                      <div className="flex-shrink-0 w-8 h-8 bg-teal-100 rounded-full flex items-center justify-center text-teal-600 font-bold text-sm">
+                      <div className="flex-shrink-0 w-8 h-8 bg-red-100 rounded-full flex items-center justify-center text-red-600 font-bold text-sm">
                         3
                       </div>
                       <div>
@@ -342,7 +342,7 @@ const OptimizedContact = () => {
                     </div>
                     
                     <div className="flex gap-3 sm:gap-4">
-                      <div className="flex-shrink-0 w-8 h-8 bg-teal-100 rounded-full flex items-center justify-center text-teal-600 font-bold text-sm">
+                      <div className="flex-shrink-0 w-8 h-8 bg-red-100 rounded-full flex items-center justify-center text-red-600 font-bold text-sm">
                         4
                       </div>
                       <div>
@@ -352,9 +352,9 @@ const OptimizedContact = () => {
                     </div>
                   </div>
 
-                  <div className="mt-6 p-4 bg-teal-50 rounded-lg border border-teal-100">
-                    <p className="text-xs sm:text-sm text-teal-800 flex items-start gap-2">
-                      <CheckCircle className="w-4 h-4 text-teal-600 flex-shrink-0 mt-0.5" />
+                  <div className="mt-6 p-4 bg-red-50 rounded-lg border border-red-100">
+                    <p className="text-xs sm:text-sm text-red-800 flex items-start gap-2">
+                      <CheckCircle className="w-4 h-4 text-red-600 flex-shrink-0 mt-0.5" />
                       <span><strong>Catatan:</strong> Untuk respon lebih cepat (5 menit), Anda bisa langsung hubungi kami via WhatsApp di tombol "Kontak Cepat" di sebelah kanan.</span>
                     </p>
                   </div>
@@ -377,7 +377,7 @@ const OptimizedContact = () => {
                       }`}
                     >
                       <div className="flex items-start gap-3 sm:gap-4">
-                        <div className="flex-shrink-0 w-10 sm:w-12 h-10 sm:h-12 bg-teal-50 rounded-xl flex items-center justify-center">
+                        <div className="flex-shrink-0 w-10 sm:w-12 h-10 sm:h-12 bg-red-50 rounded-xl flex items-center justify-center">
                           {info.icon}
                         </div>
                         <div className="flex-1 min-w-0">
@@ -419,16 +419,16 @@ const OptimizedContact = () => {
                   
                   <a 
                     href="tel:+6285782763529" 
-                    className="flex items-center gap-3 sm:gap-4 p-3 sm:p-4 rounded-xl border-2 border-teal-200 hover:bg-teal-50 hover:border-teal-400 smooth-transition group"
+                    className="flex items-center gap-3 sm:gap-4 p-3 sm:p-4 rounded-xl border-2 border-red-200 hover:bg-red-50 hover:border-red-400 smooth-transition group"
                   >
-                    <div className="w-10 sm:w-12 h-10 sm:h-12 bg-teal-100 rounded-xl flex items-center justify-center group-hover:scale-110 smooth-transition flex-shrink-0">
-                      <Phone className="w-5 sm:w-6 h-5 sm:h-6 text-teal-600" />
+                    <div className="w-10 sm:w-12 h-10 sm:h-12 bg-red-100 rounded-xl flex items-center justify-center group-hover:scale-110 smooth-transition flex-shrink-0">
+                      <Phone className="w-5 sm:w-6 h-5 sm:h-6 text-red-600" />
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="font-semibold text-sm sm:text-base text-gray-900">Telepon Langsung</div>
                       <div className="text-xs sm:text-sm text-gray-600">0857-8276-3529</div>
                     </div>
-                    <ArrowRight className="w-3 sm:w-4 h-3 sm:h-4 text-teal-600 flex-shrink-0" />
+                    <ArrowRight className="w-3 sm:w-4 h-3 sm:h-4 text-red-600 flex-shrink-0" />
                   </a>
                 </div>
               </div>
@@ -460,7 +460,7 @@ const OptimizedContact = () => {
           <div className={`text-center mb-12 transition-all duration-1000 ease-out ${
             mapVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
           }`}>
-            <span className="inline-block mb-4 px-4 py-2 bg-teal-50 text-teal-600 rounded-full text-sm font-medium">
+            <span className="inline-block mb-4 px-4 py-2 bg-red-50 text-red-600 rounded-full text-sm font-medium">
               Lokasi
             </span>
             <h2 className="text-3xl md:text-4xl font-bold mb-4 gradient-text">Kunjungi Kantor Kami</h2>
@@ -474,8 +474,8 @@ const OptimizedContact = () => {
           }`}>
             <div className="aspect-video bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center relative">
               <div className="text-center p-8">
-                <div className="w-20 h-20 bg-teal-100 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                  <MapPin className="w-10 h-10 text-teal-600" />
+                <div className="w-20 h-20 bg-red-100 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                  <MapPin className="w-10 h-10 text-red-600" />
                 </div>
                 <h3 className="font-bold text-2xl mb-3 gradient-text">RADAR Education Center</h3>
                 <div className="text-gray-600 leading-relaxed mb-6 max-w-md mx-auto">
@@ -492,7 +492,7 @@ const OptimizedContact = () => {
                     Buka di Google Maps
                   </button>
                   <button 
-                    className="inline-flex items-center justify-center px-6 py-3 border-2 border-teal-600 text-teal-600 rounded-lg font-semibold hover:bg-teal-600 hover:text-white hover:scale-105 smooth-transition"
+                    className="inline-flex items-center justify-center px-6 py-3 border-2 border-red-600 text-red-600 rounded-lg font-semibold hover:bg-red-600 hover:text-white hover:scale-105 smooth-transition"
                     onClick={() => window.open('https://wa.me/6285782763529?text=Halo, saya ingin berkunjung ke kantor RADAR Education Center. Bisa info jam operasional?', '_blank')}
                   >
                     <Phone className="w-5 h-5 mr-2" />
@@ -507,7 +507,7 @@ const OptimizedContact = () => {
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
                   <h4 className="font-semibold text-gray-900 mb-3 flex items-center gap-2">
-                    <Clock className="w-5 h-5 text-teal-600" />
+                    <Clock className="w-5 h-5 text-red-600" />
                     Jam Operasional
                   </h4>
                   <div className="space-y-2 text-sm text-gray-600">
@@ -521,14 +521,14 @@ const OptimizedContact = () => {
                     </div>
                     <div className="flex justify-between">
                       <span>Minggu</span>
-                      <span className="font-medium text-teal-600">Tutup</span>
+                      <span className="font-medium text-red-600">Tutup</span>
                     </div>
                   </div>
                 </div>
                 
                 <div>
                   <h4 className="font-semibold text-gray-900 mb-3 flex items-center gap-2">
-                    <Building className="w-5 h-5 text-teal-600" />
+                    <Building className="w-5 h-5 text-red-600" />
                     Petunjuk Arah
                   </h4>
                   <div className="space-y-2 text-sm text-gray-600">

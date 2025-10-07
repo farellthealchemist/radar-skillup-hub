@@ -208,10 +208,10 @@ const OptimizedBlog = () => {
       {/* Consistent Styles */}
       <style>{`
         .hero-gradient {
-          background: linear-gradient(135deg, #14b8a6 0%, #0d9488 100%);
+          background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
         }
         .gradient-text {
-          background: linear-gradient(45deg, #14b8a6, #0d9488, #0f766e);
+          background: linear-gradient(45deg, #ef4444, #dc2626, #b91c1c);
           background-clip: text;
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
@@ -227,7 +227,7 @@ const OptimizedBlog = () => {
           transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .btn-glow:hover {
-          box-shadow: 0 0 20px rgba(20, 184, 166, 0.4);
+          box-shadow: 0 0 20px rgba(220, 38, 38, 0.4);
         }
         .line-clamp-2 {
           display: -webkit-box;
@@ -257,7 +257,7 @@ const OptimizedBlog = () => {
                   placeholder="Cari artikel atau topik..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent smooth-transition"
+                  className="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent smooth-transition"
                 />
               </div>
 
@@ -269,7 +269,7 @@ const OptimizedBlog = () => {
                     onClick={() => setActiveCategory(category.name)}
                     className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium smooth-transition hover-lift ${
                       activeCategory === category.name
-                        ? 'bg-teal-600 text-white shadow-lg'
+                        ? 'bg-red-600 text-white shadow-lg'
                         : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                     }`}
                   >
@@ -295,7 +295,7 @@ const OptimizedBlog = () => {
         <section ref={featuredRef} className="py-20 bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
-              <span className="inline-block mb-4 px-4 py-2 bg-teal-50 text-teal-600 rounded-full text-sm font-medium">
+              <span className="inline-block mb-4 px-4 py-2 bg-red-50 text-red-600 rounded-full text-sm font-medium">
                 Artikel Pilihan
               </span>
               <h2 className="text-3xl md:text-4xl font-bold gradient-text">
@@ -316,7 +316,7 @@ const OptimizedBlog = () => {
                       loading="lazy"
                     />
                     <div className="absolute top-4 left-4">
-                      <span className="px-3 py-1 bg-teal-600 text-white text-sm font-medium rounded-full">
+                      <span className="px-3 py-1 bg-red-600 text-white text-sm font-medium rounded-full">
                         Featured
                       </span>
                     </div>
@@ -418,7 +418,7 @@ const OptimizedBlog = () => {
                       <span className="text-xs text-gray-500">{post.readTime}</span>
                     </div>
                     
-                    <h3 className="font-bold text-lg mb-3 line-clamp-2 group-hover:text-teal-600 smooth-transition">
+                    <h3 className="font-bold text-lg mb-3 line-clamp-2 group-hover:text-red-600 smooth-transition">
                       {post.title}
                     </h3>
                     
@@ -439,7 +439,7 @@ const OptimizedBlog = () => {
                     
                     <Link 
                       to="#"
-                      className="inline-flex items-center text-teal-600 hover:text-teal-700 font-medium text-sm group-hover:scale-105 smooth-transition"
+                      className="inline-flex items-center text-red-600 hover:text-red-700 font-medium text-sm group-hover:scale-105 smooth-transition"
                     >
                       Baca Selengkapnya
                       <ArrowRight className="w-3 h-3 ml-1" />
@@ -470,7 +470,7 @@ const OptimizedBlog = () => {
           {/* Load More Button - only show if there are results */}
           {filteredBlogPosts.length > 0 && (
             <div className="text-center mt-12">
-              <button className="px-8 py-3 border-2 border-teal-600 text-teal-600 font-semibold rounded-lg hover:bg-teal-600 hover:text-white hover:scale-105 smooth-transition">
+              <button className="px-8 py-3 border-2 border-red-600 text-red-600 font-semibold rounded-lg hover:bg-red-600 hover:text-white hover:scale-105 smooth-transition">
                 Muat Lebih Banyak Artikel
               </button>
             </div>
@@ -484,7 +484,7 @@ const OptimizedBlog = () => {
           <div className={`transition-all duration-1000 ease-out ${
             newsletterVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
           }`}>
-            <div className="bg-gradient-to-r from-teal-600 to-teal-700 rounded-3xl p-12 text-white relative overflow-hidden">
+            <div className="bg-gradient-to-r from-red-600 to-red-700 rounded-3xl p-12 text-white relative overflow-hidden">
               <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4xIj48Y2lyY2xlIGN4PSIzMCIgY3k9IjMwIiByPSIyIi8+PC9nPjwvZz48L3N2Zz4=')] opacity-20"></div>
               
               <div className="relative z-10">
@@ -503,7 +503,7 @@ const OptimizedBlog = () => {
                     placeholder="Masukkan email Anda"
                     className="flex-1 px-4 py-3 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-white"
                   />
-                  <button className="px-8 py-3 bg-white text-teal-600 font-semibold rounded-lg hover:bg-gray-100 hover:scale-105 smooth-transition">
+                  <button className="px-8 py-3 bg-white text-red-600 font-semibold rounded-lg hover:bg-gray-100 hover:scale-105 smooth-transition">
                     Berlangganan
                   </button>
                 </div>
@@ -543,7 +543,7 @@ const OptimizedBlog = () => {
                 href="https://wa.me/6285782763529?text=Halo%2C%20saya%20ingin%20konsultasi%20tentang%20program%20kursus%20di%20RADAR%20Education%20Center"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center px-8 py-4 border-2 border-teal-600 text-teal-600 font-semibold rounded-lg hover:bg-teal-600 hover:text-white hover:scale-105 smooth-transition"
+                className="inline-flex items-center justify-center px-8 py-4 border-2 border-red-600 text-red-600 font-semibold rounded-lg hover:bg-red-600 hover:text-white hover:scale-105 smooth-transition"
               >
                 Konsultasi Gratis
               </a>

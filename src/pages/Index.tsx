@@ -272,40 +272,40 @@ const Homepage = () => {
   const renderServiceIcon = (serviceId) => {
     switch (serviceId) {
       case 'programming':
-        return <Code className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 text-teal-600" />;
+        return <Code className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 text-red-600" />;
       case 'scratch':
-        return <Palette className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 text-teal-600" />;
+        return <Palette className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 text-red-600" />;
       case 'office':
-        return <FileText className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 text-teal-600" />;
+        return <FileText className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 text-red-600" />;
       case 'networking':
-        return <Network className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 text-teal-600" />;
+        return <Network className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 text-red-600" />;
       default:
-        return <Code className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 text-teal-600" />;
+        return <Code className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 text-red-600" />;
     }
   };
 
   const renderWhyChooseIcon = (index) => {
     switch (index) {
       case 0:
-        return <Users className="w-5 h-5 sm:w-6 sm:h-6 lg:w-8 lg:h-8 text-teal-600" />;
+        return <Users className="w-5 h-5 sm:w-6 sm:h-6 lg:w-8 lg:h-8 text-red-600" />;
       case 1:
-        return <Award className="w-5 h-5 sm:w-6 sm:h-6 lg:w-8 lg:h-8 text-teal-600" />;
+        return <Award className="w-5 h-5 sm:w-6 sm:h-6 lg:w-8 lg:h-8 text-red-600" />;
       case 2:
-        return <Clock className="w-5 h-5 sm:w-6 sm:h-6 lg:w-8 lg:h-8 text-teal-600" />;
+        return <Clock className="w-5 h-5 sm:w-6 sm:h-6 lg:w-8 lg:h-8 text-red-600" />;
       case 3:
-        return <CheckCircle className="w-5 h-5 sm:w-6 sm:h-6 lg:w-8 lg:h-8 text-teal-600" />;
+        return <CheckCircle className="w-5 h-5 sm:w-6 sm:h-6 lg:w-8 lg:h-8 text-red-600" />;
       case 4:
-        return <Target className="w-5 h-5 sm:w-6 sm:h-6 lg:w-8 lg:h-8 text-teal-600" />;
+        return <Target className="w-5 h-5 sm:w-6 sm:h-6 lg:w-8 lg:h-8 text-red-600" />;
       case 5:
-        return <Shield className="w-5 h-5 sm:w-6 sm:h-6 lg:w-8 lg:h-8 text-teal-600" />;
+        return <Shield className="w-5 h-5 sm:w-6 sm:h-6 lg:w-8 lg:h-8 text-red-600" />;
       default:
-        return <Users className="w-5 h-5 sm:w-6 sm:h-6 lg:w-8 lg:h-8 text-teal-600" />;
+        return <Users className="w-5 h-5 sm:w-6 sm:h-6 lg:w-8 lg:h-8 text-red-600" />;
     }
   };
 
   const styles = `
     .hero-gradient {
-      background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%);
+      background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
     }
     .hero-pattern {
       background-image: 
@@ -315,7 +315,7 @@ const Homepage = () => {
       background-size: 60px 60px, 40px 40px, 80px 80px;
     }
     .gradient-text-animated {
-      background: linear-gradient(45deg, #14b8a6, #0d9488, #0f766e);
+      background: linear-gradient(45deg, #ef4444, #dc2626, #b91c1c);
       background-clip: text;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -336,7 +336,7 @@ const Homepage = () => {
       box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
     }
     .btn-glow:hover {
-      box-shadow: 0 0 20px rgba(13, 148, 136, 0.4);
+      box-shadow: 0 0 20px rgba(220, 38, 38, 0.4);
     }
     .pulse-border {
       position: relative;
@@ -346,7 +346,7 @@ const Homepage = () => {
       position: absolute;
       inset: -2px;
       padding: 2px;
-      background: linear-gradient(45deg, #0d9488, #14b8a6);
+      background: linear-gradient(45deg, #dc2626, #ef4444);
       border-radius: inherit;
       opacity: 0;
       transition: opacity 0.3s ease;
@@ -400,7 +400,7 @@ const Homepage = () => {
             backgroundAttachment: "scroll"
           }}
         ></div>
-        <div className="absolute inset-0 bg-gradient-to-r from-teal-900/95 via-teal-800/90 to-teal-700/85"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-red-900/95 via-red-800/90 to-red-700/85"></div>
         
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
           <div className="grid lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 items-center">
@@ -432,11 +432,11 @@ const Homepage = () => {
               <div className={`flex flex-col gap-3 sm:gap-4 transition-all duration-800 ease-out delay-600 ${
                 heroVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
               }`}>
-                <Link to="/register" className="inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 bg-white text-teal-600 font-semibold rounded-lg hover:bg-gray-100 hover:scale-105 smooth-transition btn-glow text-sm sm:text-base">
+                <Link to="/register" className="inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 bg-white text-red-600 font-semibold rounded-lg hover:bg-gray-100 hover:scale-105 smooth-transition btn-glow text-sm sm:text-base">
                   <PlayCircle className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
                   Mulai Belajar Sekarang
                 </Link>
-                <Link to="/courses" className="inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 border-2 border-white text-white bg-transparent hover:bg-white hover:text-teal-600 font-semibold rounded-lg hover:scale-105 smooth-transition text-sm sm:text-base">
+                <Link to="/courses" className="inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 border-2 border-white text-white bg-transparent hover:bg-white hover:text-red-600 font-semibold rounded-lg hover:scale-105 smooth-transition text-sm sm:text-base">
                   Lihat Program Kursus
                   <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 ml-2" />
                 </Link>
@@ -451,14 +451,14 @@ const Homepage = () => {
                     <img 
                       src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&crop=face" 
                       alt="Asep Surahmat M.Kom" 
-                      className="w-12 h-12 rounded-full object-cover border-2 border-teal-600/20 hover-scale smooth-transition flex-shrink-0"
+                      className="w-12 h-12 rounded-full object-cover border-2 border-red-600/20 hover-scale smooth-transition flex-shrink-0"
                     />
                     <div className="flex-1 min-w-0">
                       <h3 className="font-semibold text-gray-900 smooth-transition text-sm sm:text-base truncate">Asep Surahmat M.Kom</h3>
                       <p className="text-xs sm:text-sm text-gray-500 mb-2">Lead Instructor</p>
-                      <div className="flex items-center gap-2 px-2 py-1 bg-gradient-to-r from-teal-50 to-teal-100 rounded-full hover-scale smooth-transition">
-                        <MapPin className="w-3 h-3 text-teal-600 animate-pulse-soft flex-shrink-0" />
-                        <span className="text-xs text-teal-700 font-medium truncate">15+ Tahun Exp</span>
+                      <div className="flex items-center gap-2 px-2 py-1 bg-gradient-to-r from-red-50 to-red-100 rounded-full hover-scale smooth-transition">
+                        <MapPin className="w-3 h-3 text-red-600 animate-pulse-soft flex-shrink-0" />
+                        <span className="text-xs text-red-700 font-medium truncate">15+ Tahun Exp</span>
                       </div>
                     </div>
                   </div>
@@ -469,7 +469,7 @@ const Homepage = () => {
                     <img 
                       src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&h=80&fit=crop&crop=face" 
                       alt="Rizqi Darmawan" 
-                      className="w-12 h-12 rounded-full object-cover border-2 border-teal-600/20 hover-scale smooth-transition flex-shrink-0"
+                      className="w-12 h-12 rounded-full object-cover border-2 border-red-600/20 hover-scale smooth-transition flex-shrink-0"
                     />
                     <div className="flex-1 min-w-0">
                       <h3 className="font-semibold text-gray-900 smooth-transition text-sm sm:text-base truncate">Rizqi Darmawan</h3>
@@ -495,14 +495,14 @@ const Homepage = () => {
                       <img 
                         src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&crop=face" 
                         alt="Asep Surahmat M.Kom" 
-                        className="w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover border-2 border-teal-600/20 hover-scale smooth-transition flex-shrink-0"
+                        className="w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover border-2 border-red-600/20 hover-scale smooth-transition flex-shrink-0"
                       />
                       <div className="flex-1 min-w-0">
                         <h3 className="font-semibold text-gray-900 smooth-transition text-sm sm:text-base truncate">Asep Surahmat M.Kom</h3>
                         <p className="text-xs sm:text-sm text-gray-500 mb-1 sm:mb-2">Lead Instructor</p>
-                        <div className="flex items-center gap-1 sm:gap-2 px-2 py-1 bg-gradient-to-r from-teal-50 to-teal-100 rounded-full hover-scale smooth-transition">
-                          <MapPin className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-teal-600 animate-pulse-soft flex-shrink-0" />
-                          <span className="text-xs text-teal-700 font-medium truncate">15+ Tahun Exp</span>
+                        <div className="flex items-center gap-1 sm:gap-2 px-2 py-1 bg-gradient-to-r from-red-50 to-red-100 rounded-full hover-scale smooth-transition">
+                          <MapPin className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-red-600 animate-pulse-soft flex-shrink-0" />
+                          <span className="text-xs text-red-700 font-medium truncate">15+ Tahun Exp</span>
                         </div>
                       </div>
                     </div>
@@ -513,7 +513,7 @@ const Homepage = () => {
                       <img 
                         src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&h=80&fit=crop&crop=face" 
                         alt="Rizqi Darmawan" 
-                        className="w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover border-2 border-teal-600/20 hover-scale smooth-transition flex-shrink-0"
+                        className="w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover border-2 border-red-600/20 hover-scale smooth-transition flex-shrink-0"
                       />
                       <div className="flex-1 min-w-0">
                         <h3 className="font-semibold text-gray-900 smooth-transition text-sm sm:text-base truncate">Rizqi Darmawan</h3>
@@ -536,7 +536,7 @@ const Homepage = () => {
       <section className="py-12 sm:py-16 lg:py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-10 sm:mb-12 lg:mb-16">
-            <span className="inline-block mb-3 sm:mb-4 px-3 sm:px-4 py-2 bg-teal-50 text-teal-600 rounded-full text-xs sm:text-sm font-medium">
+            <span className="inline-block mb-3 sm:mb-4 px-3 sm:px-4 py-2 bg-red-50 text-red-600 rounded-full text-xs sm:text-sm font-medium">
               Program Unggulan
             </span>
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-3 sm:mb-4">
@@ -562,12 +562,12 @@ const Homepage = () => {
                     className="w-full h-full object-cover group-hover:scale-110 smooth-transition"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent group-hover:from-black/60 smooth-transition"></div>
-                  <div className="absolute bottom-3 sm:bottom-4 left-3 sm:left-4 text-white group-hover:scale-110 group-hover:text-teal-400 smooth-transition">
+                  <div className="absolute bottom-3 sm:bottom-4 left-3 sm:left-4 text-white group-hover:scale-110 group-hover:text-red-400 smooth-transition">
                     {renderServiceIcon(service.id)}
                   </div>
                   {service.popular && (
                     <div className="absolute top-3 sm:top-4 right-3 sm:right-4">
-                      <span className="px-2 py-1 bg-teal-600 text-white text-xs rounded-full font-medium">
+                      <span className="px-2 py-1 bg-red-600 text-white text-xs rounded-full font-medium">
                         Popular
                       </span>
                     </div>
@@ -578,7 +578,7 @@ const Homepage = () => {
                 </div>
                 
                 <div className="p-4 sm:p-5 lg:p-6 relative">
-                  <h3 className="font-bold text-base sm:text-lg mb-2 sm:mb-3 group-hover:text-teal-600 smooth-transition line-clamp-1">
+                  <h3 className="font-bold text-base sm:text-lg mb-2 sm:mb-3 group-hover:text-red-600 smooth-transition line-clamp-1">
                     {service.title}
                   </h3>
                   <p className="text-gray-600 text-xs sm:text-sm mb-3 sm:mb-4 leading-relaxed line-clamp-2">
@@ -588,7 +588,7 @@ const Homepage = () => {
                   <div className="space-y-1.5 sm:space-y-2 mb-3 sm:mb-4">
                     {service.courses.slice(0, 2).map((course, idx) => (
                       <div key={idx} className="flex items-center gap-2 text-xs text-gray-500 hover:text-gray-700 smooth-transition group/item">
-                        <CheckCircle className="w-3 h-3 text-teal-600 flex-shrink-0 group-hover/item:scale-110 smooth-transition" />
+                        <CheckCircle className="w-3 h-3 text-red-600 flex-shrink-0 group-hover/item:scale-110 smooth-transition" />
                         <span className="truncate">{course}</span>
                       </div>
                     ))}
@@ -598,11 +598,11 @@ const Homepage = () => {
                   </div>
                   
                   <div className="flex justify-between items-center mb-3 sm:mb-4 text-xs sm:text-sm">
-                    <span className="text-teal-600 font-semibold">{service.price}</span>
+                    <span className="text-red-600 font-semibold">{service.price}</span>
                     <span className="text-gray-500">{service.duration}</span>
                   </div>
                   
-                  <Link to="/courses" className="w-full py-2 sm:py-2.5 text-xs sm:text-sm border border-teal-600 text-teal-600 rounded-lg hover:bg-teal-600 hover:text-white smooth-transition btn-glow font-medium flex items-center justify-center">
+                  <Link to="/courses" className="w-full py-2 sm:py-2.5 text-xs sm:text-sm border border-red-600 text-red-600 rounded-lg hover:bg-red-600 hover:text-white smooth-transition btn-glow font-medium flex items-center justify-center">
                     Pelajari Lebih Lanjut
                   </Link>
                 </div>
@@ -624,7 +624,7 @@ const Homepage = () => {
                 alt="RADAR Education Center - Pengajar Profesional" 
                 className="rounded-xl lg:rounded-2xl shadow-card w-full hover-scale smooth-transition"
               />
-              <div className={`absolute -top-4 -right-4 sm:-top-6 sm:-right-6 bg-teal-600 text-white p-4 sm:p-6 rounded-xl shadow-card hover-lift animate-float smooth-transition transition-all duration-1000 ease-out delay-300 ${
+              <div className={`absolute -top-4 -right-4 sm:-top-6 sm:-right-6 bg-red-600 text-white p-4 sm:p-6 rounded-xl shadow-card hover-lift animate-float smooth-transition transition-all duration-1000 ease-out delay-300 ${
                 aboutVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
               }`}>
                 <div className="text-center">
@@ -637,7 +637,7 @@ const Homepage = () => {
             <div className={`transition-all duration-1000 ease-out delay-400 ${
               aboutVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-6'
             }`}>
-              <span className="inline-block mb-3 sm:mb-4 px-3 sm:px-4 py-2 bg-teal-50 text-teal-600 rounded-full text-xs sm:text-sm font-medium">
+              <span className="inline-block mb-3 sm:mb-4 px-3 sm:px-4 py-2 bg-red-50 text-red-600 rounded-full text-xs sm:text-sm font-medium">
                 Tentang Kami
               </span>
               <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-4 sm:mb-6 gradient-text-animated leading-tight">
@@ -658,7 +658,7 @@ const Homepage = () => {
                     }`}
                     style={{ transitionDelay: `${index * 150}ms` }}
                   >
-                    <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-teal-50 rounded-full flex items-center justify-center hover-scale animate-pulse-soft">
+                    <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-red-50 rounded-full flex items-center justify-center hover-scale animate-pulse-soft">
                       {renderWhyChooseIcon(index)}
                     </div>
                     <div>
@@ -680,7 +680,7 @@ const Homepage = () => {
                   href="https://wa.me/6285782763529?text=Halo%2C%20saya%20ingin%20konsultasi%20tentang%20program%20kursus%20di%20RADAR%20Education%20Center"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center px-5 sm:px-6 py-2.5 sm:py-3 border border-teal-600 text-teal-600 rounded-lg hover:bg-teal-600 hover:text-white hover:scale-105 smooth-transition text-sm sm:text-base"
+                  className="inline-flex items-center justify-center px-5 sm:px-6 py-2.5 sm:py-3 border border-red-600 text-red-600 rounded-lg hover:bg-red-600 hover:text-white hover:scale-105 smooth-transition text-sm sm:text-base"
                 >
                   Konsultasi Gratis
                 </a>
@@ -694,7 +694,7 @@ const Homepage = () => {
       <section className="py-12 sm:py-16 lg:py-20 bg-white">
         <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
           <div className="text-center mb-10 sm:mb-12 lg:mb-16">
-            <span className="inline-block mb-3 sm:mb-4 px-3 sm:px-4 py-2 bg-teal-50 text-teal-600 rounded-full text-xs sm:text-sm font-medium">
+            <span className="inline-block mb-3 sm:mb-4 px-3 sm:px-4 py-2 bg-red-50 text-red-600 rounded-full text-xs sm:text-sm font-medium">
               Testimoni
             </span>
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-3 sm:mb-4">
@@ -730,7 +730,7 @@ const Homepage = () => {
                       </div>
                       
                       <div className="relative mb-4 sm:mb-6">
-                        <Quote className="w-6 h-6 sm:w-8 sm:h-8 text-teal-600/20 absolute -top-2 sm:-top-4 -left-2 sm:-left-4" />
+                        <Quote className="w-6 h-6 sm:w-8 sm:h-8 text-red-600/20 absolute -top-2 sm:-top-4 -left-2 sm:-left-4" />
                         <p className="text-gray-600 text-sm sm:text-base lg:text-lg leading-relaxed italic pl-4 sm:pl-6">
                           "{testimonial.content.length > 150 ? testimonial.content.substring(0, 150) + '...' : testimonial.content}"
                         </p>
@@ -739,7 +739,7 @@ const Homepage = () => {
                       <div>
                         <div className="font-bold text-base sm:text-lg text-gray-900">{testimonial.name}</div>
                         <div className="text-xs sm:text-sm text-gray-500">{testimonial.role}</div>
-                        <div className="text-xs sm:text-sm text-teal-600 font-medium">{testimonial.company}</div>
+                        <div className="text-xs sm:text-sm text-red-600 font-medium">{testimonial.company}</div>
                       </div>
                     </div>
                   </div>
@@ -754,7 +754,7 @@ const Homepage = () => {
                   onClick={() => setActiveTestimonial(index)}
                   className={`w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full transition-all duration-300 ${
                     activeTestimonial === index 
-                      ? 'bg-teal-600 scale-125' 
+                      ? 'bg-red-600 scale-125' 
                       : 'bg-gray-300 hover:bg-gray-400'
                   }`}
                 />
@@ -771,7 +771,7 @@ const Homepage = () => {
             <div className={`text-center transition-all duration-800 ease-out ${
               statsVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
             }`}>
-              <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-teal-600 mb-1 sm:mb-2">
+              <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-red-600 mb-1 sm:mb-2">
                 {statsVisible ? studentCount : 0}+
               </div>
               <div className="text-xs sm:text-sm lg:text-base text-gray-600 leading-tight">Alumni Tersertifikasi</div>
@@ -779,7 +779,7 @@ const Homepage = () => {
             <div className={`text-center transition-all duration-800 ease-out delay-200 ${
               statsVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
             }`}>
-              <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-teal-600 mb-1 sm:mb-2">
+              <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-red-600 mb-1 sm:mb-2">
                 {statsVisible ? courseCount : 0}+
               </div>
               <div className="text-xs sm:text-sm lg:text-base text-gray-600 leading-tight">Program Kursus</div>
@@ -787,7 +787,7 @@ const Homepage = () => {
             <div className={`text-center transition-all duration-800 ease-out delay-400 ${
               statsVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
             }`}>
-              <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-teal-600 mb-1 sm:mb-2">
+              <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-red-600 mb-1 sm:mb-2">
                 {statsVisible ? successRate : 0}%
               </div>
               <div className="text-xs sm:text-sm lg:text-base text-gray-600 leading-tight">Tingkat Kelulusan</div>
@@ -795,7 +795,7 @@ const Homepage = () => {
             <div className={`text-center transition-all duration-800 ease-out delay-600 ${
               statsVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
             }`}>
-              <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-teal-600 mb-1 sm:mb-2">
+              <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-red-600 mb-1 sm:mb-2">
                 {statsVisible ? supportTime : 0}/7
               </div>
               <div className="text-xs sm:text-sm lg:text-base text-gray-600 leading-tight">Support Online</div>
@@ -804,14 +804,14 @@ const Homepage = () => {
         </div>
       </section>
 
-      {/* FAQ Section - UPDATED WITH SMOOTH ANIMATION */}
+      {/* FAQ Section */}
       <section ref={faqRef} className="py-12 sm:py-16 lg:py-20 bg-white">
         <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
           <div className="text-center mb-8 sm:mb-12 lg:mb-16">
             <div className={`transition-all duration-800 ease-out ${
               faqVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
             }`}>
-              <span className="inline-block mb-3 sm:mb-4 px-3 sm:px-4 py-2 bg-teal-50 text-teal-600 rounded-full text-xs sm:text-sm font-medium">
+              <span className="inline-block mb-3 sm:mb-4 px-3 sm:px-4 py-2 bg-red-50 text-red-600 rounded-full text-xs sm:text-sm font-medium">
                 FAQ
               </span>
               <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
@@ -832,42 +832,42 @@ const Homepage = () => {
                   <div
                     key={index}
                     className={`group bg-white rounded-xl border border-gray-200 shadow-card hover:shadow-card-hover hover-lift overflow-hidden pulse-border transition-all duration-500 ease-out ${
-                      openFaqIndex === index ? 'ring-2 ring-teal-100 border-teal-200 shadow-lg' : ''
+                      openFaqIndex === index ? 'ring-2 ring-red-100 border-red-200 shadow-lg' : ''
                     }`}
                   >
                     <button
                       onClick={() => toggleFaq(index)}
                       disabled={isFaqAnimating}
-                      className="w-full p-6 text-left focus:outline-none focus:ring-4 focus:ring-teal-100 transition-all duration-300 ease-out"
+                      className="w-full p-6 text-left focus:outline-none focus:ring-4 focus:ring-red-100 transition-all duration-300 ease-out"
                     >
                       <div className="flex items-center justify-between">
                         <div className="flex items-start gap-4 flex-1">
                           <div className={`flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center transition-all duration-400 ease-out ${
                             openFaqIndex === index 
-                              ? 'bg-teal-100 scale-110 rotate-6' 
-                              : 'bg-teal-50 group-hover:bg-teal-100 group-hover:scale-105'
+                              ? 'bg-red-100 scale-110 rotate-6' 
+                              : 'bg-red-50 group-hover:bg-red-100 group-hover:scale-105'
                           }`}>
                             <HelpCircle className={`w-5 h-5 transition-all duration-400 ease-out ${
                               openFaqIndex === index 
-                                ? 'text-teal-600 scale-110' 
-                                : 'text-teal-600 group-hover:scale-105'
+                                ? 'text-red-600 scale-110' 
+                                : 'text-red-600 group-hover:scale-105'
                             }`} />
                           </div>
                           <h3 className={`font-bold text-lg leading-tight transition-all duration-400 ease-out ${
                             openFaqIndex === index 
-                              ? 'text-teal-600 scale-105' 
-                              : 'text-gray-900 group-hover:text-teal-600'
+                              ? 'text-red-600 scale-105' 
+                              : 'text-gray-900 group-hover:text-red-600'
                           }`}>
                             {item.question}
                           </h3>
                         </div>
                         <div className={`flex-shrink-0 ml-4 p-2 rounded-full transition-all duration-500 ease-out ${
                           openFaqIndex === index 
-                            ? 'bg-teal-100 rotate-180 scale-110' 
-                            : 'bg-gray-100 group-hover:bg-teal-50 group-hover:scale-105'
+                            ? 'bg-red-100 rotate-180 scale-110' 
+                            : 'bg-gray-100 group-hover:bg-red-50 group-hover:scale-105'
                         }`}>
                           <ChevronDown className={`w-5 h-5 transition-all duration-500 ease-out ${
-                            openFaqIndex === index ? 'text-teal-600' : 'text-gray-500 group-hover:text-teal-500'
+                            openFaqIndex === index ? 'text-red-600' : 'text-gray-500 group-hover:text-red-500'
                           }`} />
                         </div>
                       </div>
@@ -893,7 +893,7 @@ const Homepage = () => {
                         <div className="ml-14 pt-2">
                           <div className={`border-t transition-all duration-400 ${
                             openFaqIndex === index 
-                              ? 'border-teal-200 bg-gradient-to-r from-teal-50 to-transparent ease-out' 
+                              ? 'border-red-200 bg-gradient-to-r from-red-50 to-transparent ease-out' 
                               : 'border-gray-100 ease-in'
                           } rounded-sm`}></div>
                           
@@ -903,7 +903,7 @@ const Homepage = () => {
                               : 'opacity-0 transform translate-y-2 delay-0 ease-in'
                           }`}>
                             <p className="text-gray-600 leading-relaxed text-base relative">
-                              <span className={`absolute inset-0 bg-gradient-to-r from-teal-50/20 to-transparent rounded-lg transition-opacity duration-400 ${
+                              <span className={`absolute inset-0 bg-gradient-to-r from-red-50/20 to-transparent rounded-lg transition-opacity duration-400 ${
                                 openFaqIndex === index ? 'opacity-100' : 'opacity-0'
                               }`}></span>
                               <span className="relative z-10">{item.answer}</span>
@@ -918,14 +918,14 @@ const Homepage = () => {
 
               <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl p-6 sm:p-8 text-center mt-8 relative overflow-hidden">
                 <div className="absolute inset-0 opacity-30">
-                  <div className="absolute top-0 left-0 w-20 h-20 bg-teal-100 rounded-full blur-xl animate-pulse"></div>
-                  <div className="absolute bottom-0 right-0 w-32 h-32 bg-teal-50 rounded-full blur-2xl animate-pulse delay-1000"></div>
+                  <div className="absolute top-0 left-0 w-20 h-20 bg-red-100 rounded-full blur-xl animate-pulse"></div>
+                  <div className="absolute bottom-0 right-0 w-32 h-32 bg-red-50 rounded-full blur-2xl animate-pulse delay-1000"></div>
                 </div>
                 
                 <div className="max-w-2xl mx-auto relative z-10">
                   <div className="flex justify-center mb-4">
-                    <div className="p-3 bg-gradient-to-br from-teal-100 to-teal-200 rounded-full animate-float">
-                      <MessageCircle className="w-8 h-8 text-teal-600" />
+                    <div className="p-3 bg-gradient-to-br from-red-100 to-red-200 rounded-full animate-float">
+                      <MessageCircle className="w-8 h-8 text-red-600" />
                     </div>
                   </div>
                   
@@ -948,7 +948,7 @@ const Homepage = () => {
                     </a>
                     <Link 
                       to="/contact"
-                      className="inline-flex items-center justify-center px-6 py-3 border border-teal-600 text-teal-600 font-semibold rounded-lg hover:bg-teal-600 hover:text-white hover:scale-105 hover:shadow-xl transition-all duration-300 ease-out text-sm sm:text-base group"
+                      className="inline-flex items-center justify-center px-6 py-3 border border-red-600 text-red-600 font-semibold rounded-lg hover:bg-red-600 hover:text-white hover:scale-105 hover:shadow-xl transition-all duration-300 ease-out text-sm sm:text-base group"
                     >
                       <MessageCircle className="w-4 h-4 mr-2 group-hover:animate-pulse" />
                       Chat Live Support
@@ -1023,7 +1023,7 @@ const Homepage = () => {
                 <div className="flex flex-col gap-3 sm:gap-4">
                   <Link 
                     to="/courses"
-                    className="px-6 sm:px-8 py-3 sm:py-4 border-2 border-white text-white font-semibold rounded-lg hover:bg-white hover:text-teal-600 hover:scale-105 smooth-transition text-sm sm:text-base flex items-center justify-center"
+                    className="px-6 sm:px-8 py-3 sm:py-4 border-2 border-white text-white font-semibold rounded-lg hover:bg-white hover:text-red-600 hover:scale-105 smooth-transition text-sm sm:text-base flex items-center justify-center"
                   >
                     Lihat Semua Kursus
                     <ArrowRight className="w-4 h-4 ml-2" />

@@ -23,7 +23,7 @@ const Navigation = () => {
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm border-b">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          {/* Logo - With elegant animation */}
+          {/* Logo */}
           <Link 
             to="/" 
             className={`flex items-center transition-all duration-700 ease-out ${
@@ -43,43 +43,44 @@ const Navigation = () => {
             />
           </Link>
 
-          {/* Desktop Navigation - Staggered animation */}
+          {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
             {navItems.map((item, index) => (
               <Link
                 key={item.path}
                 to={item.path}
-                className={`font-medium transition-all duration-500 ease-out hover:text-primary relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-primary after:scale-x-0 after:origin-left after:transition-transform after:duration-300 hover:after:scale-x-100 ${
+                className={`font-medium transition-all duration-500 ease-out hover:text-red-600 relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-red-600 after:scale-x-0 after:origin-left after:transition-transform after:duration-300 hover:after:scale-x-100 ${
                   isActive(item.path)
-                    ? "text-primary after:scale-x-100"
+                    ? "text-red-600 after:scale-x-100"
                     : "text-foreground"
                 } ${
                   isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'
                 }`}
-                style={{ 
-                  transitionDelay: `${200 + (index * 100)}ms` 
-                }}
+                style={{ transitionDelay: `${200 + (index * 100)}ms` }}
               >
                 {item.name}
               </Link>
             ))}
           </div>
 
-          {/* CTA - Delayed animation */}
+          {/* CTA Button */}
           <div className={`hidden lg:flex items-center transition-all duration-700 ease-out ${
             isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'
           }`} style={{ transitionDelay: '700ms' }}>
             <Link to="/register">
-              <Button size="sm" className="hero-gradient text-white hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-primary/50">
+              <Button 
+                size="sm" 
+                className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-red-500/50"
+              >
                 Daftar Sekarang
               </Button>
             </Link>
           </div>
 
-          {/* Mobile menu button - With animation */}
+          {/* Mobile Menu Button */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className={`md:hidden p-2 rounded-md text-foreground hover:text-primary hover:bg-education-gray-light transition-all duration-500 ease-out hover:scale-110 ${
+            className={`md:hidden p-2 rounded-md text-foreground hover:text-red-600 hover:bg-red-50 transition-all duration-500 ease-out hover:scale-110 ${
               isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'
             }`}
             style={{ transitionDelay: '600ms' }}
@@ -90,7 +91,7 @@ const Navigation = () => {
           </button>
         </div>
 
-        {/* Mobile Navigation - Smooth slide animation */}
+        {/* Mobile Navigation */}
         <div className={`md:hidden overflow-hidden transition-all duration-500 ease-out ${
           isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
         }`}>
@@ -101,8 +102,8 @@ const Navigation = () => {
                   key={item.path}
                   to={item.path}
                   onClick={() => setIsOpen(false)}
-                  className={`font-medium transition-all duration-500 ease-out hover:text-primary hover:translate-x-2 ${
-                    isActive(item.path) ? "text-primary" : "text-foreground"
+                  className={`font-medium transition-all duration-500 ease-out hover:text-red-600 hover:translate-x-2 ${
+                    isActive(item.path) ? "text-red-600" : "text-foreground"
                   } ${
                     isOpen ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'  
                   }`}
@@ -115,7 +116,10 @@ const Navigation = () => {
                 isOpen ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
               }`} style={{ transitionDelay: '250ms' }}>
                 <Link to="/register" onClick={() => setIsOpen(false)}>
-                  <Button size="sm" className="hero-gradient text-white w-full hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-primary/50">
+                  <Button 
+                    size="sm" 
+                    className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white w-full hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-red-500/50"
+                  >
                     Daftar Sekarang
                   </Button>
                 </Link>
