@@ -49,9 +49,9 @@ const Navigation = () => {
               <Link
                 key={item.path}
                 to={item.path}
-                className={`font-medium transition-all duration-500 ease-out hover:text-teal-600 relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-teal-600 after:scale-x-0 after:origin-left after:transition-transform after:duration-300 hover:after:scale-x-100 ${
+                className={`font-medium transition-all duration-500 ease-out hover:text-primary relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-primary after:scale-x-0 after:origin-left after:transition-transform after:duration-300 hover:after:scale-x-100 ${
                   isActive(item.path)
-                    ? "text-teal-600 after:scale-x-100"
+                    ? "text-primary after:scale-x-100"
                     : "text-foreground"
                 } ${
                   isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'
@@ -70,7 +70,7 @@ const Navigation = () => {
             isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'
           }`} style={{ transitionDelay: '700ms' }}>
             <Link to="/register">
-              <Button size="sm" className="bg-gradient-to-r from-teal-600 to-teal-700 hover:from-teal-700 hover:to-teal-800 text-white hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-teal-500/50">
+              <Button size="sm" className="hero-gradient text-white hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-primary/50">
                 Daftar Sekarang
               </Button>
             </Link>
@@ -79,7 +79,7 @@ const Navigation = () => {
           {/* Mobile menu button - With animation */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className={`md:hidden p-2 rounded-md text-foreground hover:text-teal-600 hover:bg-teal-50 transition-all duration-500 ease-out hover:scale-110 ${
+            className={`md:hidden p-2 rounded-md text-foreground hover:text-primary hover:bg-education-gray-light transition-all duration-500 ease-out hover:scale-110 ${
               isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'
             }`}
             style={{ transitionDelay: '600ms' }}
@@ -101,8 +101,8 @@ const Navigation = () => {
                   key={item.path}
                   to={item.path}
                   onClick={() => setIsOpen(false)}
-                  className={`font-medium transition-all duration-500 ease-out hover:text-teal-600 hover:translate-x-2 ${
-                    isActive(item.path) ? "text-teal-600" : "text-foreground"
+                  className={`font-medium transition-all duration-500 ease-out hover:text-primary hover:translate-x-2 ${
+                    isActive(item.path) ? "text-primary" : "text-foreground"
                   } ${
                     isOpen ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'  
                   }`}
@@ -115,7 +115,7 @@ const Navigation = () => {
                 isOpen ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
               }`} style={{ transitionDelay: '250ms' }}>
                 <Link to="/register" onClick={() => setIsOpen(false)}>
-                  <Button size="sm" className="bg-gradient-to-r from-teal-600 to-teal-700 hover:from-teal-700 hover:to-teal-800 text-white w-full hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-teal-500/50">
+                  <Button size="sm" className="hero-gradient text-white w-full hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-primary/50">
                     Daftar Sekarang
                   </Button>
                 </Link>
