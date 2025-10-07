@@ -58,9 +58,9 @@ export default {
           ring: "hsl(var(--sidebar-ring))",
         },
         education: {
-          red: "hsl(var(--education-red))",
-          "red-light": "hsl(var(--education-red-light))",
-          "red-dark": "hsl(var(--education-red-dark))",
+          primary: "hsl(var(--education-primary))",
+          "primary-light": "hsl(var(--education-primary-light))",
+          "primary-dark": "hsl(var(--education-primary-dark))",
           gray: "hsl(var(--education-gray))",
           "gray-light": "hsl(var(--education-gray-light))",
           "gray-dark": "hsl(var(--education-gray-dark))",
