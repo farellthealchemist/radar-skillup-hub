@@ -193,17 +193,17 @@ const EnhancedRegister = () => {
 
   const guaranteeFeatures = [
     { 
-      icon: <Shield className="w-8 h-8 text-teal-600" />, 
+      icon: <Shield className="w-8 h-8 text-red-600" />, 
       title: "Garansi Mengulang", 
       description: "Bisa mengulang kelas GRATIS jika belum menguasai materi"
     },
     { 
-      icon: <Target className="w-8 h-8 text-teal-600" />, 
+      icon: <Target className="w-8 h-8 text-red-600" />, 
       title: "Job Assistance", 
       description: "Bantuan penempatan kerja setelah lulus program"
     },
     { 
-      icon: <TrendingUp className="w-8 h-8 text-teal-600" />, 
+      icon: <TrendingUp className="w-8 h-8 text-red-600" />, 
       title: "Kelas Kecil", 
       description: "Maksimal 12 siswa untuk perhatian personal optimal"
     }
@@ -213,10 +213,10 @@ const EnhancedRegister = () => {
     <div className="min-h-screen pt-16 overflow-x-hidden">
       <style>{`
         .hero-gradient {
-          background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%);
+          background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
         }
         .gradient-text {
-          background: linear-gradient(45deg, #14b8a6, #0d9488, #0f766e);
+          background: linear-gradient(45deg, #ef4444, #dc2626, #b91c1c);
           background-clip: text;
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
@@ -232,7 +232,7 @@ const EnhancedRegister = () => {
           transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .btn-glow:hover {
-          box-shadow: 0 0 20px rgba(13, 148, 136, 0.4);
+          box-shadow: 0 0 20px rgba(220, 38, 38, 0.4);
         }
         .animate-spin {
           animation: spin 1s linear infinite;
@@ -293,7 +293,7 @@ const EnhancedRegister = () => {
               {/* Personal Information */}
               <div className="space-y-4">
                 <h3 className="text-lg font-semibold text-gray-900 flex items-center gap-2 pb-2 border-b">
-                  <User className="w-5 h-5 text-teal-600" />
+                  <User className="w-5 h-5 text-red-600" />
                   Data Pribadi
                 </h3>
                 
@@ -305,7 +305,7 @@ const EnhancedRegister = () => {
                     value={formData.fullName}
                     onChange={handleChange}
                     placeholder="Masukkan nama lengkap Anda"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent smooth-transition"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent smooth-transition"
                   />
                 </div>
 
@@ -320,7 +320,7 @@ const EnhancedRegister = () => {
                         value={formData.email}
                         onChange={handleChange}
                         placeholder="nama@email.com"
-                        className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent smooth-transition"
+                        className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent smooth-transition"
                       />
                     </div>
                   </div>
@@ -335,7 +335,7 @@ const EnhancedRegister = () => {
                         value={formData.phone}
                         onChange={handleChange}
                         placeholder="08xx-xxxx-xxxx"
-                        className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent smooth-transition"
+                        className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent smooth-transition"
                       />
                     </div>
                   </div>
@@ -345,7 +345,7 @@ const EnhancedRegister = () => {
               {/* Course Selection */}
               <div className="space-y-4 pt-6 border-t">
                 <h3 className="text-lg font-semibold text-gray-900 flex items-center gap-2 pb-2 border-b">
-                  <BookOpen className="w-5 h-5 text-teal-600" />
+                  <BookOpen className="w-5 h-5 text-red-600" />
                   Pilihan Kursus
                 </h3>
                 
@@ -355,8 +355,8 @@ const EnhancedRegister = () => {
                     {courses.map((course) => (
                       <label 
                         key={course.value}
-                        className={`block p-4 border-2 rounded-lg cursor-pointer smooth-transition hover:border-teal-500 hover:bg-teal-50 ${
-                          formData.course === course.value ? 'border-teal-600 bg-teal-50' : 'border-gray-200 bg-white'
+                        className={`block p-4 border-2 rounded-lg cursor-pointer smooth-transition hover:border-red-500 hover:bg-red-50 ${
+                          formData.course === course.value ? 'border-red-600 bg-red-50' : 'border-gray-200 bg-white'
                         }`}
                       >
                         <div className="flex items-start gap-3">
@@ -366,14 +366,14 @@ const EnhancedRegister = () => {
                             value={course.value}
                             checked={formData.course === course.value}
                             onChange={handleChange}
-                            className="mt-1 w-4 h-4 text-teal-600 focus:ring-teal-500"
+                            className="mt-1 w-4 h-4 text-red-600 focus:ring-red-500"
                           />
                           <div className="flex-1">
                             <div className="flex items-center justify-between mb-1 flex-wrap gap-2">
                               <div className="flex items-center gap-2 flex-wrap">
                                 <span className="font-semibold text-gray-900">{course.label}</span>
                                 {course.popular && (
-                                  <span className="px-2 py-0.5 bg-teal-600 text-white text-xs font-medium rounded">
+                                  <span className="px-2 py-0.5 bg-red-600 text-white text-xs font-medium rounded">
                                     Popular
                                   </span>
                                 )}
@@ -398,7 +398,7 @@ const EnhancedRegister = () => {
                               </span>
                             </div>
                             <div className="flex items-center gap-2">
-                              <span className="text-lg font-bold text-teal-600">{course.price}</span>
+                              <span className="text-lg font-bold text-red-600">{course.price}</span>
                               {course.originalPrice && (
                                 <span className="text-sm text-gray-400 line-through">{course.originalPrice}</span>
                               )}
@@ -416,8 +416,8 @@ const EnhancedRegister = () => {
                     {schedules.map((schedule) => (
                       <label 
                         key={schedule.value}
-                        className={`flex items-center p-3 border-2 rounded-lg cursor-pointer smooth-transition hover:border-teal-500 hover:bg-teal-50 ${
-                          formData.schedule === schedule.value ? 'border-teal-600 bg-teal-50' : 'border-gray-200 bg-white'
+                        className={`flex items-center p-3 border-2 rounded-lg cursor-pointer smooth-transition hover:border-red-500 hover:bg-red-50 ${
+                          formData.schedule === schedule.value ? 'border-red-600 bg-red-50' : 'border-gray-200 bg-white'
                         }`}
                       >
                         <input
@@ -426,7 +426,7 @@ const EnhancedRegister = () => {
                           value={schedule.value}
                           checked={formData.schedule === schedule.value}
                           onChange={handleChange}
-                          className="w-4 h-4 text-teal-600 focus:ring-teal-500"
+                          className="w-4 h-4 text-red-600 focus:ring-red-500"
                         />
                         <div className="ml-3 flex items-center gap-2">
                           <span className="text-lg">{schedule.icon}</span>
@@ -443,7 +443,7 @@ const EnhancedRegister = () => {
                     name="experience"
                     value={formData.experience}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent smooth-transition"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent smooth-transition"
                   >
                     <option value="">Pilih Level Pengalaman</option>
                     <option value="beginner">Pemula - Belum ada pengalaman</option>
@@ -464,7 +464,7 @@ const EnhancedRegister = () => {
                     value={formData.message}
                     onChange={handleChange}
                     placeholder="Tulis pertanyaan atau catatan khusus di sini..."
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent resize-none h-32 smooth-transition"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent resize-none h-32 smooth-transition"
                   />
                 </div>
               </div>
