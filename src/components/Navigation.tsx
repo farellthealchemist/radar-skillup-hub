@@ -102,9 +102,9 @@ const Navigation = () => {
 
         {/* Mobile Navigation */}
         <div className={`md:hidden overflow-hidden transition-all duration-500 ease-out ${
-          isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+          isOpen ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'
         }`}>
-          <div className="py-4 border-t">
+          <div className="py-4 pb-6 border-t">
             <div className="flex flex-col space-y-4">
               {navItems.map((item, index) => (
                 <Link
@@ -124,19 +124,19 @@ const Navigation = () => {
               <div className={`pt-4 border-t space-y-3 transition-all duration-500 ease-out ${
                 isOpen ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
               }`} style={{ transitionDelay: '250ms' }}>
-                <Link to="/login" onClick={() => setIsOpen(false)}>
+                <Link to="/login" onClick={() => setIsOpen(false)} className="block">
                   <Button 
                     size="sm" 
                     variant="outline"
-                    className="border-red-600 text-red-600 w-full"
+                    className="border-red-600 text-red-600 w-full h-10"
                   >
                     Masuk
                   </Button>
                 </Link>
-                <Link to="/register" onClick={() => setIsOpen(false)}>
+                <Link to="/register" onClick={() => setIsOpen(false)} className="block">
                   <Button 
                     size="sm" 
-                    className="bg-gradient-to-r from-red-600 to-red-700 text-white w-full"
+                    className="bg-gradient-to-r from-red-600 to-red-700 text-white w-full h-10"
                   >
                     Daftar Sekarang
                   </Button>
