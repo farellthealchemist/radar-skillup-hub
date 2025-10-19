@@ -6,7 +6,6 @@ import {
   Award, 
   BookOpen, 
   CheckCircle,
-  ArrowRight,
   Star,
   Filter,
   Search,
@@ -261,6 +260,9 @@ const OptimizedCourses = () => {
         .btn-glow:hover {
           box-shadow: 0 0 20px rgba(220, 38, 38, 0.4);
         }
+        .scale-103 {
+          transform: scale(1.03);
+        }
       `}</style>
 
       {/* Hero Section - Simplified without stats */}
@@ -381,7 +383,7 @@ const OptimizedCourses = () => {
                 {/* Course Content */}
                 <div className="p-3 sm:p-5">
                   <div className="flex items-start justify-between mb-2">
-                    <h3 className="font-bold text-base sm:text-lg gradient-text group-hover:scale-105 smooth-transition leading-tight">
+                    <h3 className="font-bold text-base sm:text-lg text-gray-900 group-hover:text-red-600 group-hover:scale-103 transition-all duration-300 ease-in-out leading-tight cursor-pointer origin-left">
                       {course.title}
                     </h3>
                     <div className="flex items-center gap-1 ml-2 flex-shrink-0">

@@ -63,14 +63,23 @@ const Navigation = () => {
             ))}
           </div>
 
-          {/* CTA Button */}
-          <div className={`hidden lg:flex items-center transition-all duration-700 ease-out ${
+          {/* CTA Buttons */}
+          <div className={`hidden lg:flex items-center space-x-3 transition-all duration-700 ease-out ${
             isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'
           }`} style={{ transitionDelay: '700ms' }}>
+            <Link to="/login">
+              <Button 
+                size="sm" 
+                variant="outline"
+                className="border-red-600 text-red-600"
+              >
+                Masuk
+              </Button>
+            </Link>
             <Link to="/register">
               <Button 
                 size="sm" 
-                className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-red-500/50"
+                className="bg-gradient-to-r from-red-600 to-red-700 text-white"
               >
                 Daftar Sekarang
               </Button>
@@ -112,13 +121,22 @@ const Navigation = () => {
                   {item.name}
                 </Link>
               ))}
-              <div className={`pt-4 border-t transition-all duration-500 ease-out ${
+              <div className={`pt-4 border-t space-y-3 transition-all duration-500 ease-out ${
                 isOpen ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
               }`} style={{ transitionDelay: '250ms' }}>
+                <Link to="/login" onClick={() => setIsOpen(false)}>
+                  <Button 
+                    size="sm" 
+                    variant="outline"
+                    className="border-red-600 text-red-600 w-full"
+                  >
+                    Masuk
+                  </Button>
+                </Link>
                 <Link to="/register" onClick={() => setIsOpen(false)}>
                   <Button 
                     size="sm" 
-                    className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white w-full hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-red-500/50"
+                    className="bg-gradient-to-r from-red-600 to-red-700 text-white w-full"
                   >
                     Daftar Sekarang
                   </Button>

@@ -354,6 +354,19 @@ const Homepage = () => {
     .pulse-border:hover::before {
       opacity: 0.3;
     }
+    /* Override pulse-border untuk instructor cards - tetap putih */
+    .instructor-card.pulse-border::before {
+      display: none;
+    }
+    .instructor-card {
+      background-color: white !important;
+    }
+    .instructor-card:hover {
+      background-color: white !important;
+    }
+    .scale-103 {
+      transform: scale(1.03);
+    }
     .animate-pulse-soft {
       animation: pulseSoft 3s infinite;
     }
@@ -441,12 +454,13 @@ const Homepage = () => {
                   <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 ml-2" />
                 </Link>
               </div>
+            
 
               {/* Instructor Cards - Mobile Only */}
               <div className={`mt-16 sm:mt-20 mb-8 lg:hidden flex flex-col space-y-4 transition-all duration-1000 ease-out delay-800 ${
                 heroVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
               }`}>
-                <div className="w-full p-3 sm:p-4 bg-white hover-lift shadow-card hover:shadow-card-hover smooth-transition rounded-xl pulse-border">
+                <div className="w-full p-3 sm:p-4 bg-white instructor-card hover-lift shadow-card hover:shadow-card-hover smooth-transition rounded-xl pulse-border">
                   <div className="flex items-center gap-3 sm:gap-4">
                     <img 
                       src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&crop=face" 
@@ -464,7 +478,7 @@ const Homepage = () => {
                   </div>
                 </div>
 
-                <div className="w-full p-3 sm:p-4 bg-white hover-lift shadow-card hover:shadow-card-hover smooth-transition rounded-xl pulse-border">
+                <div className="w-full p-3 sm:p-4 bg-white instructor-card hover-lift shadow-card hover:shadow-card-hover smooth-transition rounded-xl pulse-border">
                   <div className="flex items-center gap-3 sm:gap-4">
                     <img 
                       src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&h=80&fit=crop&crop=face" 
@@ -483,14 +497,14 @@ const Homepage = () => {
                 </div>
               </div>
             </div>
-            
+                          
             {/* Instructor Cards - Desktop Only */}
             <div className={`relative order-1 lg:order-2 hidden lg:flex justify-center lg:justify-end items-center lg:items-start transition-all duration-1000 ease-out delay-400 ${
               heroVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-6'
             }`}>
               <div className="w-full max-w-sm lg:max-w-none">
                 <div className="flex flex-col space-y-3 sm:space-y-4 lg:space-y-6 lg:mt-8">
-                  <div className="w-full max-w-xs mx-auto lg:mx-0 sm:w-56 md:w-60 lg:w-64 p-3 sm:p-4 bg-white hover-lift shadow-card hover:shadow-card-hover smooth-transition rounded-xl lg:rounded-2xl pulse-border">
+                  <div className="w-full max-w-xs mx-auto lg:mx-0 sm:w-56 md:w-60 lg:w-64 p-3 sm:p-4 bg-white instructor-card hover-lift shadow-card hover:shadow-card-hover smooth-transition rounded-xl lg:rounded-2xl pulse-border">
                     <div className="flex items-center gap-3 sm:gap-4">
                       <img 
                         src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&crop=face" 
@@ -508,7 +522,7 @@ const Homepage = () => {
                     </div>
                   </div>
 
-                  <div className="w-full max-w-xs mx-auto lg:mx-0 sm:w-56 md:w-60 lg:w-64 p-3 sm:p-4 bg-white hover-lift shadow-card hover:shadow-card-hover smooth-transition rounded-xl lg:rounded-2xl pulse-border">
+                  <div className="w-full max-w-xs mx-auto lg:mx-0 sm:w-56 md:w-60 lg:w-64 p-3 sm:p-4 bg-white instructor-card hover-lift shadow-card hover:shadow-card-hover smooth-transition rounded-xl lg:rounded-2xl pulse-border">
                     <div className="flex items-center gap-3 sm:gap-4">
                       <img 
                         src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&h=80&fit=crop&crop=face" 
@@ -552,17 +566,17 @@ const Homepage = () => {
             {services.map((service, index) => (
               <div 
                 key={service.id} 
-                className={`group bg-white rounded-lg border hover-lift shadow-card hover:shadow-card-hover overflow-hidden smooth-transition pulse-border transition-all duration-800 ease-out ${
+                className={`group bg-white hover:bg-white rounded-lg border hover-lift shadow-card hover:shadow-card-hover overflow-hidden smooth-transition pulse-border transition-all duration-800 ease-out ${
                   visibleItems.includes(index) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
                 }`}>
-                <div className="aspect-video relative overflow-hidden">
+                <div className="aspect-video relative overflow-hidden bg-white">
                   <img 
                     src={service.image} 
                     alt={service.title}
                     className="w-full h-full object-cover group-hover:scale-110 smooth-transition"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent group-hover:from-black/60 smooth-transition"></div>
-                  <div className="absolute bottom-3 sm:bottom-4 left-3 sm:left-4 text-white group-hover:scale-110 group-hover:text-red-400 smooth-transition">
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent smooth-transition"></div>
+                  <div className="absolute bottom-3 sm:bottom-4 left-3 sm:left-4 text-white smooth-transition">
                     {renderServiceIcon(service.id)}
                   </div>
                   {service.popular && (
@@ -572,13 +586,10 @@ const Homepage = () => {
                       </span>
                     </div>
                   )}
-                  <div className="absolute bottom-3 sm:bottom-4 right-3 sm:right-4 opacity-0 group-hover:opacity-100 smooth-transition">
-                    <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
-                  </div>
                 </div>
                 
-                <div className="p-4 sm:p-5 lg:p-6 relative">
-                  <h3 className="font-bold text-base sm:text-lg mb-2 sm:mb-3 group-hover:text-red-600 smooth-transition line-clamp-1">
+                <div className="p-4 sm:p-5 lg:p-6 relative bg-white">
+                  <h3 className="font-bold text-base sm:text-lg mb-2 sm:mb-3 text-gray-900 group-hover:text-red-600 group-hover:scale-103 transition-all duration-300 ease-in-out line-clamp-1 cursor-pointer origin-left">
                     {service.title}
                   </h3>
                   <p className="text-gray-600 text-xs sm:text-sm mb-3 sm:mb-4 leading-relaxed line-clamp-2">
@@ -587,8 +598,8 @@ const Homepage = () => {
                   
                   <div className="space-y-1.5 sm:space-y-2 mb-3 sm:mb-4">
                     {service.courses.slice(0, 2).map((course, idx) => (
-                      <div key={idx} className="flex items-center gap-2 text-xs text-gray-500 hover:text-gray-700 smooth-transition group/item">
-                        <CheckCircle className="w-3 h-3 text-red-600 flex-shrink-0 group-hover/item:scale-110 smooth-transition" />
+                      <div key={idx} className="flex items-center gap-2 text-xs text-gray-500 smooth-transition">
+                        <CheckCircle className="w-3 h-3 text-red-600 flex-shrink-0 smooth-transition" />
                         <span className="truncate">{course}</span>
                       </div>
                     ))}
@@ -602,7 +613,7 @@ const Homepage = () => {
                     <span className="text-gray-500">{service.duration}</span>
                   </div>
                   
-                  <Link to="/courses" className="w-full py-2 sm:py-2.5 text-xs sm:text-sm border border-red-600 text-red-600 rounded-lg hover:bg-red-600 hover:text-white smooth-transition btn-glow font-medium flex items-center justify-center">
+                  <Link to="/courses" className="w-full py-2 sm:py-2.5 text-xs sm:text-sm border border-red-600 text-red-600 rounded-lg smooth-transition btn-glow font-medium flex items-center justify-center">
                     Pelajari Lebih Lanjut
                   </Link>
                 </div>
@@ -831,42 +842,42 @@ const Homepage = () => {
                 {faqs.map((item, index) => (
                   <div
                     key={index}
-                    className={`bg-white rounded-xl border border-gray-200 shadow-card overflow-hidden transition-all duration-500 ease-out ${
+                    className={`bg-white rounded-xl border border-gray-200 shadow-card overflow-hidden transition-all duration-300 ease-in-out ${
                       openFaqIndex === index ? 'ring-2 ring-red-100 border-red-200 shadow-lg' : ''
                     }`}
                   >
                     <button
                       onClick={() => toggleFaq(index)}
                       disabled={isFaqAnimating}
-                      className="w-full p-6 text-left focus:outline-none focus:ring-4 focus:ring-red-100 transition-all duration-300 ease-out"
+                      className="w-full p-6 text-left focus:outline-none focus:ring-4 focus:ring-red-100 transition-all duration-200 ease-in-out"
                     >
                       <div className="flex items-center justify-between">
                         <div className="flex items-start gap-4 flex-1">
-                          <div className={`flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center transition-all duration-400 ease-out ${
+                          <div className={`flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 ease-in-out ${
                             openFaqIndex === index 
-                              ? 'bg-red-100 scale-110 rotate-6' 
+                              ? 'bg-red-100 scale-110' 
                               : 'bg-red-50'
                           }`}>
-                            <HelpCircle className={`w-5 h-5 transition-all duration-400 ease-out ${
+                            <HelpCircle className={`w-5 h-5 transition-all duration-300 ease-in-out ${
                               openFaqIndex === index 
                                 ? 'text-red-600 scale-110' 
                                 : 'text-red-600'
                             }`} />
                           </div>
-                          <h3 className={`font-bold text-lg leading-tight transition-all duration-400 ease-out ${
+                          <h3 className={`font-bold text-lg leading-tight transition-all duration-300 ease-in-out ${
                             openFaqIndex === index 
-                              ? 'text-red-600 scale-105' 
+                              ? 'text-red-600' 
                               : 'text-gray-900'
                           }`}>
                             {item.question}
                           </h3>
                         </div>
-                        <div className={`flex-shrink-0 ml-4 p-2 rounded-full transition-all duration-500 ease-out ${
+                        <div className={`flex-shrink-0 ml-4 p-2 rounded-full transition-all duration-300 ease-in-out ${
                           openFaqIndex === index 
-                            ? 'bg-red-100 rotate-180 scale-110' 
-                            : 'bg-gray-100'
+                            ? 'bg-red-100 rotate-180' 
+                            : 'bg-gray-100 rotate-0'
                         }`}>
-                          <ChevronDown className={`w-5 h-5 transition-all duration-500 ease-out ${
+                          <ChevronDown className={`w-5 h-5 transition-all duration-300 ease-in-out ${
                             openFaqIndex === index ? 'text-red-600' : 'text-gray-500'
                           }`} />
                         </div>
@@ -874,39 +885,23 @@ const Homepage = () => {
                     </button>
                     
                     <div 
-                      className={`overflow-hidden transition-all duration-600 ${
-                        openFaqIndex === index 
-                          ? 'max-h-96 opacity-100 ease-out' 
-                          : 'max-h-0 opacity-0 ease-in'
-                      }`}
+                      className="transition-all duration-500 ease-in-out overflow-hidden"
                       style={{
-                        transitionTimingFunction: openFaqIndex === index 
-                          ? 'cubic-bezier(0.4, 0, 0.2, 1)' 
-                          : 'cubic-bezier(0.4, 0, 1, 1)'
+                        maxHeight: openFaqIndex === index ? '500px' : '0',
+                        opacity: openFaqIndex === index ? 1 : 0
                       }}
                     >
-                      <div className={`px-6 pb-6 transition-all duration-500 ${
-                        openFaqIndex === index 
-                          ? 'transform translate-y-0 opacity-100 delay-75' 
-                          : 'transform -translate-y-3 opacity-0 delay-0'
-                      }`}>
+                      <div className="px-6 pb-6">
                         <div className="ml-14 pt-2">
-                          <div className={`border-t transition-all duration-400 ${
+                          <div className={`border-t transition-all duration-300 ease-in-out ${
                             openFaqIndex === index 
-                              ? 'border-red-200 bg-gradient-to-r from-red-50 to-transparent ease-out' 
-                              : 'border-gray-100 ease-in'
+                              ? 'border-red-200' 
+                              : 'border-gray-100'
                           } rounded-sm`}></div>
                           
-                          <div className={`mt-4 transition-all duration-500 ${
-                            openFaqIndex === index 
-                              ? 'opacity-100 transform translate-y-0 delay-150 ease-out' 
-                              : 'opacity-0 transform translate-y-2 delay-0 ease-in'
-                          }`}>
-                            <p className="text-gray-600 leading-relaxed text-base relative">
-                              <span className={`absolute inset-0 bg-gradient-to-r from-red-50/20 to-transparent rounded-lg transition-opacity duration-400 ${
-                                openFaqIndex === index ? 'opacity-100' : 'opacity-0'
-                              }`}></span>
-                              <span className="relative z-10">{item.answer}</span>
+                          <div className="mt-4">
+                            <p className="text-gray-600 leading-relaxed text-base">
+                              {item.answer}
                             </p>
                           </div>
                         </div>
