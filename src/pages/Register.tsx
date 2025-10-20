@@ -478,17 +478,18 @@ const EnhancedRegister = () => {
                 </div>
               </div>
 
-              {/* Submit Button */}
+              {/* Submit Button - Replace the existing one */}
               <div className="pt-6 border-t space-y-4">
-                <div className="flex items-start space-x-2">
+                <div className="flex items-start gap-2 sm:gap-3">
                   <Checkbox 
                     id="register-terms" 
                     checked={acceptTerms}
                     onCheckedChange={(checked) => setAcceptTerms(checked as boolean)}
+                    className="mt-0.5 h-4 w-4 sm:h-5 sm:w-5 flex-shrink-0"
                   />
                   <label
                     htmlFor="register-terms"
-                    className="text-sm text-gray-600 leading-relaxed cursor-pointer"
+                    className="text-xs sm:text-sm text-gray-600 leading-snug sm:leading-relaxed cursor-pointer flex-1"
                   >
                     Saya menyetujui{" "}
                     <Link to="#" className="text-red-600 hover:text-red-700 font-medium transition-colors">
@@ -503,19 +504,19 @@ const EnhancedRegister = () => {
                 
                 <button 
                   onClick={handleSubmit}
-                  className="w-full hero-gradient text-white py-4 rounded-lg font-semibold hover:scale-105 smooth-transition btn-glow disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                  className="w-full hero-gradient text-white py-3 sm:py-4 rounded-lg font-semibold hover:scale-105 smooth-transition btn-glow disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-1.5 sm:gap-2 text-sm sm:text-base"
                   disabled={isSubmitting}
                 >
                   {isSubmitting ? (
                     <>
-                      <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
-                      <span>Mengirim Pendaftaran...</span>
+                      <div className="animate-spin rounded-full h-4 w-4 sm:h-5 sm:w-5 border-b-2 border-white"></div>
+                      <span className="text-xs sm:text-base">Mengirim...</span>
                     </>
                   ) : (
                     <>
-                      <CreditCard className="w-5 h-5" />
-                      <span>Daftar & Lanjutkan ke Pembayaran</span>
-                      <ArrowRight className="w-5 h-5" />
+                      <CreditCard className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
+                      <span className="text-xs sm:text-sm md:text-base">Daftar & Lanjutkan ke Pembayaran</span>
+                      <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
                     </>
                   )}
                 </button>
