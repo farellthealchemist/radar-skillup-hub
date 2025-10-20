@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import { 
   User, 
   Mail, 
@@ -16,6 +17,7 @@ import {
   TrendingUp,
   Sparkles
 } from "lucide-react";
+import { Checkbox } from "@/components/ui/checkbox";
 
 // Animation Hooks from Courses page
 const useScrollAnimation = ({ delay = 0, threshold = 0.1, rootMargin = "0px" } = {}) => {
@@ -82,6 +84,7 @@ const EnhancedRegister = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+  const [acceptTerms, setAcceptTerms] = useState(false);
 
   const { ref: heroRef, isVisible: heroVisible } = useScrollAnimation({ delay: 300 });
   const { ref: formRef, isVisible: formVisible } = useScrollAnimation({ delay: 200 });
@@ -92,12 +95,18 @@ const EnhancedRegister = () => {
     e.preventDefault();
     if (!formData.fullName || !formData.email || !formData.phone || !formData.course) return;
     
+    if (!acceptTerms) {
+      // You could add a toast notification here if you have one
+      alert("Anda harus menyetujui syarat & ketentuan");
+      return;
+    }
+    
     setIsSubmitting(true);
     
     setTimeout(() => {
       setShowSuccess(true);
       setFormData({ 
-        fullName: "", 
+        fullName: "",
         email: "", 
         phone: "", 
         course: "", 
@@ -470,7 +479,28 @@ const EnhancedRegister = () => {
               </div>
 
               {/* Submit Button */}
-              <div className="pt-6 border-t">
+              <div className="pt-6 border-t space-y-4">
+                <div className="flex items-start space-x-2">
+                  <Checkbox 
+                    id="register-terms" 
+                    checked={acceptTerms}
+                    onCheckedChange={(checked) => setAcceptTerms(checked as boolean)}
+                  />
+                  <label
+                    htmlFor="register-terms"
+                    className="text-sm text-gray-600 leading-relaxed cursor-pointer"
+                  >
+                    Saya menyetujui{" "}
+                    <Link to="#" className="text-red-600 hover:text-red-700 font-medium transition-colors">
+                      Syarat & Ketentuan
+                    </Link>{" "}
+                    dan{" "}
+                    <Link to="#" className="text-red-600 hover:text-red-700 font-medium transition-colors">
+                      Kebijakan Privasi
+                    </Link>
+                  </label>
+                </div>
+                
                 <button 
                   onClick={handleSubmit}
                   className="w-full hero-gradient text-white py-4 rounded-lg font-semibold hover:scale-105 smooth-transition btn-glow disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
@@ -489,10 +519,6 @@ const EnhancedRegister = () => {
                     </>
                   )}
                 </button>
-                
-                <p className="text-center text-sm text-gray-600 mt-4">
-                  Dengan mendaftar, Anda menyetujui Syarat & Ketentuan kami
-                </p>
               </div>
             </div>
           </div>

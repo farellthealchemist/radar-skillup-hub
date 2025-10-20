@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
 
 const Login = () => {
@@ -11,6 +12,7 @@ const Login = () => {
     email: "",
     password: "",
   });
+  const [acceptTerms, setAcceptTerms] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -20,6 +22,15 @@ const Login = () => {
       toast({
         title: "Error",
         description: "Mohon isi semua field",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (!acceptTerms) {
+      toast({
+        title: "Error",
+        description: "Anda harus menyetujui syarat & ketentuan",
         variant: "destructive",
       });
       return;
@@ -76,6 +87,23 @@ const Login = () => {
                 onChange={handleChange}
                 required
               />
+            </div>
+
+            <div className="flex items-center space-x-2">
+              <Checkbox 
+                id="terms" 
+                checked={acceptTerms}
+                onCheckedChange={(checked) => setAcceptTerms(checked as boolean)}
+              />
+              <label
+                htmlFor="terms"
+                className="text-sm text-muted-foreground leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+              >
+                Saya menyetujui{" "}
+                <Link to="#" className="text-primary hover:text-accent transition-colors">
+                  Syarat & Ketentuan
+                </Link>
+              </label>
             </div>
 
             <div className="flex items-center justify-between">
@@ -140,16 +168,6 @@ const Login = () => {
             </Button>
           </form>
 
-          <p className="mt-6 text-center text-sm text-muted-foreground">
-            Dengan masuk, Anda menyetujui{" "}
-            <Link to="#" className="text-primary hover:text-accent transition-colors">
-              Syarat & Ketentuan
-            </Link>{" "}
-            dan{" "}
-            <Link to="#" className="text-primary hover:text-accent transition-colors">
-              Kebijakan Privasi
-            </Link>
-          </p>
         </div>
       </div>
     </div>
