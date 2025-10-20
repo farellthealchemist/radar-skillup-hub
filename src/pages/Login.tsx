@@ -39,8 +39,8 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-education-gray-light via-white to-education-gray-light py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md mx-auto">
+    <div className="min-h-screen bg-gradient-to-br from-education-gray-light via-white to-education-gray-light pt-16 sm:pt-20 lg:pt-24 pb-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-md mx-auto w-full">
         <div className="text-center mb-8 animate-fade-in">
           <h1 className="text-4xl font-bold mb-2 bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
             Masuk
