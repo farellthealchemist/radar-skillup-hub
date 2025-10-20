@@ -307,7 +307,7 @@ const EnhancedRegister = () => {
                 </h3>
                 
                 <div>
-                  <label className="block text-sm font-semibold mb-2 text-gray-700">Nama Lengkap *</label>
+                  <label className="block text-sm font-semibold mb-2 text-gray-700">Nama Lengkap</label>
                   <input
                     name="fullName"
                     type="text"
@@ -320,7 +320,7 @@ const EnhancedRegister = () => {
 
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-semibold mb-2 text-gray-700">Email *</label>
+                    <label className="block text-sm font-semibold mb-2 text-gray-700">Email</label>
                     <div className="relative">
                       <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
                       <input
@@ -335,7 +335,7 @@ const EnhancedRegister = () => {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-semibold mb-2 text-gray-700">Nomor HP / WhatsApp *</label>
+                    <label className="block text-sm font-semibold mb-2 text-gray-700">Nomor HP / WhatsApp</label>
                     <div className="relative">
                       <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
                       <input
@@ -359,7 +359,7 @@ const EnhancedRegister = () => {
                 </h3>
                 
                 <div>
-                  <label className="block text-sm font-semibold mb-3 text-gray-700">Program Kursus *</label>
+                  <label className="block text-sm font-semibold mb-3 text-gray-700">Program Kursus</label>
                   <div className="space-y-3">
                     {courses.map((course) => (
                       <label 
@@ -420,7 +420,7 @@ const EnhancedRegister = () => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold mb-3 text-gray-700">Jadwal Kursus *</label>
+                  <label className="block text-sm font-semibold mb-3 text-gray-700">Jadwal Kursus</label>
                   <div className="grid md:grid-cols-2 gap-3">
                     {schedules.map((schedule) => (
                       <label 
