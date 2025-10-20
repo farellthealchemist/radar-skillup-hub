@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
 
 const Login = () => {
@@ -10,16 +11,25 @@ const Login = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
+    agreedToTerms: false,
   });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Validasi sederhana
     if (!formData.email || !formData.password) {
       toast({
         title: "Error",
         description: "Mohon isi semua field",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (!formData.agreedToTerms) {
+      toast({
+        title: "Error",
+        description: "Anda harus menyetujui Syarat & Ketentuan",
         variant: "destructive",
       });
       return;
@@ -38,22 +48,29 @@ const Login = () => {
     });
   };
 
+  const handleCheckboxChange = (checked: boolean) => {
+    setFormData({
+      ...formData,
+      agreedToTerms: checked,
+    });
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-education-gray-light via-white to-education-gray-light py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md mx-auto">
-        <div className="text-center mb-8 animate-fade-in">
-          <h1 className="text-4xl font-bold mb-2 bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
+    <div className="w-full bg-gradient-to-br from-education-gray-light via-white to-education-gray-light py-4 sm:py-6 md:py-8 lg:py-12 px-3 sm:px-4 lg:px-8">
+      <div className="max-w-md w-full mx-auto">
+        <div className="text-center mb-4 sm:mb-6 animate-fade-in">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-1 sm:mb-2 bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
             Masuk
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-xs sm:text-sm md:text-base text-muted-foreground">
             Masuk ke akun RADAR Anda
           </p>
         </div>
 
-        <div className="bg-white rounded-2xl shadow-xl p-8 animate-scale-in border border-education-gray-light">
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
+        <div className="bg-white rounded-xl sm:rounded-2xl shadow-xl p-4 sm:p-6 md:p-8 animate-scale-in border border-education-gray-light">
+          <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
+            <div className="space-y-1 sm:space-y-1.5">
+              <Label htmlFor="email" className="text-xs sm:text-sm">Email</Label>
               <Input
                 id="email"
                 name="email"
@@ -62,11 +79,12 @@ const Login = () => {
                 value={formData.email}
                 onChange={handleChange}
                 required
+                className="h-9 sm:h-10 text-sm"
               />
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
+            <div className="space-y-1 sm:space-y-1.5">
+              <Label htmlFor="password" className="text-xs sm:text-sm">Password</Label>
               <Input
                 id="password"
                 name="password"
@@ -75,38 +93,60 @@ const Login = () => {
                 value={formData.password}
                 onChange={handleChange}
                 required
+                className="h-9 sm:h-10 text-sm"
               />
             </div>
 
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col xs:flex-row xs:items-center xs:justify-between gap-2 pt-1">
               <Link 
                 to="/register" 
-                className="text-sm text-primary hover:text-accent transition-colors"
+                className="text-xs sm:text-sm text-primary hover:text-accent transition-colors"
               >
                 Belum punya akun?
               </Link>
               <Link 
                 to="#" 
-                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                className="text-xs sm:text-sm text-muted-foreground hover:text-foreground transition-colors"
               >
                 Lupa password?
               </Link>
             </div>
 
+            <div className="flex items-start gap-2 pt-1">
+              <Checkbox
+                id="terms"
+                checked={formData.agreedToTerms}
+                onCheckedChange={handleCheckboxChange}
+                className="mt-0.5 h-4 w-4"
+              />
+              <Label 
+                htmlFor="terms" 
+                className="text-xs leading-snug cursor-pointer text-muted-foreground flex-1"
+              >
+                Dengan masuk, Anda menyetujui{" "}
+                <Link to="#" className="text-primary hover:text-accent transition-colors font-medium">
+                  Syarat & Ketentuan
+                </Link>{" "}
+                dan{" "}
+                <Link to="#" className="text-primary hover:text-accent transition-colors font-medium">
+                  Kebijakan Privasi
+                </Link>
+              </Label>
+            </div>
+
             <Button
               type="submit"
-              className="w-full bg-gradient-to-r from-primary via-accent to-primary hover:shadow-lg hover:shadow-primary/50 transition-all duration-300"
-              size="lg"
+              className="w-full bg-gradient-to-r from-primary via-accent to-primary hover:shadow-lg hover:shadow-primary/50 transition-all duration-300 h-9 sm:h-10 text-sm"
             >
               Masuk
             </Button>
 
-            <div className="relative my-6">
+            <div className="relative my-3 sm:my-4">
               <div className="absolute inset-0 flex items-center">
                 <div className="w-full border-t border-education-gray-light"></div>
               </div>
-              <div className="relative flex justify-center text-sm">
-                <span className="px-4 bg-white text-muted-foreground">
+              <div className="relative flex justify-center text-xs">
+                <span className="px-3 bg-white text-muted-foreground">
                   Atau
                 </span>
               </div>
@@ -115,10 +155,9 @@ const Login = () => {
             <Button
               type="button"
               variant="outline"
-              className="w-full"
-              size="lg"
+              className="w-full h-9 sm:h-10 text-xs sm:text-sm"
             >
-              <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24">
+              <svg className="w-4 h-4 mr-1.5" viewBox="0 0 24 24">
                 <path
                   fill="currentColor"
                   d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
@@ -139,17 +178,6 @@ const Login = () => {
               Masuk dengan Google
             </Button>
           </form>
-
-          <p className="mt-6 text-center text-sm text-muted-foreground">
-            Dengan masuk, Anda menyetujui{" "}
-            <Link to="#" className="text-primary hover:text-accent transition-colors">
-              Syarat & Ketentuan
-            </Link>{" "}
-            dan{" "}
-            <Link to="#" className="text-primary hover:text-accent transition-colors">
-              Kebijakan Privasi
-            </Link>
-          </p>
         </div>
       </div>
     </div>
