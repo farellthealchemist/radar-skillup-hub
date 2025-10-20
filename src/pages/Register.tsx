@@ -96,7 +96,6 @@ const EnhancedRegister = () => {
     if (!formData.fullName || !formData.email || !formData.phone || !formData.course) return;
     
     if (!acceptTerms) {
-      // You could add a toast notification here if you have one
       alert("Anda harus menyetujui syarat & ketentuan");
       return;
     }
@@ -478,7 +477,7 @@ const EnhancedRegister = () => {
                 </div>
               </div>
 
-              {/* Submit Button - Replace the existing one */}
+              {/* Submit Button - RESPONSIVE VERSION */}
               <div className="pt-6 border-t space-y-4">
                 <div className="flex items-start gap-2 sm:gap-3">
                   <Checkbox 
