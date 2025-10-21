@@ -1,29 +1,46 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 const Login = () => {
   const { toast } = useToast();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
+    fullName: "",
+    phone: "",
   });
   const [acceptTerms, setAcceptTerms] = useState(false);
+  const [isLogin, setIsLogin] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  useEffect(() => {
+    const checkUser = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) {
+        navigate("/");
+      }
+    };
+    checkUser();
+  }, [navigate]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsLoading(true);
     
-    // Validasi sederhana
     if (!formData.email || !formData.password) {
       toast({
         title: "Error",
         description: "Mohon isi semua field",
         variant: "destructive",
       });
+      setIsLoading(false);
       return;
     }
 
@@ -33,13 +50,64 @@ const Login = () => {
         description: "Anda harus menyetujui syarat & ketentuan",
         variant: "destructive",
       });
+      setIsLoading(false);
       return;
     }
 
-    toast({
-      title: "Berhasil!",
-      description: "Anda berhasil masuk",
-    });
+    try {
+      if (isLogin) {
+        const { data, error } = await supabase.auth.signInWithPassword({
+          email: formData.email,
+          password: formData.password,
+        });
+
+        if (error) throw error;
+
+        toast({
+          title: "Berhasil!",
+          description: "Anda berhasil masuk",
+        });
+        navigate("/");
+      } else {
+        if (!formData.fullName || !formData.phone) {
+          toast({
+            title: "Error",
+            description: "Mohon isi semua field untuk registrasi",
+            variant: "destructive",
+          });
+          setIsLoading(false);
+          return;
+        }
+
+        const { data, error } = await supabase.auth.signUp({
+          email: formData.email,
+          password: formData.password,
+          options: {
+            data: {
+              full_name: formData.fullName,
+              phone: formData.phone,
+            },
+            emailRedirectTo: `${window.location.origin}/`,
+          },
+        });
+
+        if (error) throw error;
+
+        toast({
+          title: "Registrasi Berhasil!",
+          description: "Akun Anda telah dibuat. Silakan masuk.",
+        });
+        setIsLogin(true);
+      }
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: error.message || "Terjadi kesalahan",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -54,15 +122,45 @@ const Login = () => {
       <div className="max-w-md mx-auto w-full">
         <div className="text-center mb-8 animate-fade-in">
           <h1 className="text-4xl font-bold mb-2 bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
-            Masuk
+            {isLogin ? "Masuk" : "Daftar"}
           </h1>
           <p className="text-muted-foreground">
-            Masuk ke akun RADAR Anda
+            {isLogin ? "Masuk ke akun RADAR Anda" : "Buat akun RADAR baru"}
           </p>
         </div>
 
         <div className="bg-white rounded-2xl shadow-xl p-8 animate-scale-in border border-education-gray-light">
           <form onSubmit={handleSubmit} className="space-y-6">
+            {!isLogin && (
+              <>
+                <div className="space-y-2">
+                  <Label htmlFor="fullName">Nama Lengkap</Label>
+                  <Input
+                    id="fullName"
+                    name="fullName"
+                    type="text"
+                    placeholder="Nama lengkap Anda"
+                    value={formData.fullName}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="phone">Nomor HP / WhatsApp</Label>
+                  <Input
+                    id="phone"
+                    name="phone"
+                    type="tel"
+                    placeholder="08xx-xxxx-xxxx"
+                    value={formData.phone}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+              </>
+            )}
+
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
               <Input
@@ -107,26 +205,30 @@ const Login = () => {
             </div>
 
             <div className="flex items-center justify-between">
-              <Link 
-                to="/register" 
+              <button
+                type="button"
+                onClick={() => setIsLogin(!isLogin)}
                 className="text-sm text-primary hover:text-accent transition-colors"
               >
-                Belum punya akun?
-              </Link>
-              <Link 
-                to="#" 
-                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-              >
-                Lupa password?
-              </Link>
+                {isLogin ? "Belum punya akun?" : "Sudah punya akun?"}
+              </button>
+              {isLogin && (
+                <Link 
+                  to="#" 
+                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  Lupa password?
+                </Link>
+              )}
             </div>
 
             <Button
               type="submit"
               className="w-full bg-gradient-to-r from-primary via-accent to-primary hover:shadow-lg hover:shadow-primary/50 transition-all duration-300"
               size="lg"
+              disabled={isLoading}
             >
-              Masuk
+              {isLoading ? "Memproses..." : isLogin ? "Masuk" : "Daftar"}
             </Button>
 
             <div className="relative my-6">

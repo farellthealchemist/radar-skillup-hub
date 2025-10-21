@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { supabase } from "@/integrations/supabase/client";
 import { 
   User, 
   Mail, 
@@ -73,6 +74,7 @@ const useStaggeredAnimation = (itemCount, staggerDelay = 120, initialDelay = 200
 };
 
 const EnhancedRegister = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -85,14 +87,36 @@ const EnhancedRegister = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [acceptTerms, setAcceptTerms] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      setIsAuthenticated(!!session);
+    };
+    checkAuth();
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setIsAuthenticated(!!session);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
 
   const { ref: heroRef, isVisible: heroVisible } = useScrollAnimation({ delay: 300 });
   const { ref: formRef, isVisible: formVisible } = useScrollAnimation({ delay: 200 });
   const { ref: benefitsRef, visibleItems: benefitItems } = useStaggeredAnimation(4, 100, 200);
   const { ref: guaranteeRef, visibleItems: guaranteeItems } = useStaggeredAnimation(3, 120, 250);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    if (!isAuthenticated) {
+      alert("Silakan login terlebih dahulu untuk mendaftar kursus");
+      navigate("/login");
+      return;
+    }
+
     if (!formData.fullName || !formData.email || !formData.phone || !formData.course) return;
     
     if (!acceptTerms) {
@@ -102,7 +126,31 @@ const EnhancedRegister = () => {
     
     setIsSubmitting(true);
     
-    setTimeout(() => {
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      
+      if (!user) {
+        alert("Sesi Anda telah berakhir. Silakan login kembali.");
+        navigate("/login");
+        return;
+      }
+
+      const { error } = await (supabase as any)
+        .from('registrations')
+        .insert({
+          user_id: user.id,
+          full_name: formData.fullName,
+          email: formData.email,
+          phone: formData.phone,
+          course: formData.course,
+          schedule_preference: formData.schedule,
+          previous_experience: formData.experience,
+          expectations: formData.message,
+          status: 'pending'
+        });
+
+      if (error) throw error;
+
       setShowSuccess(true);
       setFormData({ 
         fullName: "",
@@ -113,10 +161,15 @@ const EnhancedRegister = () => {
         experience: "", 
         message: "" 
       });
-      setIsSubmitting(false);
+      setAcceptTerms(false);
       
       setTimeout(() => setShowSuccess(false), 5000);
-    }, 1500);
+    } catch (error) {
+      console.error('Error submitting registration:', error);
+      alert("Terjadi kesalahan saat mendaftar. Silakan coba lagi.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (e) => {
