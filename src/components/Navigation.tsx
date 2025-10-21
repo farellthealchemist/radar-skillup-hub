@@ -1,13 +1,48 @@
-import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
-import { Menu, X } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Menu, X, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useHeaderAnimation } from "@/hooks/useScrollAnimation";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
   const { isLoaded } = useHeaderAnimation();
+  const { toast } = useToast();
+
+  useEffect(() => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      setIsLoggedIn(!!session);
+    });
+
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setIsLoggedIn(!!session);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const handleLogout = async () => {
+    try {
+      await supabase.auth.signOut();
+      toast({
+        title: "Berhasil keluar",
+        description: "Anda telah keluar dari akun",
+      });
+      navigate("/");
+      setIsOpen(false);
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: error.message || "Gagal keluar",
+        variant: "destructive",
+      });
+    }
+  };
 
   const isActive = (path: string) => location.pathname === path;
 
@@ -67,23 +102,37 @@ const Navigation = () => {
           <div className={`hidden lg:flex items-center space-x-3 transition-all duration-700 ease-out ${
             isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'
           }`} style={{ transitionDelay: '700ms' }}>
-            <Link to="/login">
+            {isLoggedIn ? (
               <Button 
                 size="sm" 
                 variant="outline"
                 className="border-red-600 text-red-600"
+                onClick={handleLogout}
               >
-                Masuk
+                <LogOut className="w-4 h-4 mr-2" />
+                Keluar
               </Button>
-            </Link>
-            <Link to="/register">
-              <Button 
-                size="sm" 
-                className="bg-gradient-to-r from-red-600 to-red-700 text-white"
-              >
-                Daftar Sekarang
-              </Button>
-            </Link>
+            ) : (
+              <>
+                <Link to="/login">
+                  <Button 
+                    size="sm" 
+                    variant="outline"
+                    className="border-red-600 text-red-600"
+                  >
+                    Masuk
+                  </Button>
+                </Link>
+                <Link to="/register">
+                  <Button 
+                    size="sm" 
+                    className="bg-gradient-to-r from-red-600 to-red-700 text-white"
+                  >
+                    Daftar Sekarang
+                  </Button>
+                </Link>
+              </>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -124,23 +173,37 @@ const Navigation = () => {
               <div className={`pt-4 border-t space-y-3 transition-all duration-500 ease-out ${
                 isOpen ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
               }`} style={{ transitionDelay: '250ms' }}>
-                <Link to="/login" onClick={() => setIsOpen(false)} className="block">
+                {isLoggedIn ? (
                   <Button 
                     size="sm" 
                     variant="outline"
                     className="border-red-600 text-red-600 w-full h-10"
+                    onClick={handleLogout}
                   >
-                    Masuk
+                    <LogOut className="w-4 h-4 mr-2" />
+                    Keluar
                   </Button>
-                </Link>
-                <Link to="/register" onClick={() => setIsOpen(false)} className="block">
-                  <Button 
-                    size="sm" 
-                    className="bg-gradient-to-r from-red-600 to-red-700 text-white w-full h-10"
-                  >
-                    Daftar Sekarang
-                  </Button>
-                </Link>
+                ) : (
+                  <>
+                    <Link to="/login" onClick={() => setIsOpen(false)} className="block">
+                      <Button 
+                        size="sm" 
+                        variant="outline"
+                        className="border-red-600 text-red-600 w-full h-10"
+                      >
+                        Masuk
+                      </Button>
+                    </Link>
+                    <Link to="/register" onClick={() => setIsOpen(false)} className="block">
+                      <Button 
+                        size="sm" 
+                        className="bg-gradient-to-r from-red-600 to-red-700 text-white w-full h-10"
+                      >
+                        Daftar Sekarang
+                      </Button>
+                    </Link>
+                  </>
+                )}
               </div>
             </div>
           </div>
