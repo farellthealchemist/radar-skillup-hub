@@ -13,6 +13,8 @@ import {
   ArrowRight,
   Building
 } from "lucide-react";
+import { z } from 'zod';
+import { useToast } from "@/hooks/use-toast";
 
 // Consistent Animation Hooks
 const useScrollAnimation = ({ delay = 0, threshold = 0.1, rootMargin = "0px" } = {}) => {
@@ -67,7 +69,17 @@ const useStaggeredAnimation = (itemCount, staggerDelay = 100, initialDelay = 200
   return { ref, visibleItems };
 };
 
+// Contact form validation schema
+const contactSchema = z.object({
+  name: z.string().trim().min(1, "Nama harus diisi").max(100, "Nama maksimal 100 karakter"),
+  email: z.string().trim().email("Format email tidak valid").max(255, "Email maksimal 255 karakter"),
+  phone: z.string().regex(/^08\d{8,12}$/, "Format nomor HP tidak valid (contoh: 08123456789)").optional().or(z.literal("")),
+  course: z.string().optional(),
+  message: z.string().trim().min(1, "Pesan harus diisi").max(1000, "Pesan maksimal 1000 karakter")
+});
+
 const OptimizedContact = () => {
+  const { toast } = useToast();
   const { ref: heroRef, isVisible: heroVisible } = useScrollAnimation({ delay: 300 });
   const { ref: contactRef, isVisible: contactVisible } = useScrollAnimation({ threshold: 0.2 });
   const { ref: contactInfoRef, visibleItems: infoItems } = useStaggeredAnimation(4, 120, 250);
@@ -84,19 +96,32 @@ const OptimizedContact = () => {
   const [showSuccess, setShowSuccess] = useState(false);
 
   const handleSubmit = async () => {
-    if (!formData.name || !formData.email || !formData.message) return;
-    
-    setIsSubmitting(true);
-    
-    // Simulate form submission
-    setTimeout(() => {
-      setShowSuccess(true);
-      setFormData({ name: "", email: "", phone: "", course: "", message: "" });
-      setIsSubmitting(false);
+    // Validate form data using zod schema
+    try {
+      const validatedData = contactSchema.parse(formData);
       
-      // Hide success message after 5 seconds
-      setTimeout(() => setShowSuccess(false), 5000);
-    }, 1500);
+      setIsSubmitting(true);
+      
+      // Simulate form submission with validated data
+      setTimeout(() => {
+        setShowSuccess(true);
+        setFormData({ name: "", email: "", phone: "", course: "", message: "" });
+        setIsSubmitting(false);
+        
+        // Hide success message after 5 seconds
+        setTimeout(() => setShowSuccess(false), 5000);
+      }, 1500);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        // Display the first validation error
+        const firstError = error.errors[0];
+        toast({
+          title: "Validasi Gagal",
+          description: firstError.message,
+          variant: "destructive",
+        });
+      }
+    }
   };
 
   const handleChange = (e) => {
