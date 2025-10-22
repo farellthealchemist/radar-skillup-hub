@@ -6,6 +6,22 @@ import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { z } from "zod";
+
+// Password validation schema
+const passwordSchema = z.string()
+  .min(8, "Password harus minimal 8 karakter")
+  .regex(/[A-Z]/, "Password harus mengandung huruf besar")
+  .regex(/[a-z]/, "Password harus mengandung huruf kecil")
+  .regex(/[0-9]/, "Password harus mengandung angka");
+
+// Signup validation schema
+const signupSchema = z.object({
+  fullName: z.string().trim().min(2, "Nama harus minimal 2 karakter").max(100, "Nama maksimal 100 karakter"),
+  phone: z.string().trim().regex(/^08\d{8,12}$/, "Format nomor HP tidak valid (contoh: 08123456789)"),
+  email: z.string().email("Format email tidak valid").max(255, "Email maksimal 255 karakter"),
+  password: passwordSchema
+});
 
 const Login = () => {
   const { toast } = useToast();
@@ -69,14 +85,24 @@ const Login = () => {
         });
         navigate("/");
       } else {
-        if (!formData.fullName || !formData.phone) {
-          toast({
-            title: "Error",
-            description: "Mohon isi semua field untuk registrasi",
-            variant: "destructive",
+        // Validate signup form
+        try {
+          signupSchema.parse({
+            fullName: formData.fullName,
+            phone: formData.phone,
+            email: formData.email,
+            password: formData.password
           });
-          setIsLoading(false);
-          return;
+        } catch (error) {
+          if (error instanceof z.ZodError) {
+            toast({
+              title: "Validasi Gagal",
+              description: error.errors[0].message,
+              variant: "destructive",
+            });
+            setIsLoading(false);
+            return;
+          }
         }
 
         const { data, error } = await supabase.auth.signUp({
@@ -185,6 +211,11 @@ const Login = () => {
                 onChange={handleChange}
                 required
               />
+              {!isLogin && (
+                <p className="text-xs text-muted-foreground mt-1">
+                  Minimal 8 karakter, huruf besar, huruf kecil, dan angka
+                </p>
+              )}
             </div>
 
             <div className="flex items-center space-x-2">
