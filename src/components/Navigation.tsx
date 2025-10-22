@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Menu, X, LogOut } from "lucide-react";
+import { Menu, X, LogOut, LayoutDashboard } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useHeaderAnimation } from "@/hooks/useScrollAnimation";
 import { supabase } from "@/integrations/supabase/client";
@@ -46,13 +46,17 @@ const Navigation = () => {
 
   const isActive = (path: string) => location.pathname === path;
 
-  const navItems = [
+  const baseNavItems = [
     { name: "Beranda", path: "/" },
     { name: "Tentang Kami", path: "/about" },
     { name: "Kursus", path: "/courses" },
     { name: "Blog", path: "/blog" },
     { name: "Kontak", path: "/contact" },
   ];
+
+  const navItems = isLoggedIn 
+    ? [...baseNavItems, { name: "Dashboard", path: "/dashboard" }]
+    : baseNavItems;
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm border-b">
@@ -103,15 +107,27 @@ const Navigation = () => {
             isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'
           }`} style={{ transitionDelay: '700ms' }}>
             {isLoggedIn ? (
-              <Button 
-                size="sm" 
-                variant="outline"
-                className="border-red-600 text-red-600"
-                onClick={handleLogout}
-              >
-                <LogOut className="w-4 h-4 mr-2" />
-                Keluar
-              </Button>
+              <>
+                <Link to="/dashboard">
+                  <Button 
+                    size="sm" 
+                    variant="outline"
+                    className="border-red-600 text-red-600"
+                  >
+                    <LayoutDashboard className="w-4 h-4 mr-2" />
+                    Dashboard
+                  </Button>
+                </Link>
+                <Button 
+                  size="sm" 
+                  variant="outline"
+                  className="border-red-600 text-red-600"
+                  onClick={handleLogout}
+                >
+                  <LogOut className="w-4 h-4 mr-2" />
+                  Keluar
+                </Button>
+              </>
             ) : (
               <>
                 <Link to="/login">
@@ -174,15 +190,27 @@ const Navigation = () => {
                 isOpen ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
               }`} style={{ transitionDelay: '250ms' }}>
                 {isLoggedIn ? (
-                  <Button 
-                    size="sm" 
-                    variant="outline"
-                    className="border-red-600 text-red-600 w-full h-10"
-                    onClick={handleLogout}
-                  >
-                    <LogOut className="w-4 h-4 mr-2" />
-                    Keluar
-                  </Button>
+                  <>
+                    <Link to="/dashboard" onClick={() => setIsOpen(false)} className="block">
+                      <Button 
+                        size="sm" 
+                        variant="outline"
+                        className="border-red-600 text-red-600 w-full h-10"
+                      >
+                        <LayoutDashboard className="w-4 h-4 mr-2" />
+                        Dashboard
+                      </Button>
+                    </Link>
+                    <Button 
+                      size="sm" 
+                      variant="outline"
+                      className="border-red-600 text-red-600 w-full h-10"
+                      onClick={handleLogout}
+                    >
+                      <LogOut className="w-4 h-4 mr-2" />
+                      Keluar
+                    </Button>
+                  </>
                 ) : (
                   <>
                     <Link to="/login" onClick={() => setIsOpen(false)} className="block">
