@@ -451,7 +451,7 @@ const OptimizedCourses = () => {
                     
                     <div className="grid grid-cols-2 gap-2">
                       <Link 
-                        to="/courses" 
+                        to={`/course/${course.id}`}
                         className="px-2 sm:px-3 py-1.5 sm:py-2 border border-red-600 text-red-600 font-medium rounded-md hover:bg-red-50 smooth-transition text-xs sm:text-sm flex items-center justify-center"
                       >
                         Detail
