@@ -30,7 +30,6 @@ const Dashboard = () => {
       await fetchProfile(session.user.id);
       await fetchRegistrations(session.user.id);
     } catch (error) {
-      console.error('Auth error:', error);
       navigate('/login');
     } finally {
       setLoading(false);
@@ -48,7 +47,7 @@ const Dashboard = () => {
       if (error) throw error;
       setProfile(data);
     } catch (error) {
-      console.error('Error fetching profile:', error);
+      // Profile fetch error handled silently
     }
   };
 
@@ -63,7 +62,7 @@ const Dashboard = () => {
       if (error) throw error;
       setRegistrations(data || []);
     } catch (error) {
-      console.error('Error fetching registrations:', error);
+      // Registrations fetch error handled silently
     }
   };
 

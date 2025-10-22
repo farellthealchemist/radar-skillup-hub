@@ -19,6 +19,8 @@ import {
   Sparkles
 } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
+import { z } from "zod";
+import { useToast } from "@/hooks/use-toast";
 
 // Animation Hooks from Courses page
 const useScrollAnimation = ({ delay = 0, threshold = 0.1, rootMargin = "0px" } = {}) => {
@@ -73,7 +75,19 @@ const useStaggeredAnimation = (itemCount, staggerDelay = 120, initialDelay = 200
   return { ref, visibleItems };
 };
 
+// Registration validation schema
+const registrationSchema = z.object({
+  fullName: z.string().trim().min(2, "Nama harus minimal 2 karakter").max(100, "Nama maksimal 100 karakter"),
+  email: z.string().trim().email("Format email tidak valid").max(255, "Email maksimal 255 karakter"),
+  phone: z.string().trim().regex(/^08\d{8,12}$/, "Format nomor HP tidak valid (contoh: 08123456789)"),
+  course: z.string().min(1, "Silakan pilih kursus"),
+  schedule: z.string().optional(),
+  experience: z.string().optional(),
+  message: z.string().max(1000, "Pesan maksimal 1000 karakter").optional()
+});
+
 const EnhancedRegister = () => {
+  const { toast } = useToast();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     fullName: "",
@@ -112,15 +126,35 @@ const EnhancedRegister = () => {
     e.preventDefault();
     
     if (!isAuthenticated) {
-      alert("Silakan login terlebih dahulu untuk mendaftar kursus");
+      toast({
+        title: "Autentikasi Diperlukan",
+        description: "Silakan login terlebih dahulu untuk mendaftar kursus",
+        variant: "destructive"
+      });
       navigate("/login");
       return;
     }
 
-    if (!formData.fullName || !formData.email || !formData.phone || !formData.course) return;
+    // Validate form data
+    try {
+      registrationSchema.parse(formData);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        toast({
+          title: "Validasi Gagal",
+          description: error.errors[0].message,
+          variant: "destructive"
+        });
+        return;
+      }
+    }
     
     if (!acceptTerms) {
-      alert("Anda harus menyetujui syarat & ketentuan");
+      toast({
+        title: "Persetujuan Diperlukan",
+        description: "Anda harus menyetujui syarat & ketentuan",
+        variant: "destructive"
+      });
       return;
     }
     
@@ -130,7 +164,11 @@ const EnhancedRegister = () => {
       const { data: { user } } = await supabase.auth.getUser();
       
       if (!user) {
-        alert("Sesi Anda telah berakhir. Silakan login kembali.");
+        toast({
+          title: "Sesi Berakhir",
+          description: "Sesi Anda telah berakhir. Silakan login kembali.",
+          variant: "destructive"
+        });
         navigate("/login");
         return;
       }
@@ -165,8 +203,11 @@ const EnhancedRegister = () => {
       
       setTimeout(() => setShowSuccess(false), 5000);
     } catch (error) {
-      console.error('Error submitting registration:', error);
-      alert("Terjadi kesalahan saat mendaftar. Silakan coba lagi.");
+      toast({
+        title: "Pendaftaran Gagal",
+        description: "Terjadi kesalahan saat mendaftar. Silakan coba lagi.",
+        variant: "destructive"
+      });
     } finally {
       setIsSubmitting(false);
     }
