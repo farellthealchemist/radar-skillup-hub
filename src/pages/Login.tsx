@@ -40,7 +40,7 @@ const Login = () => {
     const checkUser = async () => {
       const { data: { session } } = await supabase.auth.getSession();
       if (session) {
-        navigate("/");
+        navigate("/dashboard");
       }
     };
     checkUser();
@@ -83,7 +83,7 @@ const Login = () => {
           title: "Berhasil!",
           description: "Anda berhasil masuk",
         });
-        navigate("/");
+        navigate("/dashboard");
       } else {
         // Validate signup form
         try {
@@ -121,9 +121,9 @@ const Login = () => {
 
         toast({
           title: "Registrasi Berhasil!",
-          description: "Akun Anda telah dibuat. Silakan masuk.",
+          description: "Selamat datang! Anda akan diarahkan ke dashboard.",
         });
-        setIsLogin(true);
+        navigate("/dashboard");
       }
     } catch (error: any) {
       toast({
