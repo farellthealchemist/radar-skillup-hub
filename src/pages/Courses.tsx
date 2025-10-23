@@ -78,117 +78,106 @@ const OptimizedCourses = () => {
   const { ref: guaranteeRef, visibleItems: guaranteeItems } = useStaggeredAnimation(3, 100, 200);
   const { ref: ctaRef, isVisible: ctaVisible } = useScrollAnimation();
 
+  // UPDATED: Data konsisten dengan CourseDetail
   const courses = [
     {
-      id: 1,
+      id: "1",
       title: "Programming Fundamentals",
       category: "Programming",
-      description: "Pelajari dasar-dasar pemrograman dengan Python dan Java. Cocok untuk pemula yang ingin memulai karir di bidang software development.",
+      description: "Pelajari dasar-dasar pemrograman dengan Python dan Java. Cocok untuk pemula yang ingin memulai karir di bidang software development dengan kurikulum terstruktur dan project-based learning.",
       image: "https://images.unsplash.com/photo-1517180102446-f3ece451e9d8?w=600&h=400&fit=crop",
       duration: "3-6 Bulan",
-      students: "150+",
+      students: "300+",
       level: "Pemula - Menengah",
       price: "Rp 2.500.000",
       originalPrice: "Rp 3.000.000",
       discount: "17%",
       rating: 4.8,
+      reviewCount: 150,
       popular: true,
       features: [
         "Python Programming",
         "Java Fundamentals", 
-        "Database Basics",
+        "Object-Oriented Programming (OOP)",
+        "Database Basics & SQL",
         "Web Development Intro",
-        "Project Portfolio"
-      ],
-      outcomes: [
-        "Menguasai sintaks Python dan Java",
-        "Memahami konsep OOP dan database",
-        "Dapat membuat aplikasi web sederhana",
-        "Siap untuk advanced programming"
+        "Git & GitHub",
+        "Capstone Project"
       ]
     },
     {
-      id: 2,
+      id: "2",
       title: "Scratch Visual Programming",
       category: "Programming",
-      description: "Pengenalan programming untuk anak-anak dan pemula menggunakan Scratch. Belajar logika programming dengan cara yang menyenangkan.",
+      description: "Pengenalan programming untuk anak-anak dan pemula menggunakan Scratch. Belajar logika programming dengan cara yang menyenangkan dan interaktif.",
       image: "https://images.unsplash.com/photo-1596496050827-8299e0220de1?w=600&h=400&fit=crop",
       duration: "2-3 Bulan",
-      students: "200+",
+      students: "450+",
       level: "Pemula",
       price: "Rp 750.000",
       originalPrice: "Rp 900.000",
       discount: "17%",
       rating: 4.9,
+      reviewCount: 200,
       popular: false,
       features: [
         "Scratch Basics",
         "Game Development",
         "Animation Creation",
         "Interactive Stories",
-        "Logic Building"
-      ],
-      outcomes: [
-        "Memahami logika programming",
-        "Dapat membuat game interaktif",
-        "Mengembangkan problem solving",
-        "Foundation untuk text-based coding"
+        "Logic Building",
+        "Computational Thinking",
+        "Fun Projects"
       ]
     },
     {
-      id: 3,
+      id: "3",
       title: "Microsoft Office Mastery",
       category: "Office",
       description: "Kuasai Microsoft Office (Word, Excel, PowerPoint) untuk produktivitas maksimal di tempat kerja dan pendidikan.",
       image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop",
       duration: "2-4 Bulan",
-      students: "300+",
+      students: "520+",
       level: "Pemula - Mahir",
       price: "Rp 1.200.000",
       originalPrice: "Rp 1.500.000",
       discount: "20%",
       rating: 4.7,
+      reviewCount: 180,
       popular: true,
       features: [
         "Word Advanced",
         "Excel Formulas & Macros",
         "PowerPoint Design",
         "Data Analysis",
-        "Business Templates"
-      ],
-      outcomes: [
-        "Mahir Word untuk dokumen profesional",
-        "Menguasai Excel untuk data analysis",
-        "Membuat presentasi yang menarik",
-        "Meningkatkan produktivitas kerja 300%"
+        "Pivot Tables",
+        "Business Templates",
+        "Productivity Tips"
       ]
     },
     {
-      id: 4,
+      id: "4",
       title: "Network Administration",
       category: "Networking",
       description: "Pelajari administrasi jaringan, keamanan cyber, dan infrastruktur IT. Ideal untuk IT support dan network administrator.",
       image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600&h=400&fit=crop",
       duration: "4-6 Bulan",
-      students: "100+",
+      students: "180+",
       level: "Menengah - Mahir",
       price: "Rp 3.500.000",
       originalPrice: "Rp 4.200.000",
       discount: "17%",
       rating: 4.6,
+      reviewCount: 95,
       popular: false,
       features: [
         "Network Fundamentals",
         "Cisco Configuration",
         "Cybersecurity Basics",
         "Server Administration",
-        "Troubleshooting"
-      ],
-      outcomes: [
-        "Dapat merancang infrastruktur jaringan",
-        "Menguasai konfigurasi Cisco devices",
-        "Memahami security protocols",
-        "Job-ready sebagai Network Admin"
+        "Troubleshooting",
+        "CCNA Prep",
+        "Lab Exercises"
       ]
     }
   ];
@@ -451,7 +440,7 @@ const OptimizedCourses = () => {
                     
                     <div className="grid grid-cols-2 gap-2">
                       <Link 
-                        to={`/course/${course.id}`}
+                        to={`/courses/${course.id}`}
                         className="px-2 sm:px-3 py-1.5 sm:py-2 border border-red-600 text-red-600 font-medium rounded-md hover:bg-red-50 smooth-transition text-xs sm:text-sm flex items-center justify-center"
                       >
                         Detail
