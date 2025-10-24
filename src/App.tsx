@@ -12,11 +12,18 @@ import Contact from "./pages/Contact";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
+import MyCourses from "./pages/MyCourses";
+import Profile from "./pages/Profile";
+import Transactions from "./pages/Transactions";
 import NotFound from "./pages/NotFound";
 import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
 import WhatsAppButton from "./components/WhatsAppButton";
 import ScrollToTop from "./components/ScrollToTop";
+
+// ✅ Tambahan import baru
+import Learn from "./pages/Learn";
+import Certificates from "./pages/Certificates";
 
 const queryClient = new QueryClient();
 
@@ -40,8 +47,21 @@ const App = () => (
               <Route path="/register" element={<Register />} />
               <Route path="/login" element={<Login />} />
               <Route path="/dashboard" element={<Dashboard />} />
-              
-              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+
+              {/* Dashboard Related Pages */}
+              <Route path="/my-courses" element={<MyCourses />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/transactions" element={<Transactions />} />
+
+              {/* ✅ Halaman baru */}
+              <Route path="/learn/:id" element={<Learn />} />
+              <Route path="/certificates" element={<Certificates />} />
+
+              {/* Placeholder routes (bisa dihapus nanti kalau sudah ada halamannya) */}
+              <Route path="/settings" element={<NotFound />} />
+              <Route path="/achievements" element={<NotFound />} />
+
+              {/* Catch-all */}
               <Route path="*" element={<NotFound />} />
             </Routes>
           </main>
