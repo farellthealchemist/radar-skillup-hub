@@ -5,6 +5,26 @@ import {
   Clock, Download, Menu, X, Award
 } from 'lucide-react';
 
+interface Lesson {
+  id: number;
+  title: string;
+  duration: string;
+  videoUrl: string;
+}
+
+interface Module {
+  moduleTitle: string;
+  lessons: Lesson[];
+}
+
+interface CourseData {
+  id: string;
+  title: string;
+  instructor: string;
+  thumbnail: string;
+  modules: Module[];
+}
+
 const Learn = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -12,7 +32,7 @@ const Learn = () => {
   const [currentLesson, setCurrentLesson] = useState(0);
   const [completedLessons, setCompletedLessons] = useState([0, 1, 2]);
 
-  const coursesData = {
+  const coursesData: Record<string, CourseData> = {
     "1": {
       id: "1",
       title: "Programming Fundamentals",
@@ -97,10 +117,10 @@ const Learn = () => {
 
   if (!courseData) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-slate-950">
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="text-center">
           <div className="w-12 h-12 border-4 border-red-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-slate-400">Loading course...</p>
+          <p className="text-gray-600">Loading course...</p>
         </div>
       </div>
     );
@@ -133,6 +153,11 @@ const Learn = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      <style>{`
+        .hero-gradient { background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%); }
+        .smooth-transition { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+      `}</style>
+
       {/* Top Navigation Bar */}
       <nav className="bg-white backdrop-blur-xl border-b border-gray-200 sticky top-0 z-50 shadow-sm">
         <div className="px-4 sm:px-6 lg:px-8 py-4">
@@ -275,7 +300,7 @@ const Learn = () => {
                 </div>
                 
                 {/* Lessons List */}
-                <div className="divide-y divide-slate-700/30">
+                <div className="divide-y divide-gray-200">
                   {module.lessons.map((lesson) => {
                     const isActive = currentLesson === lesson.id;
                     const isCompleted = completedLessons.includes(lesson.id);
@@ -284,10 +309,10 @@ const Learn = () => {
                       <button
                         key={lesson.id}
                         onClick={() => setCurrentLesson(lesson.id)}
-                        className={`w-full text-left p-4 transition-all ${
+                        className={`w-full text-left p-4 smooth-transition ${
                           isActive 
                             ? 'bg-gradient-to-r from-red-600 to-red-500' 
-                            : 'hover:bg-slate-800/50'
+                            : 'hover:bg-gray-100'
                         }`}
                       >
                         <div className="flex items-start gap-3">
@@ -298,22 +323,22 @@ const Learn = () => {
                               </div>
                             ) : (
                               <div className={`w-5 h-5 rounded-full flex items-center justify-center ${
-                                isActive ? 'bg-white/20' : 'bg-slate-700'
+                                isActive ? 'bg-white/20' : 'bg-gray-300'
                               }`}>
                                 <PlayCircle className={`w-4 h-4 ${
-                                  isActive ? 'text-white' : 'text-slate-400'
+                                  isActive ? 'text-white' : 'text-gray-600'
                                 }`} />
                               </div>
                             )}
                           </div>
                           <div className="flex-1 min-w-0">
                             <h5 className={`font-medium mb-1 ${
-                              isActive ? 'text-white' : 'text-slate-200'
+                              isActive ? 'text-white' : 'text-gray-900'
                             }`}>
                               {lesson.title}
                             </h5>
                             <p className={`text-xs ${
-                              isActive ? 'text-white/80' : 'text-slate-400'
+                              isActive ? 'text-white/80' : 'text-gray-600'
                             }`}>
                               {lesson.duration}
                             </p>
