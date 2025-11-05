@@ -14,13 +14,263 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      courses: {
+        Row: {
+          category: string | null
+          created_at: string
+          description: string | null
+          discount_end_date: string | null
+          discount_price: number | null
+          duration: string | null
+          id: string
+          instructor_avatar: string | null
+          instructor_name: string | null
+          is_free: boolean
+          language: string | null
+          level: string | null
+          price: number
+          rating: number | null
+          slug: string
+          thumbnail_url: string | null
+          title: string
+          total_students: number | null
+          updated_at: string
+        }
+        Insert: {
+          category?: string | null
+          created_at?: string
+          description?: string | null
+          discount_end_date?: string | null
+          discount_price?: number | null
+          duration?: string | null
+          id?: string
+          instructor_avatar?: string | null
+          instructor_name?: string | null
+          is_free?: boolean
+          language?: string | null
+          level?: string | null
+          price?: number
+          rating?: number | null
+          slug: string
+          thumbnail_url?: string | null
+          title: string
+          total_students?: number | null
+          updated_at?: string
+        }
+        Update: {
+          category?: string | null
+          created_at?: string
+          description?: string | null
+          discount_end_date?: string | null
+          discount_price?: number | null
+          duration?: string | null
+          id?: string
+          instructor_avatar?: string | null
+          instructor_name?: string | null
+          is_free?: boolean
+          language?: string | null
+          level?: string | null
+          price?: number
+          rating?: number | null
+          slug?: string
+          thumbnail_url?: string | null
+          title?: string
+          total_students?: number | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      enrollments: {
+        Row: {
+          course_id: string
+          enrolled_at: string
+          id: string
+          order_id: string | null
+          progress: number
+          status: string
+          user_id: string
+        }
+        Insert: {
+          course_id: string
+          enrolled_at?: string
+          id?: string
+          order_id?: string | null
+          progress?: number
+          status?: string
+          user_id: string
+        }
+        Update: {
+          course_id?: string
+          enrolled_at?: string
+          id?: string
+          order_id?: string | null
+          progress?: number
+          status?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "enrollments_course_id_fkey"
+            columns: ["course_id"]
+            isOneToOne: false
+            referencedRelation: "courses"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "enrollments_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      orders: {
+        Row: {
+          amount: number
+          course_id: string
+          created_at: string
+          expires_at: string
+          id: string
+          midtrans_order_id: string | null
+          midtrans_transaction_id: string | null
+          order_id: string
+          paid_at: string | null
+          payment_method: string | null
+          snap_token: string | null
+          status: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          amount: number
+          course_id: string
+          created_at?: string
+          expires_at: string
+          id?: string
+          midtrans_order_id?: string | null
+          midtrans_transaction_id?: string | null
+          order_id: string
+          paid_at?: string | null
+          payment_method?: string | null
+          snap_token?: string | null
+          status?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          amount?: number
+          course_id?: string
+          created_at?: string
+          expires_at?: string
+          id?: string
+          midtrans_order_id?: string | null
+          midtrans_transaction_id?: string | null
+          order_id?: string
+          paid_at?: string | null
+          payment_method?: string | null
+          snap_token?: string | null
+          status?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "orders_course_id_fkey"
+            columns: ["course_id"]
+            isOneToOne: false
+            referencedRelation: "courses"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          full_name: string
+          id: string
+          phone: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          full_name: string
+          id: string
+          phone: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          full_name?: string
+          id?: string
+          phone?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      registrations: {
+        Row: {
+          course: string
+          created_at: string
+          education_level: string | null
+          email: string
+          expectations: string | null
+          full_name: string
+          id: string
+          learning_goals: string | null
+          motivation: string | null
+          phone: string
+          previous_experience: string | null
+          schedule_preference: string | null
+          school_name: string | null
+          status: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          course: string
+          created_at?: string
+          education_level?: string | null
+          email: string
+          expectations?: string | null
+          full_name: string
+          id?: string
+          learning_goals?: string | null
+          motivation?: string | null
+          phone: string
+          previous_experience?: string | null
+          schedule_preference?: string | null
+          school_name?: string | null
+          status?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          course?: string
+          created_at?: string
+          education_level?: string | null
+          email?: string
+          expectations?: string | null
+          full_name?: string
+          id?: string
+          learning_goals?: string | null
+          motivation?: string | null
+          phone?: string
+          previous_experience?: string | null
+          schedule_preference?: string | null
+          school_name?: string | null
+          status?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      generate_order_id: { Args: never; Returns: string }
     }
     Enums: {
       [_ in never]: never
