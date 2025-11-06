@@ -1,0 +1,203 @@
+import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2.75.1";
+
+const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+};
+
+serve(async (req) => {
+  if (req.method === 'OPTIONS') {
+    return new Response(null, { headers: corsHeaders });
+  }
+
+  try {
+    const supabaseClient = createClient(
+      Deno.env.get('SUPABASE_URL') ?? '',
+      Deno.env.get('SUPABASE_ANON_KEY') ?? '',
+      {
+        auth: {
+          persistSession: false
+        }
+      }
+    );
+
+    const authHeader = req.headers.get('Authorization');
+    if (!authHeader) {
+      throw new Error('Missing authorization header');
+    }
+
+    const { data: { user }, error: userError } = await supabaseClient.auth.getUser(
+      authHeader.replace('Bearer ', '')
+    );
+
+    if (userError || !user) {
+      throw new Error('Unauthorized');
+    }
+
+    const { courseId } = await req.json();
+
+    if (!courseId) {
+      throw new Error('Course ID is required');
+    }
+
+    console.log('Creating payment for user:', user.id, 'course:', courseId);
+
+    // Fetch course details
+    const { data: course, error: courseError } = await supabaseClient
+      .from('courses')
+      .select('*')
+      .eq('id', courseId)
+      .single();
+
+    if (courseError || !course) {
+      throw new Error('Course not found');
+    }
+
+    // Check if course is free
+    if (course.is_free) {
+      throw new Error('This course is free, no payment required');
+    }
+
+    // Check if user already enrolled
+    const { data: existingEnrollment } = await supabaseClient
+      .from('enrollments')
+      .select('id')
+      .eq('user_id', user.id)
+      .eq('course_id', courseId)
+      .single();
+
+    if (existingEnrollment) {
+      throw new Error('Already enrolled in this course');
+    }
+
+    // Fetch user profile
+    const { data: profile } = await supabaseClient
+      .from('profiles')
+      .select('full_name, phone')
+      .eq('id', user.id)
+      .single();
+
+    // Calculate final price (check for discount)
+    const now = new Date();
+    let finalPrice = Number(course.price);
+    
+    if (course.discount_price && course.discount_end_date) {
+      const discountEndDate = new Date(course.discount_end_date);
+      if (now < discountEndDate) {
+        finalPrice = Number(course.discount_price);
+      }
+    }
+
+    // Create order record
+    const expiresAt = new Date(now.getTime() + 24 * 60 * 60 * 1000); // 24 hours
+    
+    const { data: order, error: orderError } = await supabaseClient
+      .from('orders')
+      .insert({
+        user_id: user.id,
+        course_id: courseId,
+        amount: finalPrice,
+        status: 'pending',
+        expires_at: expiresAt.toISOString()
+      })
+      .select()
+      .single();
+
+    if (orderError || !order) {
+      console.error('Order creation error:', orderError);
+      throw new Error('Failed to create order');
+    }
+
+    console.log('Order created:', order.order_id);
+
+    // Prepare Midtrans transaction
+    const midtransServerKey = Deno.env.get('MIDTRANS_SERVER_KEY');
+    if (!midtransServerKey) {
+      throw new Error('Midtrans server key not configured');
+    }
+
+    const authString = btoa(midtransServerKey + ':');
+    
+    const transactionDetails = {
+      transaction_details: {
+        order_id: order.order_id,
+        gross_amount: finalPrice,
+      },
+      customer_details: {
+        first_name: profile?.full_name || 'User',
+        email: user.email,
+        phone: profile?.phone || '',
+      },
+      item_details: [
+        {
+          id: course.id,
+          price: finalPrice,
+          quantity: 1,
+          name: course.title,
+        },
+      ],
+      callbacks: {
+        finish: `${Deno.env.get('SUPABASE_URL')}/functions/v1/payment-webhook`,
+      },
+    };
+
+    console.log('Creating Midtrans transaction for order:', order.order_id);
+
+    const midtransResponse = await fetch('https://app.sandbox.midtrans.com/snap/v1/transactions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': `Basic ${authString}`,
+      },
+      body: JSON.stringify(transactionDetails),
+    });
+
+    if (!midtransResponse.ok) {
+      const errorText = await midtransResponse.text();
+      console.error('Midtrans API error:', errorText);
+      throw new Error(`Midtrans API error: ${errorText}`);
+    }
+
+    const midtransData = await midtransResponse.json();
+    console.log('Midtrans response received, token:', midtransData.token);
+
+    // Update order with snap token
+    const { error: updateError } = await supabaseClient
+      .from('orders')
+      .update({
+        snap_token: midtransData.token,
+        midtrans_order_id: order.order_id,
+      })
+      .eq('id', order.id);
+
+    if (updateError) {
+      console.error('Failed to update order with snap token:', updateError);
+    }
+
+    return new Response(
+      JSON.stringify({
+        success: true,
+        snapToken: midtransData.token,
+        orderId: order.order_id,
+      }),
+      {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        status: 200,
+      }
+    );
+  } catch (error) {
+    console.error('Error in create-payment:', error);
+    return new Response(
+      JSON.stringify({
+        success: false,
+        error: error.message,
+      }),
+      {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        status: 400,
+      }
+    );
+  }
+});
