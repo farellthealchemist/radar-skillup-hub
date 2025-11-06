@@ -875,8 +875,8 @@ const CourseDetail = () => {
                 </div>
 
                 {/* CTA Button */}
-                <Link to="/register">
-                  <button className="hero-gradient text-white w-full py-4 rounded-lg font-semibold btn-glow smooth-transition">
+                <Link to={`/checkout/${id}`}>
+                  <button className="hero-gradient text-white w-full py-4 rounded-lg font-semibold btn-glow smooth-transition hover:shadow-lg">
                     Daftar Sekarang
                   </button>
                 </Link>

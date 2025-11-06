@@ -24,6 +24,8 @@ import ScrollToTop from "./components/ScrollToTop";
 // ✅ Tambahan import baru
 import Learn from "./pages/Learn";
 import Certificates from "./pages/Certificates";
+import Checkout from "./pages/Checkout";
+import PaymentSuccess from "./pages/PaymentSuccess";
 
 const queryClient = new QueryClient();
 
@@ -56,6 +58,10 @@ const App = () => (
               {/* ✅ Halaman baru */}
               <Route path="/learn/:id" element={<Learn />} />
               <Route path="/certificates" element={<Certificates />} />
+              
+              {/* Payment Pages */}
+              <Route path="/checkout/:courseId" element={<Checkout />} />
+              <Route path="/payment-success" element={<PaymentSuccess />} />
 
               {/* Placeholder routes (bisa dihapus nanti kalau sudah ada halamannya) */}
               <Route path="/settings" element={<NotFound />} />
