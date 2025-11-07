@@ -1,5 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
+import { supabase } from '@/integrations/supabase/client';
+import { useToast } from '@/hooks/use-toast';
+import { Loader2 } from 'lucide-react';
 import { 
   Clock, Users, Award, BookOpen, CheckCircle, Star,
   ChevronDown, ChevronRight, PlayCircle, Globe, Target,
@@ -517,25 +520,118 @@ Lulusan program ini siap mengambil sertifikasi internasional seperti CompTIA Net
 const CourseDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { toast } = useToast();
   const [activeTab, setActiveTab] = useState("overview");
   const [expandedModules, setExpandedModules] = useState([]);
+  const [course, setCourse] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   const { ref: heroRef, isVisible: heroVisible } = useScrollAnimation({ delay: 200 });
   const { ref: outcomesRef, visibleItems: outcomesVisible } = useStaggeredAnimation(8, 100, 200);
   const { ref: sidebarRef, isVisible: sidebarVisible } = useScrollAnimation({ delay: 300 });
 
-  // Get course data based on ID
-  const courseData = coursesData[id];
-
-  // If course not found, redirect to 404 or courses page
+  // Fetch course from database
   useEffect(() => {
-    if (!courseData) {
-      navigate('/courses');
-    }
-  }, [courseData, navigate]);
+    const fetchCourse = async () => {
+      if (!id) return;
 
-  // Show loading or return null if no data
-  if (!courseData) {
+      try {
+        const { data, error } = await supabase
+          .from('courses')
+          .select('*')
+          .eq('id', id)
+          .single();
+
+        if (error) throw error;
+        
+        if (!data) {
+          // Try fallback to hardcoded data
+          if (coursesData[id]) {
+            setCourse(null); // Will use coursesData fallback
+          } else {
+            navigate('/courses');
+          }
+        } else {
+          setCourse(data);
+        }
+      } catch (error) {
+        console.error('Error fetching course:', error);
+        // Try fallback to hardcoded data
+        if (coursesData[id]) {
+          setCourse(null); // Will use coursesData fallback
+        } else {
+          toast({
+            title: "Error",
+            description: "Gagal memuat data kursus",
+            variant: "destructive",
+          });
+          navigate('/courses');
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCourse();
+  }, [id, navigate, toast]);
+
+  // Format course data
+  const courseData = course ? {
+    id: course.id,
+    title: course.title,
+    category: course.category || 'Programming',
+    rating: course.rating || 4.8,
+    reviewCount: 150,
+    students: course.total_students || 0,
+    shortDesc: course.description,
+    price: course.is_free ? 'GRATIS' : `Rp ${(course.discount_price || course.price).toLocaleString('id-ID')}`,
+    originalPrice: course.is_free ? '' : `Rp ${course.price.toLocaleString('id-ID')}`,
+    discount: course.discount_price ? `${Math.round((1 - course.discount_price / course.price) * 100)}%` : '0%',
+    thumbnail: course.thumbnail_url || 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800',
+    duration: course.duration || '8 minggu',
+    level: course.level || 'Pemula',
+    language: course.language || 'Bahasa Indonesia',
+    description: course.description,
+    outcomes: [
+      "Menguasai materi kursus dengan baik",
+      "Dapat mengimplementasikan konsep yang dipelajari",
+      "Memiliki project portfolio yang siap ditampilkan",
+      "Siap untuk advanced learning atau mencari pekerjaan"
+    ],
+    requirements: [
+      "Komputer/laptop dengan spesifikasi standar",
+      "Koneksi internet yang stabil",
+      "Motivasi tinggi untuk belajar"
+    ],
+    curriculum: [],
+    instructor: {
+      name: course.instructor_name || 'Instruktur RADAR',
+      title: 'Course Instructor',
+      avatar: course.instructor_avatar || 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150',
+      bio: `Instruktur berpengalaman di bidang ${course.category || 'IT'}`,
+      expertise: [course.category || 'IT', 'Teaching', 'Mentoring']
+    },
+    reviews: [
+      {
+        name: "Student",
+        avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80",
+        rating: 5,
+        date: "1 minggu lalu",
+        comment: "Kursus yang sangat bagus dan mudah dipahami!"
+      }
+    ],
+    included: [
+      "Akses materi selamanya",
+      "Sertifikat resmi setelah lulus",
+      "Support instruktur 24/7",
+      "Source code & project files",
+      "Grup diskusi alumni",
+      "Career guidance"
+    ]
+  } : coursesData[id]; // Fallback to hardcoded data
+
+  // Show loading
+  if (loading) {
     return (
       <div className="min-h-screen pt-16 flex items-center justify-center">
         <div className="text-center">
@@ -544,6 +640,11 @@ const CourseDetail = () => {
         </div>
       </div>
     );
+  }
+
+  // If no course data found
+  if (!courseData) {
+    return null;
   }
 
   const toggleModule = (index) => {
