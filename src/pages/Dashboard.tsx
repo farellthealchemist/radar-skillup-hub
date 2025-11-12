@@ -1,8 +1,10 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { supabase } from '@/integrations/supabase/client';
+import { useToast } from '@/hooks/use-toast';
 import { 
   BookOpen, PlayCircle, CheckCircle, Clock, 
-  Award, ArrowRight, TrendingUp, ChevronRight
+  Award, ArrowRight, TrendingUp, ChevronRight, Loader2
 } from "lucide-react";
 
 // Animation Hook
@@ -58,51 +60,171 @@ const useStaggeredAnimation = (itemCount, staggerDelay = 150, initialDelay = 200
   return { ref, visibleItems };
 };
 
-// Sample Data
-const myCourses = [
-  {
-    id: "1",
-    title: "Programming Fundamentals",
-    thumbnail: "https://images.unsplash.com/photo-1517180102446-f3ece451e9d8?w=600",
-    category: "Programming",
-    progress: 65,
-    totalLessons: 12,
-    completedLessons: 8
-  },
-  {
-    id: "3",
-    title: "Microsoft Office Mastery",
-    thumbnail: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600",
-    category: "Office",
-    progress: 40,
-    totalLessons: 15,
-    completedLessons: 6
-  },
-  {
-    id: "4",
-    title: "Network Administration",
-    thumbnail: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600",
-    category: "Networking",
-    progress: 20,
-    totalLessons: 18,
-    completedLessons: 4
-  }
-];
-
 const Dashboard = () => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+  const [myCourses, setMyCourses] = useState<any[]>([]);
+  const [stats, setStats] = useState({
+    activeCourses: 0,
+    completedLessons: 0,
+    totalHours: 0,
+    certificates: 0
+  });
+
   const navigate = useNavigate();
+  const { toast } = useToast();
 
   const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation({ delay: 200 });
   const { ref: coursesRef, visibleItems: coursesVisible } = useStaggeredAnimation(3, 150, 200);
 
+  // Fetch user data and courses
   useEffect(() => {
-    // Simulate user data
-    setUser({
-      name: "John Doe",
-      email: "john@example.com"
-    });
-  }, []);
+    const fetchDashboardData = async () => {
+      try {
+        setLoading(true);
+
+        // Check authentication
+        const { data: { user } } = await supabase.auth.getUser();
+        
+        if (!user) {
+          navigate('/login');
+          return;
+        }
+
+        // Fetch user profile
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('full_name')
+          .eq('id', user.id)
+          .single();
+
+        setUser({
+          name: profile?.full_name || 'Student',
+          email: user.email
+        });
+
+        // Fetch active enrollments with course details (limit to 3 for dashboard)
+        const { data: enrollments, error } = await supabase
+          .from('enrollments')
+          .select(`
+            id,
+            progress,
+            status,
+            courses (
+              id,
+              title,
+              thumbnail_url,
+              category,
+              duration
+            )
+          `)
+          .eq('user_id', user.id)
+          .eq('status', 'active')
+          .lt('progress', 100)
+          .order('enrolled_at', { ascending: false })
+          .limit(3);
+
+        if (error) throw error;
+
+        // Process courses
+        const processedCourses = [];
+        let totalCompletedLessons = 0;
+        let totalDuration = 0;
+
+        for (const enrollment of enrollments || []) {
+          const course = enrollment.courses;
+          
+          // Count total lessons for this course
+          const { data: modules } = await supabase
+            .from('course_modules')
+            .select('id')
+            .eq('course_id', course.id);
+
+          const moduleIds = modules?.map(m => m.id) || [];
+          
+          const { count: totalLessons } = await supabase
+            .from('lessons')
+            .select('id', { count: 'exact', head: true })
+            .in('module_id', moduleIds);
+
+          // Count completed lessons for this enrollment
+          const { count: completedLessons } = await supabase
+            .from('lesson_progress')
+            .select('id', { count: 'exact', head: true })
+            .eq('enrollment_id', enrollment.id)
+            .eq('completed', true);
+
+          processedCourses.push({
+            id: course.id,
+            title: course.title,
+            thumbnail: course.thumbnail_url,
+            category: course.category,
+            progress: Math.round(enrollment.progress || 0),
+            totalLessons: totalLessons || 0,
+            completedLessons: completedLessons || 0
+          });
+
+          totalCompletedLessons += (completedLessons || 0);
+
+          // Parse duration
+          const durationMatch = course.duration?.match(/(\d+)/);
+          if (durationMatch) {
+            totalDuration += parseInt(durationMatch[1]);
+          }
+        }
+
+        setMyCourses(processedCourses);
+
+        // Count completed courses (certificates)
+        const { count: completedCount } = await supabase
+          .from('enrollments')
+          .select('id', { count: 'exact', head: true })
+          .eq('user_id', user.id)
+          .gte('progress', 100);
+
+        setStats({
+          activeCourses: processedCourses.length,
+          completedLessons: totalCompletedLessons,
+          totalHours: totalDuration,
+          certificates: completedCount || 0
+        });
+
+      } catch (error: any) {
+        console.error('Error fetching dashboard data:', error);
+        toast({
+          title: "Error",
+          description: "Gagal memuat data dashboard",
+          variant: "destructive"
+        });
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchDashboardData();
+  }, [navigate, toast]);
+
+  // Loading state
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50 pt-16">
+        <section className="bg-white border-b">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
+              Selamat datang kembali! 👋
+            </h1>
+            <p className="text-gray-600">Mari lanjutkan pembelajaran Anda hari ini</p>
+          </div>
+        </section>
+        <div className="flex items-center justify-center min-h-[400px]">
+          <div className="text-center">
+            <Loader2 className="w-12 h-12 text-red-600 animate-spin mx-auto mb-4" />
+            <p className="text-gray-600">Memuat dashboard...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 pt-16">
@@ -228,36 +350,36 @@ const Dashboard = () => {
           <h2 className="text-xl font-bold text-gray-900 mb-6">Statistik Belajar</h2>
           
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {[
-              { 
-                icon: <BookOpen className="w-6 h-6" />, 
-                value: myCourses.length, 
-                label: "Kursus Aktif",
-                color: "blue",
-                bgColor: "bg-blue-50"
-              },
-              { 
-                icon: <PlayCircle className="w-6 h-6" />, 
-                value: myCourses.reduce((acc, c) => acc + c.completedLessons, 0), 
-                label: "Lessons Selesai",
-                color: "green",
-                bgColor: "bg-green-50"
-              },
-              { 
-                icon: <Clock className="w-6 h-6" />, 
-                value: "24h", 
-                label: "Total Waktu",
-                color: "purple",
-                bgColor: "bg-purple-50"
-              },
-              { 
-                icon: <Award className="w-6 h-6" />, 
-                value: "1", 
-                label: "Sertifikat",
-                color: "yellow",
-                bgColor: "bg-yellow-50"
-              }
-            ].map((stat, index) => (
+              {[
+                { 
+                  icon: <BookOpen className="w-6 h-6" />, 
+                  value: stats.activeCourses, 
+                  label: "Kursus Aktif",
+                  color: "blue",
+                  bgColor: "bg-blue-50"
+                },
+                { 
+                  icon: <PlayCircle className="w-6 h-6" />, 
+                  value: stats.completedLessons, 
+                  label: "Lessons Selesai",
+                  color: "green",
+                  bgColor: "bg-green-50"
+                },
+                { 
+                  icon: <Clock className="w-6 h-6" />, 
+                  value: `${stats.totalHours}h`, 
+                  label: "Total Waktu",
+                  color: "purple",
+                  bgColor: "bg-purple-50"
+                },
+                { 
+                  icon: <Award className="w-6 h-6" />, 
+                  value: stats.certificates, 
+                  label: "Sertifikat",
+                  color: "yellow",
+                  bgColor: "bg-yellow-50"
+                }
+              ].map((stat, index) => (
               <div 
                 key={index}
                 className="bg-white rounded-xl shadow-sm p-5 hover-lift smooth-transition border"

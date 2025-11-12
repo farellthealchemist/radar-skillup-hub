@@ -1,58 +1,156 @@
-import { useState } from 'react';
-import { CreditCard, Calendar, CheckCircle, Clock, Download, Filter } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { supabase } from '@/integrations/supabase/client';
+import { useToast } from '@/hooks/use-toast';
+import { CreditCard, Calendar, CheckCircle, Clock, Download, Filter, Loader2, XCircle } from 'lucide-react';
 
 const Transactions = () => {
   const [filterStatus, setFilterStatus] = useState('all');
+  const [loading, setLoading] = useState(true);
+  const [transactions, setTransactions] = useState<any[]>([]);
+  const [stats, setStats] = useState({
+    success: 0,
+    pending: 0,
+    failed: 0,
+    totalSpent: 0
+  });
 
-  const transactions = [
-    {
-      id: 'TRX001',
-      course: 'Programming Fundamentals',
-      date: '15 Sep 2025',
-      amount: 'Rp 2.500.000',
-      status: 'success',
-      method: 'Transfer Bank',
-      invoice: '#'
-    },
-    {
-      id: 'TRX002',
-      course: 'Microsoft Office Mastery',
-      date: '20 Sep 2025',
-      amount: 'Rp 1.200.000',
-      status: 'success',
-      method: 'E-Wallet',
-      invoice: '#'
-    },
-    {
-      id: 'TRX003',
-      course: 'Network Administration',
-      date: '25 Sep 2025',
-      amount: 'Rp 3.500.000',
-      status: 'pending',
-      method: 'Transfer Bank',
-      invoice: '#'
-    }
-  ];
+  const { toast } = useToast();
+  const navigate = useNavigate();
+
+  // Fetch transactions
+  useEffect(() => {
+    const fetchTransactions = async () => {
+      try {
+        setLoading(true);
+
+        // Check authentication
+        const { data: { user } } = await supabase.auth.getUser();
+        
+        if (!user) {
+          toast({
+            title: "Login Required",
+            description: "Silakan login untuk melihat transaksi Anda",
+            variant: "destructive"
+          });
+          navigate('/login');
+          return;
+        }
+
+        // Fetch orders with course details
+        const { data: orders, error } = await supabase
+          .from('orders')
+          .select(`
+            id,
+            order_id,
+            amount,
+            status,
+            payment_method,
+            created_at,
+            paid_at,
+            midtrans_transaction_id,
+            courses (
+              id,
+              title
+            )
+          `)
+          .eq('user_id', user.id)
+          .order('created_at', { ascending: false });
+
+        if (error) throw error;
+
+        // Process transactions
+        const processedTransactions = (orders || []).map(order => ({
+          id: order.order_id,
+          internalId: order.id,
+          course: order.courses?.title || 'Unknown Course',
+          date: new Date(order.created_at).toLocaleDateString('id-ID', {
+            day: 'numeric',
+            month: 'short',
+            year: 'numeric'
+          }),
+          amount: `Rp ${order.amount.toLocaleString('id-ID')}`,
+          amountNum: order.amount,
+          status: order.status,
+          method: order.payment_method || 'Pending',
+          transactionId: order.midtrans_transaction_id || '-',
+          invoice: order.paid_at ? `/invoices/${order.order_id}` : null
+        }));
+
+        setTransactions(processedTransactions);
+
+        // Calculate stats
+        const successCount = processedTransactions.filter(t => t.status === 'paid').length;
+        const pendingCount = processedTransactions.filter(t => t.status === 'pending').length;
+        const failedCount = processedTransactions.filter(t => ['failed', 'expired', 'cancelled'].includes(t.status)).length;
+        const totalSpent = processedTransactions
+          .filter(t => t.status === 'paid')
+          .reduce((acc, t) => acc + t.amountNum, 0);
+
+        setStats({
+          success: successCount,
+          pending: pendingCount,
+          failed: failedCount,
+          totalSpent
+        });
+
+      } catch (error: any) {
+        console.error('Error fetching transactions:', error);
+        toast({
+          title: "Error",
+          description: "Gagal memuat riwayat transaksi",
+          variant: "destructive"
+        });
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchTransactions();
+  }, [navigate, toast]);
 
   const filteredTransactions = filterStatus === 'all' 
     ? transactions 
-    : transactions.filter(t => t.status === filterStatus);
+    : transactions.filter(t => {
+        if (filterStatus === 'success') return t.status === 'paid';
+        if (filterStatus === 'pending') return t.status === 'pending';
+        if (filterStatus === 'failed') return ['failed', 'expired', 'cancelled'].includes(t.status);
+        return true;
+      });
 
-  const totalSpent = transactions
-    .filter(t => t.status === 'success')
-    .reduce((acc, t) => acc + parseInt(t.amount.replace(/\D/g, '')), 0);
-
-  const getStatusBadge = (status) => {
-    if (status === 'success') return 'bg-green-100 text-green-700';
+  const getStatusBadge = (status: string) => {
+    if (status === 'paid') return 'bg-green-100 text-green-700';
     if (status === 'pending') return 'bg-yellow-100 text-yellow-700';
     return 'bg-red-100 text-red-700';
   };
 
-  const getStatusText = (status) => {
-    if (status === 'success') return 'Berhasil';
+  const getStatusText = (status: string) => {
+    if (status === 'paid') return 'Berhasil';
     if (status === 'pending') return 'Pending';
+    if (status === 'expired') return 'Kadaluarsa';
+    if (status === 'cancelled') return 'Dibatalkan';
     return 'Gagal';
   };
+
+  // Loading state
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50 pt-16">
+        <section className="hero-gradient text-white py-12">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h1 className="text-3xl md:text-4xl font-bold mb-4">Riwayat Transaksi</h1>
+            <p className="text-lg opacity-90">Lihat semua transaksi pembelian kursus Anda</p>
+          </div>
+        </section>
+        <div className="flex items-center justify-center min-h-[400px]">
+          <div className="text-center">
+            <Loader2 className="w-12 h-12 text-red-600 animate-spin mx-auto mb-4" />
+            <p className="text-gray-600">Memuat transaksi Anda...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 pt-16">
@@ -78,7 +176,7 @@ const Transactions = () => {
                 </div>
               </div>
               <div className="text-3xl font-bold text-green-600 mb-1">
-                {transactions.filter(t => t.status === 'success').length}
+                {stats.success}
               </div>
               <div className="text-sm text-gray-600">Berhasil</div>
             </div>
@@ -90,7 +188,7 @@ const Transactions = () => {
                 </div>
               </div>
               <div className="text-3xl font-bold text-yellow-600 mb-1">
-                {transactions.filter(t => t.status === 'pending').length}
+                {stats.pending}
               </div>
               <div className="text-sm text-gray-600">Pending</div>
             </div>
@@ -102,7 +200,7 @@ const Transactions = () => {
                 </div>
               </div>
               <div className="text-2xl font-bold text-red-600 mb-1">
-                Rp {totalSpent.toLocaleString('id-ID')}
+                Rp {stats.totalSpent.toLocaleString('id-ID')}
               </div>
               <div className="text-sm text-gray-600">Total Pengeluaran</div>
             </div>
@@ -135,7 +233,18 @@ const Transactions = () => {
           </div>
 
           <div className="space-y-4">
-            {filteredTransactions.map((transaction) => (
+            {filteredTransactions.length === 0 ? (
+              <div className="bg-white rounded-xl p-12 text-center shadow-md">
+                <CreditCard className="w-16 h-16 text-gray-300 mx-auto mb-4" />
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">Tidak ada transaksi</h3>
+                <p className="text-gray-600">
+                  {filterStatus === 'all' 
+                    ? 'Anda belum memiliki transaksi' 
+                    : `Tidak ada transaksi dengan status ${filterStatus}`}
+                </p>
+              </div>
+            ) : (
+              filteredTransactions.map((transaction) => (
               <div key={transaction.id} className="bg-white rounded-xl shadow-md p-6 hover:shadow-lg smooth-transition">
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                   <div className="flex-1">
@@ -158,17 +267,25 @@ const Transactions = () => {
                     <div className="text-right">
                       <div className="text-2xl font-bold text-red-600">{transaction.amount}</div>
                     </div>
-                    <button
-                      onClick={() => window.open(transaction.invoice, '_blank')}
-                      className="px-4 py-2 border-2 border-gray-300 text-gray-700 rounded-lg hover:border-red-600 hover:text-red-600 smooth-transition font-medium flex items-center gap-2"
-                    >
-                      <Download className="w-4 h-4" />
-                      <span>Invoice</span>
-                    </button>
+                    {transaction.invoice && (
+                      <button
+                        onClick={() => window.open(transaction.invoice, '_blank')}
+                        className="px-4 py-2 border-2 border-gray-300 text-gray-700 rounded-lg hover:border-red-600 hover:text-red-600 smooth-transition font-medium flex items-center gap-2"
+                      >
+                        <Download className="w-4 h-4" />
+                        <span>Invoice</span>
+                      </button>
+                    )}
+                    {!transaction.invoice && (
+                      <div className="px-4 py-2 text-gray-400 text-sm">
+                        Invoice belum tersedia
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
-            ))}
+              ))
+            )}
           </div>
         </div>
       </section>

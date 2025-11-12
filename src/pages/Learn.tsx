@@ -1,153 +1,261 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
+import { supabase } from '@/integrations/supabase/client';
+import { useToast } from '@/hooks/use-toast';
 import { 
   PlayCircle, CheckCircle, ChevronLeft, ChevronRight, 
-  Clock, Download, Menu, X, Award
+  Clock, Download, Menu, X, Award, Loader2, AlertCircle, Lock
 } from 'lucide-react';
 
 interface Lesson {
-  id: number;
+  id: string;
   title: string;
+  description: string | null;
   duration: string;
-  videoUrl: string;
+  video_url: string;
+  order_number: number;
+  completed?: boolean;
 }
 
 interface Module {
-  moduleTitle: string;
+  id: string;
+  title: string;
+  description: string | null;
+  order_number: number;
   lessons: Lesson[];
 }
 
 interface CourseData {
   id: string;
   title: string;
-  instructor: string;
-  thumbnail: string;
+  instructor_name: string;
+  thumbnail_url: string;
   modules: Module[];
 }
 
 const Learn = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { toast } = useToast();
+  
   const [sidebarOpen, setSidebarOpen] = useState(true);
-  const [currentLesson, setCurrentLesson] = useState(0);
-  const [completedLessons, setCompletedLessons] = useState([0, 1, 2]);
+  const [currentLessonIndex, setCurrentLessonIndex] = useState(0);
+  const [completedLessons, setCompletedLessons] = useState<Set<string>>(new Set());
+  
+  const [loading, setLoading] = useState(true);
+  const [courseData, setCourseData] = useState<CourseData | null>(null);
+  const [enrollmentId, setEnrollmentId] = useState<string | null>(null);
+  const [isEnrolled, setIsEnrolled] = useState(false);
+  const [userId, setUserId] = useState<string | null>(null);
 
-  const coursesData: Record<string, CourseData> = {
-    "1": {
-      id: "1",
-      title: "Programming Fundamentals",
-      instructor: "Asep Surahmat M.Kom",
-      thumbnail: "https://images.unsplash.com/photo-1517180102446-f3ece451e9d8?w=600",
-      modules: [
-        {
-          moduleTitle: "Module 1: Python Basics",
-          lessons: [
-            { id: 0, title: "Introduction to Python", duration: "15 min", videoUrl: "https://www.youtube.com/embed/kqtD5dpn9C8" },
-            { id: 1, title: "Variables & Data Types", duration: "25 min", videoUrl: "https://www.youtube.com/embed/kqtD5dpn9C8" },
-            { id: 2, title: "Control Flow", duration: "30 min", videoUrl: "https://www.youtube.com/embed/kqtD5dpn9C8" },
-            { id: 3, title: "Functions", duration: "28 min", videoUrl: "https://www.youtube.com/embed/kqtD5dpn9C8" }
-          ]
-        },
-        {
-          moduleTitle: "Module 2: Object-Oriented Programming",
-          lessons: [
-            { id: 4, title: "Introduction to OOP", duration: "20 min", videoUrl: "https://www.youtube.com/embed/kqtD5dpn9C8" },
-            { id: 5, title: "Classes & Objects", duration: "30 min", videoUrl: "https://www.youtube.com/embed/kqtD5dpn9C8" },
-            { id: 6, title: "Inheritance", duration: "35 min", videoUrl: "https://www.youtube.com/embed/kqtD5dpn9C8" }
-          ]
+  // Check authentication and enrollment
+  useEffect(() => {
+    const checkAuthAndEnrollment = async () => {
+      try {
+        // Check if user is authenticated
+        const { data: { user } } = await supabase.auth.getUser();
+        
+        if (!user) {
+          toast({
+            title: "Login Required",
+            description: "Silakan login untuk mengakses kursus",
+            variant: "destructive"
+          });
+          navigate('/login');
+          return;
         }
-      ]
-    },
-    "3": {
-      id: "3",
-      title: "Microsoft Office Mastery",
-      instructor: "Dewi Lestari M.M",
-      thumbnail: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600",
-      modules: [
-        {
-          moduleTitle: "Module 1: Microsoft Word",
-          lessons: [
-            { id: 0, title: "Word Basics", duration: "20 min", videoUrl: "https://www.youtube.com/embed/kqtD5dpn9C8" },
-            { id: 1, title: "Document Formatting", duration: "25 min", videoUrl: "https://www.youtube.com/embed/kqtD5dpn9C8" },
-            { id: 2, title: "Mail Merge", duration: "30 min", videoUrl: "https://www.youtube.com/embed/kqtD5dpn9C8" }
-          ]
-        },
-        {
-          moduleTitle: "Module 2: Microsoft Excel",
-          lessons: [
-            { id: 3, title: "Excel Basics", duration: "20 min", videoUrl: "https://www.youtube.com/embed/kqtD5dpn9C8" },
-            { id: 4, title: "Formulas & Functions", duration: "35 min", videoUrl: "https://www.youtube.com/embed/kqtD5dpn9C8" },
-            { id: 5, title: "Pivot Tables", duration: "40 min", videoUrl: "https://www.youtube.com/embed/kqtD5dpn9C8" }
-          ]
+        
+        setUserId(user.id);
+
+        // Check enrollment
+        const { data: enrollment, error: enrollmentError } = await supabase
+          .from('enrollments')
+          .select('id, status')
+          .eq('user_id', user.id)
+          .eq('course_id', id)
+          .eq('status', 'active')
+          .maybeSingle();
+
+        if (enrollmentError) throw enrollmentError;
+
+        if (!enrollment) {
+          toast({
+            title: "Akses Ditolak",
+            description: "Anda belum terdaftar di kursus ini. Silakan checkout terlebih dahulu.",
+            variant: "destructive"
+          });
+          navigate(`/courses/${id}`);
+          return;
         }
-      ]
-    },
-    "4": {
-      id: "4",
-      title: "Network Administration",
-      instructor: "Joko Widodo S.Kom",
-      thumbnail: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600",
-      modules: [
-        {
-          moduleTitle: "Module 1: Network Fundamentals",
-          lessons: [
-            { id: 0, title: "Introduction to Networking", duration: "30 min", videoUrl: "https://www.youtube.com/embed/kqtD5dpn9C8" },
-            { id: 1, title: "OSI Model", duration: "45 min", videoUrl: "https://www.youtube.com/embed/kqtD5dpn9C8" },
-            { id: 2, title: "TCP/IP Protocol", duration: "40 min", videoUrl: "https://www.youtube.com/embed/kqtD5dpn9C8" }
-          ]
-        },
-        {
-          moduleTitle: "Module 2: Cisco Configuration",
-          lessons: [
-            { id: 3, title: "Cisco IOS Basics", duration: "35 min", videoUrl: "https://www.youtube.com/embed/kqtD5dpn9C8" },
-            { id: 4, title: "Router Configuration", duration: "45 min", videoUrl: "https://www.youtube.com/embed/kqtD5dpn9C8" }
-          ]
-        }
-      ]
+
+        setIsEnrolled(true);
+        setEnrollmentId(enrollment.id);
+        
+        // Fetch course data with modules and lessons
+        await fetchCourseContent();
+        
+      } catch (error: any) {
+        console.error('Error checking enrollment:', error);
+        toast({
+          title: "Error",
+          description: "Gagal memuat data kursus",
+          variant: "destructive"
+        });
+        navigate('/dashboard');
+      }
+    };
+
+    if (id) {
+      checkAuthAndEnrollment();
+    }
+  }, [id, navigate, toast]);
+
+  // Fetch course content from database
+  const fetchCourseContent = async () => {
+    try {
+      setLoading(true);
+
+      // Fetch course details
+      const { data: course, error: courseError } = await supabase
+        .from('courses')
+        .select('id, title, instructor_name, thumbnail_url')
+        .eq('id', id)
+        .single();
+
+      if (courseError) throw courseError;
+
+      // Fetch modules with lessons
+      const { data: modules, error: modulesError } = await supabase
+        .from('course_modules')
+        .select(`
+          id,
+          title,
+          description,
+          order_number,
+          lessons (
+            id,
+            title,
+            description,
+            video_url,
+            duration,
+            order_number
+          )
+        `)
+        .eq('course_id', id)
+        .order('order_number', { ascending: true });
+
+      if (modulesError) throw modulesError;
+
+      // Sort lessons within each module
+      const sortedModules = modules.map(module => ({
+        ...module,
+        lessons: (module.lessons as any[]).sort((a, b) => a.order_number - b.order_number)
+      }));
+
+      // Fetch user's lesson progress
+      const { data: progress, error: progressError } = await supabase
+        .from('lesson_progress')
+        .select('lesson_id, completed')
+        .eq('user_id', userId)
+        .eq('enrollment_id', enrollmentId);
+
+      if (progressError) throw progressError;
+
+      // Create set of completed lesson IDs
+      const completedSet = new Set<string>(
+        progress?.filter(p => p.completed).map(p => p.lesson_id) || []
+      );
+      setCompletedLessons(completedSet);
+
+      // Set course data
+      setCourseData({
+        ...course,
+        modules: sortedModules as Module[]
+      });
+
+    } catch (error: any) {
+      console.error('Error fetching course content:', error);
+      toast({
+        title: "Error",
+        description: "Gagal memuat konten kursus",
+        variant: "destructive"
+      });
+    } finally {
+      setLoading(false);
     }
   };
 
-  const courseData = coursesData[id];
-
-  useEffect(() => {
-    if (!courseData) {
-      navigate('/dashboard');
-    }
-  }, [courseData, navigate]);
-
-  if (!courseData) {
+  // Loading state
+  if (loading || !courseData || !isEnrolled) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="text-center">
-          <div className="w-12 h-12 border-4 border-red-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading course...</p>
+          <Loader2 className="w-12 h-12 text-red-600 animate-spin mx-auto mb-4" />
+          <p className="text-gray-600">Memuat kursus...</p>
         </div>
       </div>
     );
   }
 
   const allLessons = courseData.modules.flatMap(m => m.lessons);
-  const currentLessonData = allLessons[currentLesson];
-  const progress = Math.round((completedLessons.length / allLessons.length) * 100);
+  const currentLessonData = allLessons[currentLessonIndex];
+  const progress = Math.round((completedLessons.size / allLessons.length) * 100);
 
-  const markAsComplete = () => {
-    if (!completedLessons.includes(currentLesson)) {
-      setCompletedLessons([...completedLessons, currentLesson]);
-    }
-    if (currentLesson < allLessons.length - 1) {
-      setCurrentLesson(currentLesson + 1);
+  // Mark lesson as complete
+  const markAsComplete = async () => {
+    if (!currentLessonData || !userId || !enrollmentId) return;
+
+    const isAlreadyCompleted = completedLessons.has(currentLessonData.id);
+
+    try {
+      // Update or insert lesson progress
+      const { error } = await supabase
+        .from('lesson_progress')
+        .upsert({
+          user_id: userId,
+          lesson_id: currentLessonData.id,
+          enrollment_id: enrollmentId,
+          completed: true,
+          completed_at: new Date().toISOString()
+        }, {
+          onConflict: 'user_id,lesson_id'
+        });
+
+      if (error) throw error;
+
+      // Update local state
+      setCompletedLessons(prev => new Set(prev).add(currentLessonData.id));
+
+      toast({
+        title: "Progress Tersimpan",
+        description: "Lesson berhasil diselesaikan!",
+      });
+
+      // Auto-advance to next lesson
+      if (currentLessonIndex < allLessons.length - 1) {
+        setTimeout(() => {
+          setCurrentLessonIndex(currentLessonIndex + 1);
+        }, 1000);
+      }
+    } catch (error: any) {
+      console.error('Error marking lesson complete:', error);
+      toast({
+        title: "Error",
+        description: "Gagal menyimpan progress",
+        variant: "destructive"
+      });
     }
   };
 
   const goToPrevious = () => {
-    if (currentLesson > 0) {
-      setCurrentLesson(currentLesson - 1);
+    if (currentLessonIndex > 0) {
+      setCurrentLessonIndex(currentLessonIndex - 1);
     }
   };
 
   const goToNext = () => {
-    if (currentLesson < allLessons.length - 1) {
-      setCurrentLesson(currentLesson + 1);
+    if (currentLessonIndex < allLessons.length - 1) {
+      setCurrentLessonIndex(currentLessonIndex + 1);
     }
   };
 
@@ -175,7 +283,7 @@ const Learn = () => {
                   {courseData.title}
                 </h1>
                 <p className="text-gray-500 text-xs sm:text-sm truncate">
-                  {courseData.instructor}
+                  {courseData.instructor_name}
                 </p>
               </div>
             </div>
@@ -211,7 +319,7 @@ const Learn = () => {
           {/* Video Player */}
           <div className="relative aspect-video bg-black">
             <iframe
-              src={currentLessonData.videoUrl}
+              src={currentLessonData.video_url}
               className="w-full h-full"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
@@ -234,7 +342,7 @@ const Learn = () => {
                   </span>
                   <span className="hidden sm:inline">•</span>
                   <span>
-                    Lesson {currentLesson + 1} of {allLessons.length}
+                    Lesson {currentLessonIndex + 1} of {allLessons.length}
                   </span>
                 </div>
               </div>
@@ -243,7 +351,7 @@ const Learn = () => {
               <div className="flex flex-col sm:flex-row gap-3">
                 <button
                   onClick={goToPrevious}
-                  disabled={currentLesson === 0}
+                  disabled={currentLessonIndex === 0}
                   className="sm:flex-shrink-0 flex items-center justify-center gap-2 px-5 py-3 bg-white border-2 border-gray-300 text-gray-700 rounded-xl hover:bg-gray-50 hover:border-gray-400 transition-all disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-white disabled:hover:border-gray-300 font-medium"
                 >
                   <ChevronLeft className="w-4 h-4" />
@@ -256,12 +364,12 @@ const Learn = () => {
                   className="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-red-600 to-red-500 text-white rounded-xl hover:from-red-700 hover:to-red-600 transition-all font-semibold shadow-lg shadow-red-500/25"
                 >
                   <CheckCircle className="w-5 h-5" />
-                  {completedLessons.includes(currentLesson) ? 'Completed' : 'Mark Complete'}
+                  {completedLessons.has(currentLessonData.id) ? 'Completed' : 'Mark Complete'}
                 </button>
 
                 <button
                   onClick={goToNext}
-                  disabled={currentLesson === allLessons.length - 1}
+                  disabled={currentLessonIndex === allLessons.length - 1}
                   className="sm:flex-shrink-0 flex items-center justify-center gap-2 px-5 py-3 bg-white border-2 border-gray-300 text-gray-700 rounded-xl hover:bg-gray-50 hover:border-gray-400 transition-all disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-white disabled:hover:border-gray-300 font-medium"
                 >
                   <span className="hidden sm:inline">Next</span>
@@ -282,7 +390,7 @@ const Learn = () => {
           <div className="p-4 sm:p-6 sticky top-0 bg-white border-b border-gray-200 lg:border-b-0">
             <h3 className="text-gray-900 font-bold text-lg">Course Content</h3>
             <p className="text-gray-500 text-sm mt-1">
-              {allLessons.length} lessons • {completedLessons.length} completed
+              {allLessons.length} lessons • {completedLessons.size} completed
             </p>
           </div>
           
@@ -292,7 +400,7 @@ const Learn = () => {
                 {/* Module Header */}
                 <div className="px-4 py-3 bg-gray-100 border-b border-gray-200">
                   <h4 className="text-gray-900 font-semibold text-sm">
-                    {module.moduleTitle}
+                    {module.title}
                   </h4>
                   <p className="text-gray-600 text-xs mt-1">
                     {module.lessons.length} lessons
@@ -301,14 +409,18 @@ const Learn = () => {
                 
                 {/* Lessons List */}
                 <div className="divide-y divide-gray-200">
-                  {module.lessons.map((lesson) => {
-                    const isActive = currentLesson === lesson.id;
-                    const isCompleted = completedLessons.includes(lesson.id);
+                  {module.lessons.map((lesson, lessonIndex) => {
+                    const lessonGlobalIndex = courseData.modules
+                      .slice(0, moduleIndex)
+                      .reduce((acc, m) => acc + m.lessons.length, 0) + lessonIndex;
+                    
+                    const isActive = currentLessonIndex === lessonGlobalIndex;
+                    const isCompleted = completedLessons.has(lesson.id);
                     
                     return (
                       <button
                         key={lesson.id}
-                        onClick={() => setCurrentLesson(lesson.id)}
+                        onClick={() => setCurrentLessonIndex(lessonGlobalIndex)}
                         className={`w-full text-left p-4 smooth-transition ${
                           isActive 
                             ? 'bg-gradient-to-r from-red-600 to-red-500' 

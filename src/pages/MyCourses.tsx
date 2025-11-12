@@ -1,9 +1,11 @@
 import { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { supabase } from '@/integrations/supabase/client';
+import { useToast } from '@/hooks/use-toast';
 import { 
   BookOpen, PlayCircle, CheckCircle, Clock, 
   Award, Filter, Search, Download, Calendar,
-  TrendingUp, Star
+  TrendingUp, Star, Loader2
 } from "lucide-react";
 
 // Animation Hook
@@ -34,81 +36,183 @@ const useScrollAnimation = ({ delay = 0 } = {}) => {
 const MyCourses = () => {
   const [activeTab, setActiveTab] = useState("active");
   const [searchTerm, setSearchTerm] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [courses, setCourses] = useState<{
+    active: any[];
+    completed: any[];
+  }>({ active: [], completed: [] });
+  const [stats, setStats] = useState({
+    total: 0,
+    active: 0,
+    completed: 0,
+    totalHours: 0
+  });
+
+  const { toast } = useToast();
+  const navigate = useNavigate();
   
   const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation({ delay: 200 });
 
-  // Sample data
-  const courses = {
-    active: [
-      {
-        id: "1",
-        title: "Programming Fundamentals",
-        thumbnail: "https://images.unsplash.com/photo-1517180102446-f3ece451e9d8?w=600",
-        category: "Programming",
-        progress: 65,
-        completedLessons: 8,
-        totalLessons: 12,
-        totalDuration: "45 jam",
-        enrolledDate: "15 Sep 2025",
-        lastAccessed: "2 jam yang lalu",
-        instructor: "Asep Surahmat M.Kom"
-      },
-      {
-        id: "3",
-        title: "Microsoft Office Mastery",
-        thumbnail: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600",
-        category: "Office",
-        progress: 40,
-        completedLessons: 5,
-        totalLessons: 15,
-        totalDuration: "30 jam",
-        enrolledDate: "20 Sep 2025",
-        lastAccessed: "1 hari yang lalu",
-        instructor: "Dewi Lestari M.M"
-      },
-      {
-        id: "4",
-        title: "Network Administration",
-        thumbnail: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600",
-        category: "Networking",
-        progress: 20,
-        completedLessons: 3,
-        totalLessons: 18,
-        totalDuration: "60 jam",
-        enrolledDate: "25 Sep 2025",
-        lastAccessed: "3 hari yang lalu",
-        instructor: "Joko Widodo S.Kom"
+  // Fetch enrolled courses
+  useEffect(() => {
+    const fetchMyCourses = async () => {
+      try {
+        setLoading(true);
+
+        // Check authentication
+        const { data: { user } } = await supabase.auth.getUser();
+        
+        if (!user) {
+          toast({
+            title: "Login Required",
+            description: "Silakan login untuk melihat kursus Anda",
+            variant: "destructive"
+          });
+          navigate('/login');
+          return;
+        }
+
+        // Fetch enrollments with course details
+        const { data: enrollments, error } = await supabase
+          .from('enrollments')
+          .select(`
+            id,
+            progress,
+            status,
+            enrolled_at,
+            courses (
+              id,
+              title,
+              thumbnail_url,
+              category,
+              duration,
+              instructor_name
+            )
+          `)
+          .eq('user_id', user.id)
+          .order('enrolled_at', { ascending: false });
+
+        if (error) throw error;
+
+        // Process enrollments into active and completed
+        const activeCourses = [];
+        const completedCourses = [];
+        let totalDuration = 0;
+
+        for (const enrollment of enrollments || []) {
+          const course = enrollment.courses;
+          
+          // Count lessons
+          const { count: totalLessons } = await supabase
+            .from('lessons')
+            .select('id', { count: 'exact', head: true })
+            .in('module_id', 
+              await supabase
+                .from('course_modules')
+                .select('id')
+                .eq('course_id', course.id)
+                .then(res => res.data?.map(m => m.id) || [])
+            );
+
+          // Count completed lessons
+          const { count: completedLessons } = await supabase
+            .from('lesson_progress')
+            .select('id', { count: 'exact', head: true })
+            .eq('enrollment_id', enrollment.id)
+            .eq('completed', true);
+
+          const courseData = {
+            id: course.id,
+            title: course.title,
+            thumbnail: course.thumbnail_url,
+            category: course.category,
+            progress: Math.round(enrollment.progress || 0),
+            completedLessons: completedLessons || 0,
+            totalLessons: totalLessons || 0,
+            totalDuration: course.duration,
+            enrolledDate: new Date(enrollment.enrolled_at).toLocaleDateString('id-ID', {
+              day: 'numeric',
+              month: 'short',
+              year: 'numeric'
+            }),
+            instructor: course.instructor_name
+          };
+
+          // Parse duration for stats
+          const durationMatch = course.duration?.match(/(\d+)/);
+          if (durationMatch) {
+            totalDuration += parseInt(durationMatch[1]);
+          }
+
+          if (enrollment.progress >= 100) {
+            completedCourses.push({
+              ...courseData,
+              completedDate: new Date(enrollment.enrolled_at).toLocaleDateString('id-ID', {
+                day: 'numeric',
+                month: 'short',
+                year: 'numeric'
+              }),
+              certificateUrl: `/certificates/${enrollment.id}`,
+              rating: 5
+            });
+          } else {
+            activeCourses.push({
+              ...courseData,
+              lastAccessed: 'Baru saja'
+            });
+          }
+        }
+
+        setCourses({
+          active: activeCourses,
+          completed: completedCourses
+        });
+
+        setStats({
+          total: activeCourses.length + completedCourses.length,
+          active: activeCourses.length,
+          completed: completedCourses.length,
+          totalHours: totalDuration
+        });
+
+      } catch (error: any) {
+        console.error('Error fetching courses:', error);
+        toast({
+          title: "Error",
+          description: "Gagal memuat kursus Anda",
+          variant: "destructive"
+        });
+      } finally {
+        setLoading(false);
       }
-    ],
-    completed: [
-      {
-        id: "2",
-        title: "Scratch Visual Programming",
-        thumbnail: "https://images.unsplash.com/photo-1596496050827-8299e0220de1?w=600",
-        category: "Programming",
-        progress: 100,
-        completedLessons: 10,
-        totalLessons: 10,
-        totalDuration: "20 jam",
-        completedDate: "10 Sep 2025",
-        certificateUrl: "#",
-        rating: 5,
-        instructor: "Rina Kusuma S.Pd"
-      }
-    ]
-  };
+    };
+
+    fetchMyCourses();
+  }, [navigate, toast]);
 
   const filteredCourses = courses[activeTab].filter(course =>
     course.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const stats = {
-    total: courses.active.length + courses.completed.length,
-    active: courses.active.length,
-    completed: courses.completed.length,
-    totalHours: courses.active.reduce((acc, c) => acc + parseInt(c.totalDuration), 0) + 
-                courses.completed.reduce((acc, c) => acc + parseInt(c.totalDuration), 0)
-  };
+  // Loading state
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50 pt-16">
+        <section className="hero-gradient text-white py-12">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h1 className="text-3xl md:text-4xl font-bold mb-4">Kursus Saya</h1>
+            <p className="text-lg opacity-90">Kelola dan lanjutkan pembelajaran Anda</p>
+          </div>
+        </section>
+        <div className="flex items-center justify-center min-h-[400px]">
+          <div className="text-center">
+            <Loader2 className="w-12 h-12 text-red-600 animate-spin mx-auto mb-4" />
+            <p className="text-gray-600">Memuat kursus Anda...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 pt-16">
