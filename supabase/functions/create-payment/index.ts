@@ -50,8 +50,6 @@ serve(async (req) => {
 
     const { courseId } = validationResult.data;
 
-    console.log('Creating payment for user:', user.id, 'course:', courseId);
-
     // Fetch course details
     const { data: course, error: courseError } = await supabaseClient
       .from('courses')
@@ -119,11 +117,8 @@ serve(async (req) => {
       .single();
 
     if (orderError || !order) {
-      console.error('Order creation error:', orderError);
       throw new Error('Failed to create order');
     }
-
-    console.log('Order created:', order.order_id);
 
     // Prepare Midtrans transaction
     const midtransServerKey = Deno.env.get('MIDTRANS_SERVER_KEY');
@@ -156,8 +151,6 @@ serve(async (req) => {
       },
     };
 
-    console.log('Creating Midtrans transaction for order:', order.order_id);
-
     const midtransResponse = await fetch('https://app.sandbox.midtrans.com/snap/v1/transactions', {
       method: 'POST',
       headers: {
@@ -170,12 +163,10 @@ serve(async (req) => {
 
     if (!midtransResponse.ok) {
       const errorText = await midtransResponse.text();
-      console.error('Midtrans API error:', errorText);
       throw new Error(`Midtrans API error: ${errorText}`);
     }
 
     const midtransData = await midtransResponse.json();
-    console.log('Midtrans response received, token:', midtransData.token);
 
     // Update order with snap token
     const { error: updateError } = await supabaseClient
@@ -187,7 +178,7 @@ serve(async (req) => {
       .eq('id', order.id);
 
     if (updateError) {
-      console.error('Failed to update order with snap token:', updateError);
+      throw new Error('Failed to update order with snap token');
     }
 
     return new Response(
@@ -202,7 +193,6 @@ serve(async (req) => {
       }
     );
   } catch (error) {
-    console.error('Error in create-payment:', error);
     return new Response(
       JSON.stringify({
         success: false,

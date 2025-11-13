@@ -46,7 +46,17 @@ const Checkout = () => {
   // Load Midtrans Snap script
   useEffect(() => {
     const snapScript = 'https://app.sandbox.midtrans.com/snap/snap.js';
-    const clientKey = import.meta.env.VITE_MIDTRANS_CLIENT_KEY || 'SB-Mid-client-YOUR_CLIENT_KEY';
+    const clientKey = import.meta.env.VITE_MIDTRANS_CLIENT_KEY;
+    
+    if (!clientKey) {
+      toast({
+        title: "Configuration Error",
+        description: "Payment system not configured. Please contact support.",
+        variant: "destructive",
+      });
+      navigate('/courses');
+      return;
+    }
     
     const script = document.createElement('script');
     script.src = snapScript;
@@ -92,7 +102,6 @@ const Checkout = () => {
         if (error) throw error;
         setCourse(data);
       } catch (error: any) {
-        console.error('Error fetching course:', error);
         toast({
           title: "Error",
           description: "Gagal memuat data kursus",
@@ -127,7 +136,6 @@ const Checkout = () => {
       // Open Midtrans Snap popup
       window.snap.pay(data.snapToken, {
         onSuccess: (result) => {
-          console.log('Payment success:', result);
           toast({
             title: "Pembayaran Berhasil!",
             description: "Terima kasih, pembayaran Anda telah berhasil diproses",
@@ -135,7 +143,6 @@ const Checkout = () => {
           navigate(`/payment-success?orderId=${data.orderId}`);
         },
         onPending: (result) => {
-          console.log('Payment pending:', result);
           toast({
             title: "Pembayaran Pending",
             description: "Pembayaran Anda sedang diproses",
@@ -143,7 +150,6 @@ const Checkout = () => {
           navigate(`/transactions`);
         },
         onError: (result) => {
-          console.error('Payment error:', result);
           toast({
             title: "Pembayaran Gagal",
             description: "Terjadi kesalahan saat memproses pembayaran",
@@ -152,12 +158,10 @@ const Checkout = () => {
           setProcessing(false);
         },
         onClose: () => {
-          console.log('Payment popup closed');
           setProcessing(false);
         },
       });
     } catch (error: any) {
-      console.error('Payment error:', error);
       toast({
         title: "Error",
         description: error.message || "Gagal memproses pembayaran",
@@ -208,7 +212,6 @@ const Checkout = () => {
       });
       navigate('/my-courses');
     } catch (error: any) {
-      console.error('Free enrollment error:', error);
       toast({
         title: "Error",
         description: error.message || "Gagal mendaftar kursus",

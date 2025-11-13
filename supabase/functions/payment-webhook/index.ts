@@ -26,7 +26,6 @@ serve(async (req) => {
     );
 
     const payload = await req.json();
-    console.log('Webhook received:', JSON.stringify(payload, null, 2));
 
     // Validate webhook payload
     const webhookSchema = z.object({
@@ -79,11 +78,8 @@ serve(async (req) => {
     const calculatedSignature = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
 
     if (calculatedSignature !== signature_key) {
-      console.error('Invalid signature. Expected:', calculatedSignature, 'Received:', signature_key);
       throw new Error('Invalid signature');
     }
-
-    console.log('Signature verified for order:', order_id);
 
     // Fetch order
     const { data: order, error: orderError } = await supabaseClient
@@ -93,11 +89,8 @@ serve(async (req) => {
       .single();
 
     if (orderError || !order) {
-      console.error('Order not found:', order_id, orderError);
       throw new Error('Order not found');
     }
-
-    console.log('Order found:', order.id, 'Current status:', order.status);
 
     // Determine new status based on transaction status
     let newStatus = order.status;
@@ -119,8 +112,6 @@ serve(async (req) => {
       newStatus = 'failed';
     }
 
-    console.log('New status:', newStatus, 'Should enroll:', shouldEnroll);
-
     // Update order
     const updateData: any = {
       status: newStatus,
@@ -139,16 +130,11 @@ serve(async (req) => {
       .eq('id', order.id);
 
     if (updateError) {
-      console.error('Failed to update order:', updateError);
       throw new Error('Failed to update order');
     }
 
-    console.log('Order updated successfully');
-
     // Create enrollment if payment is successful
     if (shouldEnroll && order.status !== 'paid') {
-      console.log('Creating enrollment for user:', order.user_id, 'course:', order.course_id);
-
       // Check if enrollment already exists
       const { data: existingEnrollment } = await supabaseClient
         .from('enrollments')
@@ -169,13 +155,8 @@ serve(async (req) => {
           });
 
         if (enrollError) {
-          console.error('Failed to create enrollment:', enrollError);
-          // Don't throw error, just log it
-        } else {
-          console.log('Enrollment created successfully');
+          // Don't throw error, continue processing
         }
-      } else {
-        console.log('Enrollment already exists, skipping creation');
       }
     }
 
@@ -190,7 +171,6 @@ serve(async (req) => {
       }
     );
   } catch (error) {
-    console.error('Error in payment-webhook:', error);
     return new Response(
       JSON.stringify({
         success: false,
