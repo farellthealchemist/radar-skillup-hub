@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
+import { supabase } from '@/integrations/supabase/client';
 import { 
   Clock, 
   Users, 
@@ -13,7 +14,8 @@ import {
   Download,
   Target,
   TrendingUp,
-  Shield
+  Shield,
+  Loader2
 } from "lucide-react";
 
 // Optimized Animation Hooks (consistent with homepage)
@@ -72,121 +74,66 @@ const useStaggeredAnimation = (itemCount, staggerDelay = 120, initialDelay = 200
 const OptimizedCourses = () => {
   const [activeCategory, setActiveCategory] = useState("Semua");
   const [searchTerm, setSearchTerm] = useState("");
+  const [courses, setCourses] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
   
   const { ref: heroRef, isVisible: heroVisible } = useScrollAnimation({ delay: 300 });
-  const { ref: coursesRef, visibleItems } = useStaggeredAnimation(4, 150, 250);
+  const { ref: coursesRef, visibleItems } = useStaggeredAnimation(courses.length, 150, 250);
   const { ref: guaranteeRef, visibleItems: guaranteeItems } = useStaggeredAnimation(3, 100, 200);
   const { ref: ctaRef, isVisible: ctaVisible } = useScrollAnimation();
 
-  // UPDATED: Data konsisten dengan CourseDetail
-  const courses = [
-    {
-      id: "1",
-      title: "Programming Fundamentals",
-      category: "Programming",
-      description: "Pelajari dasar-dasar pemrograman dengan Python dan Java. Cocok untuk pemula yang ingin memulai karir di bidang software development dengan kurikulum terstruktur dan project-based learning.",
-      image: "https://images.unsplash.com/photo-1517180102446-f3ece451e9d8?w=600&h=400&fit=crop",
-      duration: "3-6 Bulan",
-      students: "300+",
-      level: "Pemula - Menengah",
-      price: "Rp 2.500.000",
-      originalPrice: "Rp 3.000.000",
-      discount: "17%",
-      rating: 4.8,
-      reviewCount: 150,
-      popular: true,
-      features: [
-        "Python Programming",
-        "Java Fundamentals", 
-        "Object-Oriented Programming (OOP)",
-        "Database Basics & SQL",
-        "Web Development Intro",
-        "Git & GitHub",
-        "Capstone Project"
-      ]
-    },
-    {
-      id: "2",
-      title: "Scratch Visual Programming",
-      category: "Programming",
-      description: "Pengenalan programming untuk anak-anak dan pemula menggunakan Scratch. Belajar logika programming dengan cara yang menyenangkan dan interaktif.",
-      image: "https://images.unsplash.com/photo-1596496050827-8299e0220de1?w=600&h=400&fit=crop",
-      duration: "2-3 Bulan",
-      students: "450+",
-      level: "Pemula",
-      price: "Rp 750.000",
-      originalPrice: "Rp 900.000",
-      discount: "17%",
-      rating: 4.9,
-      reviewCount: 200,
-      popular: false,
-      features: [
-        "Scratch Basics",
-        "Game Development",
-        "Animation Creation",
-        "Interactive Stories",
-        "Logic Building",
-        "Computational Thinking",
-        "Fun Projects"
-      ]
-    },
-    {
-      id: "3",
-      title: "Microsoft Office Mastery",
-      category: "Office",
-      description: "Kuasai Microsoft Office (Word, Excel, PowerPoint) untuk produktivitas maksimal di tempat kerja dan pendidikan.",
-      image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop",
-      duration: "2-4 Bulan",
-      students: "520+",
-      level: "Pemula - Mahir",
-      price: "Rp 1.200.000",
-      originalPrice: "Rp 1.500.000",
-      discount: "20%",
-      rating: 4.7,
-      reviewCount: 180,
-      popular: true,
-      features: [
-        "Word Advanced",
-        "Excel Formulas & Macros",
-        "PowerPoint Design",
-        "Data Analysis",
-        "Pivot Tables",
-        "Business Templates",
-        "Productivity Tips"
-      ]
-    },
-    {
-      id: "4",
-      title: "Network Administration",
-      category: "Networking",
-      description: "Pelajari administrasi jaringan, keamanan cyber, dan infrastruktur IT. Ideal untuk IT support dan network administrator.",
-      image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600&h=400&fit=crop",
-      duration: "4-6 Bulan",
-      students: "180+",
-      level: "Menengah - Mahir",
-      price: "Rp 3.500.000",
-      originalPrice: "Rp 4.200.000",
-      discount: "17%",
-      rating: 4.6,
-      reviewCount: 95,
-      popular: false,
-      features: [
-        "Network Fundamentals",
-        "Cisco Configuration",
-        "Cybersecurity Basics",
-        "Server Administration",
-        "Troubleshooting",
-        "CCNA Prep",
-        "Lab Exercises"
-      ]
-    }
-  ];
+  // Fetch courses from database
+  useEffect(() => {
+    const fetchCourses = async () => {
+      try {
+        setLoading(true);
+        const { data, error } = await supabase
+          .from('courses')
+          .select('*')
+          .order('created_at', { ascending: true });
 
+        if (error) throw error;
+
+        const formattedCourses = data?.map(course => ({
+          id: course.id,
+          title: course.title,
+          slug: course.slug,
+          category: course.category,
+          description: course.description || '',
+          image: course.thumbnail_url || 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800',
+          duration: course.duration || '',
+          students: `${course.total_students || 0}+`,
+          level: course.level || 'Pemula',
+          price: course.is_free ? 'GRATIS' : `Rp ${course.price?.toLocaleString('id-ID')}`,
+          originalPrice: course.discount_price ? `Rp ${course.discount_price?.toLocaleString('id-ID')}` : null,
+          discount: course.discount_price ? `${Math.round((1 - course.discount_price / course.price) * 100)}%` : null,
+          rating: course.rating || 0,
+          reviewCount: course.total_students || 0,
+          popular: course.total_students > 500,
+          instructor: course.instructor_name || '',
+          language: course.language || 'Bahasa Indonesia',
+          isFree: course.is_free
+        })) || [];
+
+        setCourses(formattedCourses);
+      } catch (error) {
+        console.error('Error fetching courses:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCourses();
+  }, []);
+
+  // Calculate categories dynamically
+  const allCategories = Array.from(new Set(courses.map(c => c.category)));
   const categories = [
     { name: "Semua", count: courses.length },
-    { name: "Programming", count: courses.filter(c => c.category === "Programming").length },
-    { name: "Office", count: courses.filter(c => c.category === "Office").length },
-    { name: "Networking", count: courses.filter(c => c.category === "Networking").length }
+    ...allCategories.map(cat => ({
+      name: cat,
+      count: courses.filter(c => c.category === cat).length
+    }))
   ];
 
   const guaranteeFeatures = [
@@ -326,6 +273,14 @@ const OptimizedCourses = () => {
       {/* Enhanced Courses Grid */}
       <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {loading ? (
+            <div className="flex items-center justify-center min-h-[400px]">
+              <div className="text-center">
+                <Loader2 className="w-12 h-12 text-red-600 animate-spin mx-auto mb-4" />
+                <p className="text-gray-600">Memuat kursus...</p>
+              </div>
+            </div>
+          ) : (
           <div ref={coursesRef} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {filteredCourses.map((course, index) => (
               <div 
@@ -401,24 +356,10 @@ const OptimizedCourses = () => {
                     </div>
                   </div>
 
-                  {/* Key Features */}
-                  <div className="mb-3 sm:mb-4">
-                    <h4 className="font-medium text-xs sm:text-sm mb-2 flex items-center gap-2">
-                      <BookOpen className="w-3 h-3 text-red-600" />
-                      <span className="hidden sm:inline">Materi Utama:</span>
-                      <span className="sm:hidden">Materi:</span>
-                    </h4>
-                    <div className="space-y-1">
-                      {course.features.slice(0, 2).map((feature, idx) => (
-                        <div key={idx} className="flex items-center gap-2 text-xs text-gray-600">
-                          <CheckCircle className="w-2 h-2 text-green-500 flex-shrink-0" />
-                          <span className="truncate">{feature}</span>
-                        </div>
-                      ))}
-                      <div className="text-xs text-gray-500">
-                        +{course.features.length - 2} lainnya
-                      </div>
-                    </div>
+                  {/* Instructor */}
+                  <div className="mb-3 sm:mb-4 flex items-center gap-2 text-xs text-gray-600">
+                    <Users className="w-3 h-3 text-red-600" />
+                    <span>{course.instructor}</span>
                   </div>
 
                   {/* Price & CTA */}
@@ -440,23 +381,33 @@ const OptimizedCourses = () => {
                     
                     <div className="grid grid-cols-2 gap-2">
                       <Link 
-                        to={`/courses/${course.id}`}
+                        to={`/courses/${course.slug}`}
                         className="px-2 sm:px-3 py-1.5 sm:py-2 border border-red-600 text-red-600 font-medium rounded-md hover:bg-red-50 smooth-transition text-xs sm:text-sm flex items-center justify-center"
                       >
                         Detail
                       </Link>
-                      <Link 
-                        to="/register"
-                        className="px-2 sm:px-3 py-1.5 sm:py-2 hero-gradient text-white font-medium rounded-md hover:scale-105 smooth-transition btn-glow text-xs sm:text-sm flex items-center justify-center"
-                      >
-                        Daftar
-                      </Link>
+                      {course.isFree ? (
+                        <Link 
+                          to={`/courses/${course.slug}`}
+                          className="px-2 sm:px-3 py-1.5 sm:py-2 hero-gradient text-white font-medium rounded-md hover:scale-105 smooth-transition btn-glow text-xs sm:text-sm flex items-center justify-center"
+                        >
+                          Mulai Gratis
+                        </Link>
+                      ) : (
+                        <Link 
+                          to="/register"
+                          className="px-2 sm:px-3 py-1.5 sm:py-2 hero-gradient text-white font-medium rounded-md hover:scale-105 smooth-transition btn-glow text-xs sm:text-sm flex items-center justify-center"
+                        >
+                          Daftar
+                        </Link>
+                      )}
                     </div>
                   </div>
                 </div>
               </div>
             ))}
           </div>
+          )}
         </div>
       </section>
 
