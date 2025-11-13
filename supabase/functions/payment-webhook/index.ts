@@ -1,6 +1,7 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.75.1";
 import { crypto } from "https://deno.land/std@0.168.0/crypto/mod.ts";
+import { z } from "https://deno.land/x/zod@v3.22.4/mod.ts";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -27,6 +28,32 @@ serve(async (req) => {
     const payload = await req.json();
     console.log('Webhook received:', JSON.stringify(payload, null, 2));
 
+    // Validate webhook payload
+    const webhookSchema = z.object({
+      order_id: z.string().min(1, 'order_id is required'),
+      transaction_status: z.enum(['capture', 'settlement', 'pending', 'deny', 'expire', 'cancel'], {
+        errorMap: () => ({ message: 'Invalid transaction_status' })
+      }),
+      fraud_status: z.string().optional(),
+      signature_key: z.string().min(1, 'signature_key is required'),
+      gross_amount: z.union([z.string(), z.number()]).transform(val => {
+        const num = typeof val === 'string' ? parseFloat(val) : val;
+        if (isNaN(num) || num < 0 || num > 100000000) {
+          throw new Error('Invalid gross_amount');
+        }
+        return num;
+      }),
+      transaction_id: z.string().optional(),
+      payment_type: z.string().max(100).optional(),
+      transaction_time: z.string().optional(),
+    });
+
+    const validationResult = webhookSchema.safeParse(payload);
+
+    if (!validationResult.success) {
+      throw new Error(`Validation error: ${validationResult.error.errors[0].message}`);
+    }
+
     const {
       order_id,
       transaction_status,
@@ -36,11 +63,7 @@ serve(async (req) => {
       transaction_id,
       payment_type,
       transaction_time,
-    } = payload;
-
-    if (!order_id) {
-      throw new Error('Missing order_id in webhook payload');
-    }
+    } = validationResult.data;
 
     // Verify signature
     const serverKey = Deno.env.get('MIDTRANS_SERVER_KEY');

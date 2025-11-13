@@ -1,5 +1,6 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.75.1";
+import { z } from "https://deno.land/x/zod@v3.22.4/mod.ts";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -35,11 +36,19 @@ serve(async (req) => {
       throw new Error('Unauthorized');
     }
 
-    const { courseId } = await req.json();
+    // Validate request body
+    const requestSchema = z.object({
+      courseId: z.string().uuid('Invalid course ID format'),
+    });
 
-    if (!courseId) {
-      throw new Error('Course ID is required');
+    const body = await req.json();
+    const validationResult = requestSchema.safeParse(body);
+
+    if (!validationResult.success) {
+      throw new Error(`Validation error: ${validationResult.error.errors[0].message}`);
     }
+
+    const { courseId } = validationResult.data;
 
     console.log('Creating payment for user:', user.id, 'course:', courseId);
 
@@ -87,6 +96,11 @@ serve(async (req) => {
       if (now < discountEndDate) {
         finalPrice = Number(course.discount_price);
       }
+    }
+
+    // Validate final price
+    if (isNaN(finalPrice) || finalPrice < 0 || finalPrice > 100000000) {
+      throw new Error('Invalid payment amount');
     }
 
     // Create order record
