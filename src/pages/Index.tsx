@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { 
+import { supabase } from '@/integrations/supabase/client';
+import {
   Code, 
   Palette, 
   FileText, 
@@ -105,6 +106,8 @@ const useCountAnimation = (targetValue, duration = 2000, isVisible = false) => {
 const Homepage = () => {
   const [openFaqIndex, setOpenFaqIndex] = useState(null);
   const [isFaqAnimating, setIsFaqAnimating] = useState(false);
+  const [featuredCourses, setFeaturedCourses] = useState<any[]>([]);
+  const [coursesLoading, setCoursesLoading] = useState(true);
 
   const toggleFaq = (index) => {
     if (isFaqAnimating) return;
@@ -157,7 +160,46 @@ const Homepage = () => {
 
   const [activeTestimonial, setActiveTestimonial] = useState(0);
 
-  const services = [
+  // Fetch featured courses from database
+  useEffect(() => {
+    const fetchFeaturedCourses = async () => {
+      try {
+        setCoursesLoading(true);
+        const { data, error } = await supabase
+          .from('courses')
+          .select('*')
+          .order('total_students', { ascending: false })
+          .limit(4);
+
+        if (error) throw error;
+
+        const formattedCourses = data?.map(course => ({
+          id: course.id,
+          title: course.title,
+          slug: course.slug,
+          category: course.category,
+          description: course.description || '',
+          image: course.thumbnail_url || 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800',
+          popular: course.total_students > 500,
+          price: course.is_free ? 'GRATIS' : `Rp ${course.price?.toLocaleString('id-ID')}`,
+          originalPrice: course.discount_price ? `Rp ${course.price?.toLocaleString('id-ID')}` : null,
+          discount: course.discount_price ? `${Math.round((1 - course.discount_price / course.price) * 100)}%` : null,
+          duration: course.duration || '3-6 bulan',
+          isFree: course.is_free
+        })) || [];
+
+        setFeaturedCourses(formattedCourses);
+      } catch (error) {
+        console.error('Error fetching courses:', error);
+      } finally {
+        setCoursesLoading(false);
+      }
+    };
+
+    fetchFeaturedCourses();
+  }, []);
+
+  const services = featuredCourses.length > 0 ? featuredCourses : [
     {
       id: 'programming',
       title: "Programming",
@@ -554,19 +596,28 @@ const Homepage = () => {
               Program Unggulan
             </span>
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-3 sm:mb-4">
-              4 Kategori Kursus Terpopuler
+              Kursus Terpopuler
             </h2>
             <p className="text-gray-600 text-sm sm:text-base lg:text-lg max-w-2xl mx-auto leading-relaxed">
               Pilih program yang sesuai dengan minat dan kebutuhan karir Anda. 
               Dari programming hingga office skills, semua tersedia di sini.
             </p>
           </div>
-          
+
+          {coursesLoading ? (
+            <div className="flex items-center justify-center min-h-[300px]">
+              <div className="text-center">
+                <div className="w-12 h-12 border-4 border-red-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+                <p className="text-gray-600">Memuat kursus...</p>
+              </div>
+            </div>
+          ) : (
           <div ref={servicesRef} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
             {services.map((service, index) => (
-              <div 
+              <Link
+                to={service.slug ? `/courses/${service.slug}` : '/courses'}
                 key={service.id} 
-                className={`group bg-white hover:bg-white rounded-lg border hover-lift shadow-card hover:shadow-card-hover overflow-hidden smooth-transition pulse-border transition-all duration-800 ease-out ${
+                className={`group bg-white hover:bg-white rounded-lg border hover-lift shadow-card hover:shadow-card-hover overflow-hidden smooth-transition pulse-border transition-all duration-800 ease-out block ${
                   visibleItems.includes(index) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
                 }`}>
                 <div className="aspect-video relative overflow-hidden bg-white">
@@ -597,29 +648,39 @@ const Homepage = () => {
                   </p>
                   
                   <div className="space-y-1.5 sm:space-y-2 mb-3 sm:mb-4">
-                    {service.courses.slice(0, 2).map((course, idx) => (
+                    {service.courses && service.courses.length > 0 ? service.courses.slice(0, 2).map((course, idx) => (
                       <div key={idx} className="flex items-center gap-2 text-xs text-gray-500 smooth-transition">
                         <CheckCircle className="w-3 h-3 text-red-600 flex-shrink-0 smooth-transition" />
                         <span className="truncate">{course}</span>
                       </div>
-                    ))}
-                    {service.courses.length > 2 && (
+                    )) : null}
+                    {service.courses && service.courses.length > 2 && (
                       <div className="text-xs text-gray-400">+{service.courses.length - 2} lainnya</div>
                     )}
                   </div>
                   
-                  <div className="flex justify-between items-center mb-3 sm:mb-4 text-xs sm:text-sm">
-                    <span className="text-red-600 font-semibold">{service.price}</span>
-                    <span className="text-gray-500">{service.duration}</span>
+                  <div className="flex justify-between items-center pt-3 sm:pt-4 border-t">
+                    <div>
+                      <div className="flex items-center gap-1 sm:gap-2">
+                        <span className="text-base sm:text-lg font-bold text-red-600">{service.price}</span>
+                        {service.originalPrice && (
+                          <span className="text-xs text-gray-400 line-through">{service.originalPrice}</span>
+                        )}
+                      </div>
+                      {service.discount && (
+                        <span className="text-xs text-red-600 font-medium">{service.discount} OFF</span>
+                      )}
+                    </div>
+                    <span className="text-red-600 hover:text-red-700 text-xs sm:text-sm font-semibold smooth-transition flex items-center gap-1">
+                      Detail
+                      <ArrowRight className="w-3 h-3 group-hover:translate-x-1 smooth-transition" />
+                    </span>
                   </div>
-                  
-                  <Link to="/courses" className="w-full py-2 sm:py-2.5 text-xs sm:text-sm border border-red-600 text-red-600 rounded-lg smooth-transition btn-glow font-medium flex items-center justify-center">
-                    Pelajari Lebih Lanjut
-                  </Link>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
+          )}
         </div>
       </section>
 

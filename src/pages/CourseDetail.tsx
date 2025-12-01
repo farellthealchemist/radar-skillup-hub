@@ -3,10 +3,11 @@ import { Link, useParams, useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { Button } from '@/components/ui/button';
+import { Progress } from '@/components/ui/progress';
 import { 
   Clock, Users, Award, BookOpen, CheckCircle, Star,
   ChevronDown, PlayCircle, Globe, Target, Loader2,
-  Share2, Heart, Lock
+  Share2, Heart, Lock, ChevronRight
 } from "lucide-react";
 
 interface Lesson {
@@ -251,8 +252,18 @@ const CourseDetail = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <Loader2 className="w-8 h-8 animate-spin text-primary" />
+      <div className="min-h-screen bg-gray-50 pt-16">
+        <div className="bg-white border-b">
+          <div className="container mx-auto px-4 py-4">
+            <div className="h-4 bg-gray-200 rounded w-48 animate-pulse"></div>
+          </div>
+        </div>
+        <div className="flex items-center justify-center min-h-[60vh]">
+          <div className="text-center">
+            <Loader2 className="w-12 h-12 text-red-600 animate-spin mx-auto mb-4" />
+            <p className="text-gray-600">Memuat kursus...</p>
+          </div>
+        </div>
       </div>
     );
   }
@@ -266,9 +277,26 @@ const CourseDetail = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white pt-16">
+      {/* Breadcrumb */}
+      <div className="bg-white border-b">
+        <div className="container mx-auto px-4 py-3">
+          <div className="flex items-center gap-2 text-sm">
+            <Link to="/" className="text-gray-500 hover:text-red-600 transition-colors">
+              Beranda
+            </Link>
+            <ChevronRight className="w-4 h-4 text-gray-400" />
+            <Link to="/courses" className="text-gray-500 hover:text-red-600 transition-colors">
+              Kursus
+            </Link>
+            <ChevronRight className="w-4 h-4 text-gray-400" />
+            <span className="text-gray-900 font-medium truncate">{course.title}</span>
+          </div>
+        </div>
+      </div>
+
       {/* Hero Section */}
-      <div className="bg-gradient-to-r from-primary via-primary/90 to-primary/80 text-white py-16">
+      <div className="bg-gradient-to-r from-primary via-primary/90 to-primary/80 text-white py-12">
         <div className="container mx-auto px-4">
           <div className="grid lg:grid-cols-3 gap-8">
             {/* Left Content */}
