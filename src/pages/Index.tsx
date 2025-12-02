@@ -146,7 +146,7 @@ const Homepage = () => {
   ];
 
   const { ref: heroRef, isVisible: heroVisible } = useScrollAnimation({ delay: 200 });
-  const { ref: servicesRef, visibleItems } = useStaggeredAnimation(4, 150, 300);
+  const { ref: servicesRef, visibleItems } = useStaggeredAnimation(featuredCourses.length || 4, 150, 300);
   const { ref: aboutRef, isVisible: aboutVisible } = useScrollAnimation({ threshold: 0.1, rootMargin: "-50px" });
   const { ref: testimonialsRef, visibleItems: testimonialVisible } = useStaggeredAnimation(3, 200, 250);
   const { ref: statsRef, isVisible: statsVisible } = useScrollAnimation({ threshold: 0.3 });
@@ -189,6 +189,7 @@ const Homepage = () => {
         })) || [];
 
         setFeaturedCourses(formattedCourses);
+        console.log('Featured courses loaded:', formattedCourses);
       } catch (error) {
         console.error('Error fetching courses:', error);
       } finally {
@@ -199,6 +200,8 @@ const Homepage = () => {
     fetchFeaturedCourses();
   }, []);
 
+  console.log('Services to render:', featuredCourses.length, featuredCourses);
+  
   const services = featuredCourses.length > 0 ? featuredCourses : [
     {
       id: 'programming',
@@ -311,11 +314,11 @@ const Homepage = () => {
     return () => clearInterval(timer);
   }, [testimonials.length]);
 
-  const renderServiceIcon = (serviceId) => {
-    switch (serviceId) {
+  const renderServiceIcon = (category) => {
+    switch (category?.toLowerCase()) {
       case 'programming':
         return <Code className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 text-red-600" />;
-      case 'scratch':
+      case 'kids programming':
         return <Palette className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 text-red-600" />;
       case 'office':
         return <FileText className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 text-red-600" />;
@@ -604,16 +607,21 @@ const Homepage = () => {
             </p>
           </div>
 
-          {coursesLoading ? (
-            <div className="flex items-center justify-center min-h-[300px]">
-              <div className="text-center">
-                <div className="w-12 h-12 border-4 border-red-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-                <p className="text-gray-600">Memuat kursus...</p>
-              </div>
-            </div>
-          ) : (
-          <div ref={servicesRef} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
-            {services.map((service, index) => (
+          <div ref={servicesRef} className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8 ${coursesLoading ? 'opacity-0 pointer-events-none' : 'opacity-100'} transition-opacity duration-500`}>
+            {coursesLoading ? (
+              // Render placeholder cards during loading
+              [...Array(4)].map((_, index) => (
+                <div key={index} className="bg-white rounded-lg border shadow-card overflow-hidden animate-pulse">
+                  <div className="aspect-video bg-gray-200"></div>
+                  <div className="p-4 sm:p-5 lg:p-6">
+                    <div className="h-6 bg-gray-200 rounded mb-3"></div>
+                    <div className="h-4 bg-gray-200 rounded mb-2"></div>
+                    <div className="h-4 bg-gray-200 rounded w-2/3"></div>
+                  </div>
+                </div>
+              ))
+            ) : (
+              services.map((service, index) => (
               <Link
                 to={service.slug ? `/courses/${service.slug}` : '/courses'}
                 key={service.id} 
@@ -628,7 +636,7 @@ const Homepage = () => {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent smooth-transition"></div>
                   <div className="absolute bottom-3 sm:bottom-4 left-3 sm:left-4 text-white smooth-transition">
-                    {renderServiceIcon(service.id)}
+                    {renderServiceIcon(service.category)}
                   </div>
                   {service.popular && (
                     <div className="absolute top-3 sm:top-4 right-3 sm:right-4">
@@ -678,9 +686,9 @@ const Homepage = () => {
                   </div>
                 </div>
               </Link>
-            ))}
+            ))
+            )}
           </div>
-          )}
         </div>
       </section>
 
