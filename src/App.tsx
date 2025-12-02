@@ -43,7 +43,7 @@ const App = () => (
               <Route path="/" element={<Index />} />
               <Route path="/about" element={<About />} />
               <Route path="/courses" element={<Courses />} />
-              <Route path="/courses/:id" element={<CourseDetail />} />
+              <Route path="/courses/:slug" element={<CourseDetail />} />
               <Route path="/blog" element={<Blog />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/register" element={<Register />} />
@@ -56,7 +56,7 @@ const App = () => (
               <Route path="/transactions" element={<Transactions />} />
 
               {/* ✅ Halaman baru */}
-              <Route path="/learn/:id" element={<Learn />} />
+              <Route path="/learn/:slug" element={<Learn />} />
               <Route path="/certificates" element={<Certificates />} />
               
               {/* Payment Pages */}

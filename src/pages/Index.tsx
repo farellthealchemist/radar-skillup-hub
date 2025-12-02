@@ -21,7 +21,8 @@ import {
   Shield,
   MessageCircle,
   ChevronDown,
-  HelpCircle
+  HelpCircle,
+  BookOpen
 } from "lucide-react";
 
 // Custom Hooks
@@ -189,7 +190,6 @@ const Homepage = () => {
         })) || [];
 
         setFeaturedCourses(formattedCourses);
-        console.log('Featured courses loaded:', formattedCourses);
       } catch (error) {
         console.error('Error fetching courses:', error);
       } finally {
@@ -200,8 +200,6 @@ const Homepage = () => {
     fetchFeaturedCourses();
   }, []);
 
-  console.log('Services to render:', featuredCourses.length, featuredCourses);
-  
   const services = featuredCourses.length > 0 ? featuredCourses : [
     {
       id: 'programming',
@@ -647,27 +645,31 @@ const Homepage = () => {
                   )}
                 </div>
                 
-                <div className="p-4 sm:p-5 lg:p-6 relative bg-white">
-                  <h3 className="font-bold text-base sm:text-lg mb-2 sm:mb-3 text-gray-900 group-hover:text-red-600 group-hover:scale-103 transition-all duration-300 ease-in-out line-clamp-1 cursor-pointer origin-left">
+                <div className="p-4 sm:p-5 lg:p-6 relative bg-white flex flex-col h-full">
+                  <h3 className="font-bold text-base sm:text-lg mb-2 text-gray-900 group-hover:text-red-600 transition-all duration-300 ease-in-out line-clamp-1">
                     {service.title}
                   </h3>
-                  <p className="text-gray-600 text-xs sm:text-sm mb-3 sm:mb-4 leading-relaxed line-clamp-2">
+                  <p className="text-gray-600 text-xs sm:text-sm mb-3 leading-relaxed line-clamp-2 flex-grow">
                     {service.description}
                   </p>
                   
-                  <div className="space-y-1.5 sm:space-y-2 mb-3 sm:mb-4">
-                    {service.courses && service.courses.length > 0 ? service.courses.slice(0, 2).map((course, idx) => (
-                      <div key={idx} className="flex items-center gap-2 text-xs text-gray-500 smooth-transition">
-                        <CheckCircle className="w-3 h-3 text-red-600 flex-shrink-0 smooth-transition" />
-                        <span className="truncate">{course}</span>
+                  {/* Course info */}
+                  <div className="flex items-center gap-3 text-xs text-gray-500 mb-3 pb-3 border-b">
+                    {service.duration && (
+                      <div className="flex items-center gap-1">
+                        <Clock className="w-3 h-3 text-red-600" />
+                        <span>{service.duration}</span>
                       </div>
-                    )) : null}
-                    {service.courses && service.courses.length > 2 && (
-                      <div className="text-xs text-gray-400">+{service.courses.length - 2} lainnya</div>
+                    )}
+                    {service.category && (
+                      <div className="flex items-center gap-1">
+                        <BookOpen className="w-3 h-3 text-red-600" />
+                        <span>{service.category}</span>
+                      </div>
                     )}
                   </div>
                   
-                  <div className="flex justify-between items-center pt-3 sm:pt-4 border-t">
+                  <div className="flex justify-between items-center">
                     <div>
                       <div className="flex items-center gap-1 sm:gap-2">
                         <span className="text-base sm:text-lg font-bold text-red-600">{service.price}</span>

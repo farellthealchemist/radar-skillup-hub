@@ -34,7 +34,7 @@ interface CourseData {
 }
 
 const Learn = () => {
-  const { id } = useParams();
+  const { slug } = useParams();
   const navigate = useNavigate();
   const { toast } = useToast();
   
@@ -47,6 +47,7 @@ const Learn = () => {
   const [enrollmentId, setEnrollmentId] = useState<string | null>(null);
   const [isEnrolled, setIsEnrolled] = useState(false);
   const [userId, setUserId] = useState<string | null>(null);
+  const [courseId, setCourseId] = useState<string | null>(null);
 
   // Check authentication and enrollment
   useEffect(() => {
@@ -67,12 +68,34 @@ const Learn = () => {
         
         setUserId(user.id);
 
+        // First, fetch course by slug to get the course ID
+        const { data: courseInfo, error: courseInfoError } = await supabase
+          .from('courses')
+          .select('id')
+          .eq('slug', slug)
+          .maybeSingle();
+
+        if (courseInfoError) throw courseInfoError;
+
+        if (!courseInfo) {
+          toast({
+            title: "Kursus tidak ditemukan",
+            description: "Kursus yang Anda cari tidak tersedia",
+            variant: "destructive"
+          });
+          navigate('/courses');
+          return;
+        }
+
+        const fetchedCourseId = courseInfo.id;
+        setCourseId(fetchedCourseId);
+
         // Check enrollment
         const { data: enrollment, error: enrollmentError } = await supabase
           .from('enrollments')
           .select('id, status')
           .eq('user_id', user.id)
-          .eq('course_id', id)
+          .eq('course_id', fetchedCourseId)
           .eq('status', 'active')
           .maybeSingle();
 
@@ -84,7 +107,7 @@ const Learn = () => {
             description: "Anda belum terdaftar di kursus ini. Silakan checkout terlebih dahulu.",
             variant: "destructive"
           });
-          navigate(`/courses/${id}`);
+          navigate(`/courses/${slug}`);
           return;
         }
 
@@ -92,7 +115,7 @@ const Learn = () => {
         setEnrollmentId(enrollment.id);
         
         // Fetch course data with modules and lessons
-        await fetchCourseContent();
+        await fetchCourseContent(fetchedCourseId, enrollment.id, user.id);
         
       } catch (error: any) {
         console.error('Error checking enrollment:', error);
@@ -105,13 +128,13 @@ const Learn = () => {
       }
     };
 
-    if (id) {
+    if (slug) {
       checkAuthAndEnrollment();
     }
-  }, [id, navigate, toast]);
+  }, [slug, navigate, toast]);
 
   // Fetch course content from database
-  const fetchCourseContent = async () => {
+  const fetchCourseContent = async (fetchedCourseId: string, fetchedEnrollmentId: string, fetchedUserId: string) => {
     try {
       setLoading(true);
 
@@ -119,7 +142,7 @@ const Learn = () => {
       const { data: course, error: courseError } = await supabase
         .from('courses')
         .select('id, title, instructor_name, thumbnail_url')
-        .eq('id', id)
+        .eq('id', fetchedCourseId)
         .single();
 
       if (courseError) throw courseError;
@@ -141,7 +164,7 @@ const Learn = () => {
             order_number
           )
         `)
-        .eq('course_id', id)
+        .eq('course_id', fetchedCourseId)
         .order('order_number', { ascending: true });
 
       if (modulesError) throw modulesError;
@@ -156,8 +179,8 @@ const Learn = () => {
       const { data: progress, error: progressError } = await supabase
         .from('lesson_progress')
         .select('lesson_id, completed')
-        .eq('user_id', userId)
-        .eq('enrollment_id', enrollmentId);
+        .eq('user_id', fetchedUserId)
+        .eq('enrollment_id', fetchedEnrollmentId);
 
       if (progressError) throw progressError;
 
