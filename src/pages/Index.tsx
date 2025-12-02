@@ -160,7 +160,7 @@ const Homepage = () => {
 
   const [activeTestimonial, setActiveTestimonial] = useState(0);
 
-  // Fetch featured courses from database
+  // Fetch featured courses from database - same as Courses page
   useEffect(() => {
     const fetchFeaturedCourses = async () => {
       try {
@@ -168,7 +168,7 @@ const Homepage = () => {
         const { data, error } = await supabase
           .from('courses')
           .select('*')
-          .order('total_students', { ascending: false })
+          .order('created_at', { ascending: true })
           .limit(4);
 
         if (error) throw error;
