@@ -89,12 +89,13 @@ const CourseDetail = () => {
         .from('courses')
         .select('*')
         .eq('slug', slug)
-        .single();
+        .maybeSingle();
 
       if (courseError) throw courseError;
       if (!courseData) {
         toast({
           title: "Kursus tidak ditemukan",
+          description: "Kursus yang Anda cari tidak tersedia.",
           variant: "destructive"
         });
         navigate('/courses');
