@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { User, Mail, Phone, Save, Loader2 } from 'lucide-react';
+import { User, Mail, Phone, Save, Loader2, Camera, X } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { z } from 'zod';
@@ -13,12 +13,15 @@ const profileSchema = z.object({
 const Profile = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const [isEditing, setIsEditing] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
+  const [isUploadingAvatar, setIsUploadingAvatar] = useState(false);
   const [userId, setUserId] = useState<string | null>(null);
   const [userEmail, setUserEmail] = useState<string>('');
   const [memberSince, setMemberSince] = useState<string>('');
+  const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     full_name: '',
     phone: '',
@@ -49,7 +52,7 @@ const Profile = () => {
         // Fetch profile data
         const { data: profile, error } = await supabase
           .from('profiles')
-          .select('full_name, phone')
+          .select('full_name, phone, avatar_url')
           .eq('id', session.user.id)
           .maybeSingle();
 
@@ -70,6 +73,7 @@ const Profile = () => {
           };
           setFormData(profileData);
           setOriginalData(profileData);
+          setAvatarUrl(profile.avatar_url || null);
         }
       } catch (error) {
         console.error('Error:', error);
@@ -88,6 +92,139 @@ const Profile = () => {
 
     return () => subscription.unsubscribe();
   }, [navigate, toast]);
+
+  const handleAvatarClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleAvatarChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file || !userId) return;
+
+    // Validate file type
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
+    if (!allowedTypes.includes(file.type)) {
+      toast({
+        title: 'Error',
+        description: 'Format file tidak didukung. Gunakan JPG, PNG, atau WebP.',
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    // Validate file size (max 2MB)
+    if (file.size > 2 * 1024 * 1024) {
+      toast({
+        title: 'Error',
+        description: 'Ukuran file maksimal 2MB',
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    setIsUploadingAvatar(true);
+
+    try {
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${userId}/avatar.${fileExt}`;
+
+      // Upload to Supabase Storage
+      const { error: uploadError } = await supabase.storage
+        .from('avatars')
+        .upload(fileName, file, { upsert: true });
+
+      if (uploadError) {
+        console.error('Upload error:', uploadError);
+        toast({
+          title: 'Error',
+          description: 'Gagal mengupload foto profil',
+          variant: 'destructive',
+        });
+        return;
+      }
+
+      // Get public URL
+      const { data: urlData } = supabase.storage
+        .from('avatars')
+        .getPublicUrl(fileName);
+
+      const publicUrl = `${urlData.publicUrl}?t=${Date.now()}`;
+
+      // Update profile with avatar URL
+      const { error: updateError } = await supabase
+        .from('profiles')
+        .update({ avatar_url: publicUrl })
+        .eq('id', userId);
+
+      if (updateError) {
+        console.error('Update error:', updateError);
+        toast({
+          title: 'Error',
+          description: 'Gagal menyimpan foto profil',
+          variant: 'destructive',
+        });
+        return;
+      }
+
+      setAvatarUrl(publicUrl);
+      toast({
+        title: 'Berhasil',
+        description: 'Foto profil berhasil diperbarui',
+      });
+    } catch (error) {
+      console.error('Error:', error);
+      toast({
+        title: 'Error',
+        description: 'Terjadi kesalahan saat mengupload foto',
+        variant: 'destructive',
+      });
+    } finally {
+      setIsUploadingAvatar(false);
+      // Reset file input
+      if (fileInputRef.current) {
+        fileInputRef.current.value = '';
+      }
+    }
+  };
+
+  const handleRemoveAvatar = async () => {
+    if (!userId) return;
+
+    setIsUploadingAvatar(true);
+
+    try {
+      // List and delete all files in user's folder
+      const { data: files } = await supabase.storage
+        .from('avatars')
+        .list(userId);
+
+      if (files && files.length > 0) {
+        const filesToDelete = files.map(file => `${userId}/${file.name}`);
+        await supabase.storage.from('avatars').remove(filesToDelete);
+      }
+
+      // Update profile to remove avatar URL
+      await supabase
+        .from('profiles')
+        .update({ avatar_url: null })
+        .eq('id', userId);
+
+      setAvatarUrl(null);
+      toast({
+        title: 'Berhasil',
+        description: 'Foto profil berhasil dihapus',
+      });
+    } catch (error) {
+      console.error('Error:', error);
+      toast({
+        title: 'Error',
+        description: 'Gagal menghapus foto profil',
+        variant: 'destructive',
+      });
+    } finally {
+      setIsUploadingAvatar(false);
+    }
+  };
 
   const handleCancel = () => {
     setFormData(originalData);
@@ -165,6 +302,15 @@ const Profile = () => {
         .smooth-transition { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
       `}</style>
 
+      {/* Hidden file input */}
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept="image/jpeg,image/png,image/webp"
+        onChange={handleAvatarChange}
+        className="hidden"
+      />
+
       {/* Header */}
       <section className="hero-gradient text-primary-foreground py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -180,15 +326,50 @@ const Profile = () => {
             {/* Profile Header */}
             <div className="bg-gradient-to-r from-primary/5 to-primary/10 p-8">
               <div className="flex flex-col sm:flex-row items-center gap-6">
-                <div className="relative">
-                  <div className="w-32 h-32 rounded-full border-4 border-background shadow-lg bg-primary/10 flex items-center justify-center">
-                    <User className="w-16 h-16 text-primary" />
+                <div className="relative group">
+                  {avatarUrl ? (
+                    <img
+                      src={avatarUrl}
+                      alt="Profile"
+                      className="w-32 h-32 rounded-full border-4 border-background shadow-lg object-cover"
+                    />
+                  ) : (
+                    <div className="w-32 h-32 rounded-full border-4 border-background shadow-lg bg-primary/10 flex items-center justify-center">
+                      <User className="w-16 h-16 text-primary" />
+                    </div>
+                  )}
+                  
+                  {/* Upload overlay */}
+                  <div className="absolute inset-0 rounded-full bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                    {isUploadingAvatar ? (
+                      <Loader2 className="w-8 h-8 text-white animate-spin" />
+                    ) : (
+                      <button
+                        onClick={handleAvatarClick}
+                        className="w-10 h-10 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center text-white transition-colors"
+                        title="Ubah foto profil"
+                      >
+                        <Camera className="w-5 h-5" />
+                      </button>
+                    )}
                   </div>
+
+                  {/* Remove avatar button */}
+                  {avatarUrl && !isUploadingAvatar && (
+                    <button
+                      onClick={handleRemoveAvatar}
+                      className="absolute -top-1 -right-1 w-8 h-8 bg-destructive hover:bg-destructive/90 rounded-full flex items-center justify-center text-white shadow-md transition-colors"
+                      title="Hapus foto profil"
+                    >
+                      <X className="w-4 h-4" />
+                    </button>
+                  )}
                 </div>
                 <div className="text-center sm:text-left">
                   <h2 className="text-2xl font-bold text-foreground mb-2">{formData.full_name || 'User'}</h2>
                   <p className="text-muted-foreground mb-1">{userEmail}</p>
                   <p className="text-sm text-muted-foreground">Member sejak: {memberSince}</p>
+                  <p className="text-xs text-muted-foreground mt-2">Klik foto untuk mengubah (max 2MB)</p>
                 </div>
               </div>
             </div>
