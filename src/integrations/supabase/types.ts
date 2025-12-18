@@ -14,6 +14,57 @@ export type Database = {
   }
   public: {
     Tables: {
+      blog_posts: {
+        Row: {
+          author_avatar: string | null
+          author_name: string
+          category: string
+          content: string
+          created_at: string
+          excerpt: string
+          id: string
+          is_featured: boolean
+          published_at: string | null
+          read_time: string
+          slug: string
+          thumbnail_url: string | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          author_avatar?: string | null
+          author_name?: string
+          category: string
+          content: string
+          created_at?: string
+          excerpt: string
+          id?: string
+          is_featured?: boolean
+          published_at?: string | null
+          read_time?: string
+          slug: string
+          thumbnail_url?: string | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          author_avatar?: string | null
+          author_name?: string
+          category?: string
+          content?: string
+          created_at?: string
+          excerpt?: string
+          id?: string
+          is_featured?: boolean
+          published_at?: string | null
+          read_time?: string
+          slug?: string
+          thumbnail_url?: string | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       course_modules: {
         Row: {
           course_id: string
