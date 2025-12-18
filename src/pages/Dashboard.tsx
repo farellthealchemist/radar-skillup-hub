@@ -113,6 +113,7 @@ const Dashboard = () => {
             courses (
               id,
               title,
+              slug,
               thumbnail_url,
               category,
               duration
@@ -156,6 +157,7 @@ const Dashboard = () => {
 
           processedCourses.push({
             id: course.id,
+            slug: course.slug,
             title: course.title,
             thumbnail: course.thumbnail_url,
             category: course.category,
@@ -272,7 +274,7 @@ const Dashboard = () => {
             {myCourses.map((course, index) => (
               <Link
                 key={course.id}
-                to={`/learn/${course.id}`}
+                to={`/learn/${course.slug}`}
                 className={`block transition-all duration-800 ease-out ${
                   coursesVisible.includes(index) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
                 }`}

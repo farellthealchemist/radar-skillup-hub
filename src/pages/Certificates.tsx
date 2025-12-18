@@ -1,20 +1,120 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Award, Download, Share2, Eye, Calendar, CheckCircle } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { Award, Download, Share2, Eye, Calendar, CheckCircle, Loader2 } from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
+import { useToast } from '@/hooks/use-toast';
+
+interface Certificate {
+  id: string;
+  courseTitle: string;
+  completedDate: string;
+  certificateNumber: string;
+  instructor: string;
+  thumbnail: string;
+  slug: string;
+  score: number;
+}
 
 const Certificates = () => {
-  const certificates = [
-    {
-      id: 1,
-      courseTitle: "Scratch Visual Programming",
-      completedDate: "10 Sep 2025",
-      certificateNumber: "RADAR/2025/09/001",
-      instructor: "Rina Kusuma S.Pd",
-      thumbnail: "https://images.unsplash.com/photo-1596496050827-8299e0220de1?w=600",
-      pdfUrl: "#",
-      score: 95
-    }
-  ];
+  const [certificates, setCertificates] = useState<Certificate[]>([]);
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+  const { toast } = useToast();
+
+  useEffect(() => {
+    const fetchCertificates = async () => {
+      try {
+        setLoading(true);
+
+        // Check authentication
+        const { data: { user } } = await supabase.auth.getUser();
+        
+        if (!user) {
+          navigate('/login');
+          return;
+        }
+
+        // Fetch completed enrollments (progress >= 100)
+        const { data: enrollments, error } = await supabase
+          .from('enrollments')
+          .select(`
+            id,
+            progress,
+            enrolled_at,
+            courses (
+              id,
+              title,
+              slug,
+              thumbnail_url,
+              instructor_name
+            )
+          `)
+          .eq('user_id', user.id)
+          .gte('progress', 100);
+
+        if (error) throw error;
+
+        // Transform to certificate format
+        const certs: Certificate[] = (enrollments || []).map((enrollment, index) => {
+          const course = enrollment.courses as any;
+          const enrollDate = new Date(enrollment.enrolled_at);
+          const completedDate = new Date(enrollDate);
+          completedDate.setMonth(completedDate.getMonth() + 1); // Estimate completion date
+          
+          return {
+            id: enrollment.id,
+            courseTitle: course?.title || 'Unknown Course',
+            completedDate: completedDate.toLocaleDateString('id-ID', {
+              day: 'numeric',
+              month: 'short',
+              year: 'numeric'
+            }),
+            certificateNumber: `RADAR/${completedDate.getFullYear()}/${String(completedDate.getMonth() + 1).padStart(2, '0')}/${String(index + 1).padStart(3, '0')}`,
+            instructor: course?.instructor_name || 'RADAR Team',
+            thumbnail: course?.thumbnail_url || '',
+            slug: course?.slug || '',
+            score: Math.round(enrollment.progress)
+          };
+        });
+
+        setCertificates(certs);
+
+      } catch (error: any) {
+        console.error('Error fetching certificates:', error);
+        toast({
+          title: "Error",
+          description: "Gagal memuat sertifikat",
+          variant: "destructive"
+        });
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCertificates();
+  }, [navigate, toast]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50 pt-16">
+        <section className="hero-gradient text-white py-12">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h1 className="text-3xl md:text-4xl font-bold mb-4">Sertifikat Saya</h1>
+            <p className="text-lg opacity-90">Kumpulan sertifikat dari kursus yang telah Anda selesaikan</p>
+          </div>
+        </section>
+        <div className="flex items-center justify-center min-h-[400px]">
+          <div className="text-center">
+            <Loader2 className="w-12 h-12 text-red-600 animate-spin mx-auto mb-4" />
+            <p className="text-gray-600">Memuat sertifikat...</p>
+          </div>
+        </div>
+        <style>{`
+          .hero-gradient { background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%); }
+        `}</style>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 pt-16">
@@ -106,7 +206,7 @@ const Certificates = () => {
                     </div>
                     <div className="absolute top-3 right-3">
                       <span className="px-3 py-1 bg-green-600 text-white text-xs rounded-full font-medium">
-                        Score: {cert.score}
+                        Score: {cert.score}%
                       </span>
                     </div>
                   </div>
@@ -127,18 +227,23 @@ const Certificates = () => {
 
                     {/* Actions */}
                     <div className="flex gap-2">
-                      <a
-                        href={cert.pdfUrl}
-                        download
+                      <button
+                        onClick={() => toast({ title: "Coming Soon", description: "Fitur download sertifikat akan segera tersedia" })}
                         className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 smooth-transition font-medium text-sm"
                       >
                         <Download className="w-4 h-4" />
                         Download
-                      </a>
-                      <button className="px-4 py-2 border-2 border-gray-300 text-gray-700 rounded-lg hover:border-red-600 hover:text-red-600 smooth-transition">
+                      </button>
+                      <button 
+                        onClick={() => toast({ title: "Coming Soon", description: "Fitur preview sertifikat akan segera tersedia" })}
+                        className="px-4 py-2 border-2 border-gray-300 text-gray-700 rounded-lg hover:border-red-600 hover:text-red-600 smooth-transition"
+                      >
                         <Eye className="w-4 h-4" />
                       </button>
-                      <button className="px-4 py-2 border-2 border-gray-300 text-gray-700 rounded-lg hover:border-red-600 hover:text-red-600 smooth-transition">
+                      <button 
+                        onClick={() => toast({ title: "Coming Soon", description: "Fitur share sertifikat akan segera tersedia" })}
+                        className="px-4 py-2 border-2 border-gray-300 text-gray-700 rounded-lg hover:border-red-600 hover:text-red-600 smooth-transition"
+                      >
                         <Share2 className="w-4 h-4" />
                       </button>
                     </div>
