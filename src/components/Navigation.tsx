@@ -50,6 +50,7 @@ const Navigation = () => {
     { name: "Beranda", path: "/" },
     { name: "Tentang Kami", path: "/about" },
     { name: "Kursus", path: "/courses" },
+    { name: "Blog", path: "/blog" },
     { name: "FAQ", path: "/faq" },
     { name: "Kontak", path: "/contact" },
   ];
