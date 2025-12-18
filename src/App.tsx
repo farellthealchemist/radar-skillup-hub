@@ -26,6 +26,7 @@ import Learn from "./pages/Learn";
 import Certificates from "./pages/Certificates";
 import Checkout from "./pages/Checkout";
 import PaymentSuccess from "./pages/PaymentSuccess";
+import FAQ from "./pages/FAQ";
 
 const queryClient = new QueryClient();
 
@@ -58,6 +59,7 @@ const App = () => (
               {/* ✅ Halaman baru */}
               <Route path="/learn/:slug" element={<Learn />} />
               <Route path="/certificates" element={<Certificates />} />
+              <Route path="/faq" element={<FAQ />} />
               
               {/* Payment Pages */}
               <Route path="/checkout/:courseId" element={<Checkout />} />
