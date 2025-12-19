@@ -8,6 +8,9 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
+// Maximum age for webhook notifications (15 minutes)
+const MAX_WEBHOOK_AGE_MS = 15 * 60 * 1000;
+
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
@@ -42,14 +45,15 @@ serve(async (req) => {
         }
         return num;
       }),
-      transaction_id: z.string().optional(),
+      transaction_id: z.string().min(1, 'transaction_id is required'),
       payment_type: z.string().max(100).optional(),
-      transaction_time: z.string().optional(),
+      transaction_time: z.string().min(1, 'transaction_time is required'),
     });
 
     const validationResult = webhookSchema.safeParse(payload);
 
     if (!validationResult.success) {
+      console.error('Validation error:', validationResult.error.errors[0].message);
       throw new Error(`Validation error: ${validationResult.error.errors[0].message}`);
     }
 
@@ -63,6 +67,8 @@ serve(async (req) => {
       payment_type,
       transaction_time,
     } = validationResult.data;
+
+    console.log(`Processing webhook for order: ${order_id}, transaction: ${transaction_id}`);
 
     // Verify signature
     const serverKey = Deno.env.get('MIDTRANS_SERVER_KEY');
@@ -78,7 +84,39 @@ serve(async (req) => {
     const calculatedSignature = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
 
     if (calculatedSignature !== signature_key) {
+      console.error('Invalid signature for order:', order_id);
       throw new Error('Invalid signature');
+    }
+
+    // REPLAY PROTECTION: Check if transaction was already processed
+    const { data: existingWebhook, error: webhookCheckError } = await supabaseClient
+      .from('processed_webhooks')
+      .select('id')
+      .eq('transaction_id', transaction_id)
+      .single();
+
+    if (existingWebhook) {
+      console.log(`Transaction ${transaction_id} already processed, skipping`);
+      return new Response(
+        JSON.stringify({
+          success: true,
+          message: 'Transaction already processed',
+        }),
+        {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          status: 200,
+        }
+      );
+    }
+
+    // TIMESTAMP VALIDATION: Reject old notifications
+    const transactionDate = new Date(transaction_time);
+    const now = new Date();
+    const ageMs = now.getTime() - transactionDate.getTime();
+
+    if (ageMs > MAX_WEBHOOK_AGE_MS) {
+      console.error(`Webhook too old: ${ageMs}ms for transaction ${transaction_id}`);
+      throw new Error('Webhook notification too old');
     }
 
     // Fetch order
@@ -89,6 +127,7 @@ serve(async (req) => {
       .single();
 
     if (orderError || !order) {
+      console.error('Order not found:', order_id);
       throw new Error('Order not found');
     }
 
@@ -130,6 +169,7 @@ serve(async (req) => {
       .eq('id', order.id);
 
     if (updateError) {
+      console.error('Failed to update order:', updateError);
       throw new Error('Failed to update order');
     }
 
@@ -155,10 +195,28 @@ serve(async (req) => {
           });
 
         if (enrollError) {
+          console.error('Failed to create enrollment:', enrollError);
           // Don't throw error, continue processing
+        } else {
+          console.log(`Enrollment created for user ${order.user_id} in course ${order.course_id}`);
         }
       }
     }
+
+    // RECORD PROCESSED TRANSACTION: Prevent replay attacks
+    const { error: recordError } = await supabaseClient
+      .from('processed_webhooks')
+      .insert({
+        transaction_id: transaction_id,
+        order_id: order_id,
+      });
+
+    if (recordError) {
+      console.error('Failed to record processed webhook:', recordError);
+      // Don't throw - the transaction was already processed successfully
+    }
+
+    console.log(`Webhook processed successfully for order: ${order_id}`);
 
     return new Response(
       JSON.stringify({
@@ -171,6 +229,7 @@ serve(async (req) => {
       }
     );
   } catch (error) {
+    console.error('Webhook processing error:', error.message);
     return new Response(
       JSON.stringify({
         success: false,

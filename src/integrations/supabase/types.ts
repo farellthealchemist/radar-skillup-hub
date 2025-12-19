@@ -368,6 +368,27 @@ export type Database = {
           },
         ]
       }
+      processed_webhooks: {
+        Row: {
+          id: string
+          order_id: string
+          processed_at: string
+          transaction_id: string
+        }
+        Insert: {
+          id?: string
+          order_id: string
+          processed_at?: string
+          transaction_id: string
+        }
+        Update: {
+          id?: string
+          order_id?: string
+          processed_at?: string
+          transaction_id?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null

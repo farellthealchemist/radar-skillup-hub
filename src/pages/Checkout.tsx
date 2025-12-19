@@ -41,33 +41,7 @@ const Checkout = () => {
   const [loading, setLoading] = useState(true);
   const [processing, setProcessing] = useState(false);
   const [user, setUser] = useState<any>(null);
-  const [snapLoaded, setSnapLoaded] = useState(false);
-
-  // Load Midtrans Snap script
-  useEffect(() => {
-    const snapScript = 'https://app.sandbox.midtrans.com/snap/snap.js';
-    const clientKey = import.meta.env.VITE_MIDTRANS_CLIENT_KEY;
-    
-    if (!clientKey) {
-      toast({
-        title: "Configuration Error",
-        description: "Payment system not configured. Please contact support.",
-        variant: "destructive",
-      });
-      navigate('/courses');
-      return;
-    }
-    
-    const script = document.createElement('script');
-    script.src = snapScript;
-    script.setAttribute('data-client-key', clientKey);
-    script.onload = () => setSnapLoaded(true);
-    document.body.appendChild(script);
-
-    return () => {
-      document.body.removeChild(script);
-    };
-  }, []);
+  const [snapReady, setSnapReady] = useState(false);
 
   // Check authentication
   useEffect(() => {
@@ -116,22 +90,48 @@ const Checkout = () => {
     fetchCourse();
   }, [courseId, navigate, toast]);
 
+  // Load Midtrans Snap script dynamically with client key from server
+  const loadSnapScript = (clientKey: string): Promise<void> => {
+    return new Promise((resolve, reject) => {
+      // Check if already loaded
+      const existingScript = document.querySelector('script[src*="midtrans"]');
+      if (existingScript) {
+        resolve();
+        return;
+      }
+
+      const script = document.createElement('script');
+      script.src = 'https://app.sandbox.midtrans.com/snap/snap.js';
+      script.setAttribute('data-client-key', clientKey);
+      script.onload = () => resolve();
+      script.onerror = () => reject(new Error('Failed to load payment script'));
+      document.body.appendChild(script);
+    });
+  };
+
   const handlePayment = async () => {
-    if (!course || !user || !snapLoaded) return;
+    if (!course || !user) return;
 
     setProcessing(true);
 
     try {
-      // Call edge function to create payment
+      // Call edge function to create payment - client key comes from server
       const { data, error } = await supabase.functions.invoke('create-payment', {
         body: { courseId: course.id }
       });
 
       if (error) throw error;
 
-      if (!data.snapToken) {
+      if (!data.snapToken || !data.clientKey) {
         throw new Error('Failed to get payment token');
       }
+
+      // Load Snap script with server-provided client key
+      await loadSnapScript(data.clientKey);
+      setSnapReady(true);
+
+      // Small delay to ensure script is initialized
+      await new Promise(resolve => setTimeout(resolve, 100));
 
       // Open Midtrans Snap popup
       window.snap.pay(data.snapToken, {
@@ -358,7 +358,7 @@ const Checkout = () => {
               {/* CTA Button */}
               <Button
                 onClick={course.is_free ? handleFreeEnrollment : handlePayment}
-                disabled={processing || (!snapLoaded && !course.is_free)}
+                disabled={processing}
                 className="w-full h-12 text-base font-semibold"
                 size="lg"
               >
@@ -373,12 +373,6 @@ const Checkout = () => {
                   'Bayar Sekarang'
                 )}
               </Button>
-
-              {!snapLoaded && !course.is_free && (
-                <p className="text-xs text-center text-gray-500 mt-2">
-                  Memuat sistem pembayaran...
-                </p>
-              )}
 
               <p className="text-xs text-center text-gray-500 mt-4">
                 Dengan melanjutkan, Anda menyetujui{' '}
