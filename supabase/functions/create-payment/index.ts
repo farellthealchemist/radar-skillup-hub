@@ -122,8 +122,14 @@ serve(async (req) => {
 
     // Prepare Midtrans transaction
     const midtransServerKey = Deno.env.get('MIDTRANS_SERVER_KEY');
+    const midtransClientKey = Deno.env.get('MIDTRANS_CLIENT_KEY');
+    
     if (!midtransServerKey) {
       throw new Error('Midtrans server key not configured');
+    }
+
+    if (!midtransClientKey) {
+      throw new Error('Midtrans client key not configured');
     }
 
     const authString = btoa(midtransServerKey + ':');
@@ -181,11 +187,13 @@ serve(async (req) => {
       throw new Error('Failed to update order with snap token');
     }
 
+    // Return snap token, order ID, AND client key from server
     return new Response(
       JSON.stringify({
         success: true,
         snapToken: midtransData.token,
         orderId: order.order_id,
+        clientKey: midtransClientKey,
       }),
       {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
