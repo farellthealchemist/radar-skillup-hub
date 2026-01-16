@@ -21,6 +21,7 @@ import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
 import WhatsAppButton from "./components/WhatsAppButton";
 import ScrollToTop from "./components/ScrollToTop";
+import PageTransition from "./components/PageTransition";
 
 // ✅ Tambahan import baru
 import Learn from "./pages/Learn";
@@ -41,39 +42,41 @@ const App = () => (
         <div className="min-h-screen flex flex-col">
           <Navigation />
           <main className="flex-1">
-            <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/courses" element={<Courses />} />
-              <Route path="/courses/:slug" element={<CourseDetail />} />
-              <Route path="/blog" element={<Blog />} />
-              <Route path="/blog/:slug" element={<BlogDetail />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/register" element={<Register />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/dashboard" element={<Dashboard />} />
+            <PageTransition>
+              <Routes>
+                <Route path="/" element={<Index />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/courses" element={<Courses />} />
+                <Route path="/courses/:slug" element={<CourseDetail />} />
+                <Route path="/blog" element={<Blog />} />
+                <Route path="/blog/:slug" element={<BlogDetail />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="/register" element={<Register />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/dashboard" element={<Dashboard />} />
 
-              {/* Dashboard Related Pages */}
-              <Route path="/my-courses" element={<MyCourses />} />
-              <Route path="/profile" element={<Profile />} />
-              <Route path="/transactions" element={<Transactions />} />
+                {/* Dashboard Related Pages */}
+                <Route path="/my-courses" element={<MyCourses />} />
+                <Route path="/profile" element={<Profile />} />
+                <Route path="/transactions" element={<Transactions />} />
 
-              {/* ✅ Halaman baru */}
-              <Route path="/learn/:slug" element={<Learn />} />
-              <Route path="/certificates" element={<Certificates />} />
-              <Route path="/faq" element={<FAQ />} />
-              
-              {/* Payment Pages */}
-              <Route path="/checkout/:courseId" element={<Checkout />} />
-              <Route path="/payment-success" element={<PaymentSuccess />} />
+                {/* ✅ Halaman baru */}
+                <Route path="/learn/:slug" element={<Learn />} />
+                <Route path="/certificates" element={<Certificates />} />
+                <Route path="/faq" element={<FAQ />} />
+                
+                {/* Payment Pages */}
+                <Route path="/checkout/:courseId" element={<Checkout />} />
+                <Route path="/payment-success" element={<PaymentSuccess />} />
 
-              {/* Placeholder routes (bisa dihapus nanti kalau sudah ada halamannya) */}
-              <Route path="/settings" element={<NotFound />} />
-              <Route path="/achievements" element={<NotFound />} />
+                {/* Placeholder routes (bisa dihapus nanti kalau sudah ada halamannya) */}
+                <Route path="/settings" element={<NotFound />} />
+                <Route path="/achievements" element={<NotFound />} />
 
-              {/* Catch-all */}
-              <Route path="*" element={<NotFound />} />
-            </Routes>
+                {/* Catch-all */}
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </PageTransition>
           </main>
           <Footer />
           <WhatsAppButton />

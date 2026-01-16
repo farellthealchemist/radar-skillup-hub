@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, RefObject } from "react";
 
 interface UseScrollAnimationOptions {
   threshold?: number;
@@ -7,10 +7,17 @@ interface UseScrollAnimationOptions {
   delay?: number;
 }
 
-export const useScrollAnimation = (options: UseScrollAnimationOptions = {}) => {
+interface UseScrollAnimationReturn<T extends HTMLElement> {
+  ref: RefObject<T>;
+  isVisible: boolean;
+}
+
+export function useScrollAnimation<T extends HTMLElement = HTMLDivElement>(
+  options: UseScrollAnimationOptions = {}
+): UseScrollAnimationReturn<T> {
   const { threshold = 0.15, rootMargin = "-50px", triggerOnce = true, delay = 0 } = options;
   const [isVisible, setIsVisible] = useState(false);
-  const ref = useRef<HTMLElement>(null);
+  const ref = useRef<T>(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -45,12 +52,16 @@ export const useScrollAnimation = (options: UseScrollAnimationOptions = {}) => {
   }, [threshold, rootMargin, triggerOnce, delay]);
 
   return { ref, isVisible };
-};
+}
 
 // Enhanced animation hook with stagger support and smoother timing
-export const useStaggeredAnimation = (itemCount: number, delay: number = 150, startDelay: number = 200) => {
+export function useStaggeredAnimation<T extends HTMLElement = HTMLDivElement>(
+  itemCount: number, 
+  delay: number = 150, 
+  startDelay: number = 200
+) {
   const [visibleItems, setVisibleItems] = useState<number[]>([]);
-  const { ref, isVisible } = useScrollAnimation({ threshold: 0.1, rootMargin: "-80px" });
+  const { ref, isVisible } = useScrollAnimation<T>({ threshold: 0.1, rootMargin: "-80px" });
 
   useEffect(() => {
     if (isVisible) {
@@ -70,7 +81,7 @@ export const useStaggeredAnimation = (itemCount: number, delay: number = 150, st
   }, [isVisible, itemCount, delay, startDelay]);
 
   return { ref, visibleItems };
-};
+}
 
 // Header navigation animation hook
 export const useHeaderAnimation = () => {

@@ -1,75 +1,19 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
+import { useScrollAnimation, useStaggeredAnimation } from '@/hooks/useScrollAnimation';
 import { 
   Clock, 
   Users, 
   Award, 
-  BookOpen, 
-  CheckCircle,
   Star,
-  Filter,
   Search,
   Phone,
   Download,
   Target,
-  TrendingUp,
   Shield,
   Loader2
 } from "lucide-react";
-
-// Optimized Animation Hooks (consistent with homepage)
-const useScrollAnimation = ({ delay = 0, threshold = 0.1, rootMargin = "0px" } = {}) => {
-  const [isVisible, setIsVisible] = useState(false);
-  const ref = useRef(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setTimeout(() => setIsVisible(true), delay);
-        }
-      },
-      { threshold, rootMargin }
-    );
-
-    if (ref.current) {
-      observer.observe(ref.current);
-    }
-
-    return () => observer.disconnect();
-  }, [delay, threshold, rootMargin]);
-
-  return { ref, isVisible };
-};
-
-const useStaggeredAnimation = (itemCount, staggerDelay = 120, initialDelay = 200) => {
-  const [visibleItems, setVisibleItems] = useState([]);
-  const ref = useRef(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          for (let i = 0; i < itemCount; i++) {
-            setTimeout(() => {
-              setVisibleItems(prev => [...prev, i]);
-            }, initialDelay + i * staggerDelay);
-          }
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    if (ref.current) {
-      observer.observe(ref.current);
-    }
-
-    return () => observer.disconnect();
-  }, [itemCount, staggerDelay, initialDelay]);
-
-  return { ref, visibleItems };
-};
 
 const OptimizedCourses = () => {
   const [activeCategory, setActiveCategory] = useState("Semua");
@@ -77,10 +21,10 @@ const OptimizedCourses = () => {
   const [courses, setCourses] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   
-  const { ref: heroRef, isVisible: heroVisible } = useScrollAnimation({ delay: 300 });
-  const { ref: coursesRef, visibleItems } = useStaggeredAnimation(courses.length, 150, 250);
-  const { ref: guaranteeRef, visibleItems: guaranteeItems } = useStaggeredAnimation(3, 100, 200);
-  const { ref: ctaRef, isVisible: ctaVisible } = useScrollAnimation();
+  const { ref: heroRef, isVisible: heroVisible } = useScrollAnimation<HTMLElement>({ delay: 300 });
+  const { ref: coursesRef, visibleItems } = useStaggeredAnimation<HTMLDivElement>(courses.length, 150, 250);
+  const { ref: guaranteeRef, visibleItems: guaranteeItems } = useStaggeredAnimation<HTMLDivElement>(3, 100, 200);
+  const { ref: ctaRef, isVisible: ctaVisible } = useScrollAnimation<HTMLElement>();
 
   // Fetch courses from database
   useEffect(() => {

@@ -7,6 +7,47 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
+// Rate limiting configuration
+const RATE_LIMIT_WINDOW_MS = 60 * 1000; // 1 minute window
+const MAX_REQUESTS_PER_WINDOW = 5; // Max 5 payment attempts per minute per user
+const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
+
+// Clean up expired rate limit entries periodically
+const cleanupRateLimits = () => {
+  const now = Date.now();
+  for (const [key, value] of rateLimitMap.entries()) {
+    if (now > value.resetTime) {
+      rateLimitMap.delete(key);
+    }
+  }
+};
+
+// Check rate limit for a user
+const checkRateLimit = (userId: string): { allowed: boolean; retryAfter?: number } => {
+  cleanupRateLimits();
+  const now = Date.now();
+  const userLimit = rateLimitMap.get(userId);
+
+  if (!userLimit || now > userLimit.resetTime) {
+    // First request or window expired - reset counter
+    rateLimitMap.set(userId, {
+      count: 1,
+      resetTime: now + RATE_LIMIT_WINDOW_MS,
+    });
+    return { allowed: true };
+  }
+
+  if (userLimit.count >= MAX_REQUESTS_PER_WINDOW) {
+    // Rate limit exceeded
+    const retryAfter = Math.ceil((userLimit.resetTime - now) / 1000);
+    return { allowed: false, retryAfter };
+  }
+
+  // Increment counter
+  userLimit.count++;
+  return { allowed: true };
+};
+
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
@@ -36,7 +77,28 @@ serve(async (req) => {
       throw new Error('Unauthorized');
     }
 
-    // Validate request body
+    // Apply rate limiting
+    const rateLimitResult = checkRateLimit(user.id);
+    if (!rateLimitResult.allowed) {
+      console.log(`Rate limit exceeded for user ${user.id}`);
+      return new Response(
+        JSON.stringify({
+          success: false,
+          error: `Terlalu banyak permintaan. Coba lagi dalam ${rateLimitResult.retryAfter} detik.`,
+          retryAfter: rateLimitResult.retryAfter,
+        }),
+        {
+          headers: { 
+            ...corsHeaders, 
+            'Content-Type': 'application/json',
+            'Retry-After': String(rateLimitResult.retryAfter),
+          },
+          status: 429,
+        }
+      );
+    }
+
+    console.log(`Processing payment request for user: ${user.id}`);
     const requestSchema = z.object({
       courseId: z.string().uuid('Invalid course ID format'),
     });
