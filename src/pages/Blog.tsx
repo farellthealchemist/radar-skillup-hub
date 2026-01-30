@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { 
   Calendar, 
@@ -10,12 +10,12 @@ import {
   Trophy, 
   Clock,
   Search,
-  TrendingUp,
   Shield,
   GraduationCap,
   Loader2
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import { useScrollAnimation, useStaggeredAnimation } from "@/hooks/useScrollAnimation";
 
 interface BlogPost {
   id: string;
@@ -33,59 +33,6 @@ interface BlogPost {
   created_at: string;
 }
 
-// Animation Hooks
-const useScrollAnimation = ({ delay = 0, threshold = 0.1 } = {}) => {
-  const [isVisible, setIsVisible] = useState(false);
-  const ref = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setTimeout(() => setIsVisible(true), delay);
-        }
-      },
-      { threshold }
-    );
-
-    if (ref.current) {
-      observer.observe(ref.current);
-    }
-
-    return () => observer.disconnect();
-  }, [delay, threshold]);
-
-  return { ref, isVisible };
-};
-
-const useStaggeredAnimation = (itemCount: number, staggerDelay = 100, initialDelay = 200) => {
-  const [visibleItems, setVisibleItems] = useState<number[]>([]);
-  const ref = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          for (let i = 0; i < itemCount; i++) {
-            setTimeout(() => {
-              setVisibleItems(prev => [...prev, i]);
-            }, initialDelay + i * staggerDelay);
-          }
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    if (ref.current) {
-      observer.observe(ref.current);
-    }
-
-    return () => observer.disconnect();
-  }, [itemCount, staggerDelay, initialDelay]);
-
-  return { ref, visibleItems };
-};
-
 const Blog = () => {
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [featuredPost, setFeaturedPost] = useState<BlogPost | null>(null);
@@ -94,8 +41,8 @@ const Blog = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [categories, setCategories] = useState<string[]>([]);
 
-  const { ref: featuredRef, isVisible: featuredVisible } = useScrollAnimation({ threshold: 0.2 });
-  const { ref: postsRef, visibleItems } = useStaggeredAnimation(posts.length, 100, 250);
+  const { ref: featuredRef, isVisible: featuredVisible } = useScrollAnimation<HTMLElement>({ threshold: 0.2 });
+  const { ref: postsRef, visibleItems } = useStaggeredAnimation<HTMLDivElement>(posts.length, 100, 250);
 
   useEffect(() => {
     fetchPosts();
