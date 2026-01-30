@@ -1,64 +1,12 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { useScrollAnimation, useStaggeredAnimation } from '@/hooks/useScrollAnimation';
 import { 
   BookOpen, PlayCircle, CheckCircle, Clock, 
   Award, ArrowRight, TrendingUp, ChevronRight, Loader2
 } from "lucide-react";
-
-// Animation Hook
-const useScrollAnimation = ({ delay = 0 } = {}) => {
-  const [isVisible, setIsVisible] = useState(false);
-  const ref = useRef(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setTimeout(() => setIsVisible(true), delay);
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    if (ref.current) {
-      observer.observe(ref.current);
-    }
-
-    return () => observer.disconnect();
-  }, [delay]);
-
-  return { ref, isVisible };
-};
-
-const useStaggeredAnimation = (itemCount, staggerDelay = 150, initialDelay = 200) => {
-  const [visibleItems, setVisibleItems] = useState([]);
-  const ref = useRef(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          for (let i = 0; i < itemCount; i++) {
-            setTimeout(() => {
-              setVisibleItems(prev => [...prev, i]);
-            }, initialDelay + i * staggerDelay);
-          }
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    if (ref.current) {
-      observer.observe(ref.current);
-    }
-
-    return () => observer.disconnect();
-  }, [itemCount, staggerDelay, initialDelay]);
-
-  return { ref, visibleItems };
-};
 
 const Dashboard = () => {
   const [user, setUser] = useState<any>(null);
