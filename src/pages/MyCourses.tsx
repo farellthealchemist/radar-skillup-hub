@@ -1,37 +1,12 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { 
   BookOpen, PlayCircle, CheckCircle, Clock, 
-  Award, Filter, Search, Download, Calendar,
-  TrendingUp, Star, Loader2
+  Award, Search, Download, Loader2
 } from "lucide-react";
-
-// Animation Hook
-const useScrollAnimation = ({ delay = 0 } = {}) => {
-  const [isVisible, setIsVisible] = useState(false);
-  const ref = useRef(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setTimeout(() => setIsVisible(true), delay);
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    if (ref.current) {
-      observer.observe(ref.current);
-    }
-
-    return () => observer.disconnect();
-  }, [delay]);
-
-  return { ref, isVisible };
-};
 
 const MyCourses = () => {
   const [activeTab, setActiveTab] = useState("active");
@@ -82,6 +57,7 @@ const MyCourses = () => {
             enrolled_at,
             courses (
               id,
+              slug,
               title,
               thumbnail_url,
               category,
@@ -123,6 +99,7 @@ const MyCourses = () => {
 
           const courseData = {
             id: course.id,
+            slug: course.slug,
             title: course.title,
             thumbnail: course.thumbnail_url,
             category: course.category,
@@ -374,14 +351,14 @@ const MyCourses = () => {
                         {activeTab === "active" ? (
                           <>
                             <Link 
-                              to={`/learn/${course.id}`}
+                              to={`/learn/${course.slug}`}
                               className="inline-flex items-center px-6 py-2.5 hero-gradient text-white rounded-lg hover:scale-105 smooth-transition btn-glow font-medium gap-2"
                             >
                               <PlayCircle className="w-4 h-4" />
                               Lanjutkan Belajar
                             </Link>
                             <Link 
-                              to={`/courses/${course.id}`}
+                              to={`/courses/${course.slug}`}
                               className="inline-flex items-center px-6 py-2.5 border-2 border-gray-300 text-gray-700 rounded-lg hover:border-red-600 hover:text-red-600 font-medium smooth-transition"
                             >
                               Lihat Detail
@@ -397,7 +374,7 @@ const MyCourses = () => {
                               Download Sertifikat
                             </a>
                             <Link 
-                              to={`/learn/${course.id}`}
+                              to={`/learn/${course.slug}`}
                               className="inline-flex items-center px-6 py-2.5 border-2 border-gray-300 text-gray-700 rounded-lg hover:border-red-600 hover:text-red-600 font-medium smooth-transition"
                             >
                               Review Materi
