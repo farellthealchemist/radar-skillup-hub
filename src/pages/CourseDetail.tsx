@@ -189,7 +189,10 @@ const CourseDetail = () => {
   };
 
   const handleEnroll = async () => {
-    if (!user) {
+    // Re-fetch user to ensure we have the latest auth state
+    const { data: { user: currentUser } } = await supabase.auth.getUser();
+    
+    if (!currentUser) {
       toast({
         title: "Login diperlukan",
         description: "Silakan login terlebih dahulu untuk mendaftar kursus"
@@ -206,7 +209,7 @@ const CourseDetail = () => {
         const { error } = await supabase
           .from('enrollments')
           .insert({
-            user_id: user.id,
+            user_id: currentUser.id,
             course_id: course.id
           });
 
@@ -217,7 +220,8 @@ const CourseDetail = () => {
           description: "Anda sekarang dapat mengakses kursus ini"
         });
 
-        fetchEnrollment(user.id, course.id);
+        setUser(currentUser);
+        fetchEnrollment(currentUser.id, course.id);
       } catch (error) {
         console.error('Error enrolling:', error);
         toast({
