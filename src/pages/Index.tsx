@@ -147,7 +147,7 @@ const Homepage = () => {
   ];
 
   const { ref: heroRef, isVisible: heroVisible } = useScrollAnimation({ delay: 200 });
-  const { ref: servicesRef, visibleItems } = useStaggeredAnimation(featuredCourses.length || 4, 150, 300);
+  const { ref: servicesRef, visibleItems } = useStaggeredAnimation(4, 150, 300);
   const { ref: aboutRef, isVisible: aboutVisible } = useScrollAnimation({ threshold: 0.1, rootMargin: "-50px" });
   const { ref: testimonialsRef, visibleItems: testimonialVisible } = useStaggeredAnimation(3, 200, 250);
   const { ref: statsRef, isVisible: statsVisible } = useScrollAnimation({ threshold: 0.3 });
