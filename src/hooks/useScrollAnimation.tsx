@@ -65,7 +65,7 @@ export function useStaggeredAnimation<T extends HTMLElement = HTMLDivElement>(
 
   useEffect(() => {
     if (isVisible) {
-      const timeouts: NodeJS.Timeout[] = [];
+      const timeouts: ReturnType<typeof setTimeout>[] = [];
       
       for (let i = 0; i < itemCount; i++) {
         const timeout = setTimeout(() => {
