@@ -22,7 +22,7 @@ const OptimizedCourses = () => {
   const [loading, setLoading] = useState(true);
   
   const { ref: heroRef, isVisible: heroVisible } = useScrollAnimation<HTMLElement>({ delay: 300 });
-  const { ref: coursesRef, visibleItems } = useStaggeredAnimation<HTMLDivElement>(courses.length, 150, 250);
+  const { ref: coursesRef, visibleItems } = useStaggeredAnimation<HTMLDivElement>(20, 150, 250);
   const { ref: guaranteeRef, visibleItems: guaranteeItems } = useStaggeredAnimation<HTMLDivElement>(3, 100, 200);
   const { ref: ctaRef, isVisible: ctaVisible } = useScrollAnimation<HTMLElement>();
 

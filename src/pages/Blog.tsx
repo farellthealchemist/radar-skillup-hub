@@ -42,7 +42,7 @@ const Blog = () => {
   const [categories, setCategories] = useState<string[]>([]);
 
   const { ref: featuredRef, isVisible: featuredVisible } = useScrollAnimation<HTMLElement>({ threshold: 0.2 });
-  const { ref: postsRef, visibleItems } = useStaggeredAnimation<HTMLDivElement>(posts.length, 100, 250);
+  const { ref: postsRef, visibleItems } = useStaggeredAnimation<HTMLDivElement>(20, 100, 250);
 
   useEffect(() => {
     fetchPosts();
