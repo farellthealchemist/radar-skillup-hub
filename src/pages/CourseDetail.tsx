@@ -204,29 +204,34 @@ const CourseDetail = () => {
     if (!course) return;
 
     if (course.is_free) {
-      // Create enrollment directly for free courses
+      // Enroll via secure edge function for free courses
       try {
-        const { error } = await supabase
-          .from('enrollments')
-          .insert({
-            user_id: currentUser.id,
-            course_id: course.id
-          });
+        const { data, error } = await supabase.functions.invoke('enroll-free-course', {
+          body: { courseId: course.id }
+        });
 
         if (error) throw error;
+        if (!data.success) throw new Error(data.error || 'Enrollment failed');
 
-        toast({
-          title: "Berhasil mendaftar!",
-          description: "Anda sekarang dapat mengakses kursus ini"
-        });
+        if (data.alreadyEnrolled) {
+          toast({
+            title: "Sudah terdaftar",
+            description: "Anda sudah terdaftar di kursus ini"
+          });
+        } else {
+          toast({
+            title: "Berhasil mendaftar!",
+            description: "Anda sekarang dapat mengakses kursus ini"
+          });
+        }
 
         setUser(currentUser);
         fetchEnrollment(currentUser.id, course.id);
-      } catch (error) {
+      } catch (error: any) {
         console.error('Error enrolling:', error);
         toast({
           title: "Gagal mendaftar",
-          description: "Terjadi kesalahan saat mendaftar kursus",
+          description: error.message || "Terjadi kesalahan saat mendaftar kursus",
           variant: "destructive"
         });
       }

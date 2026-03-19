@@ -3,5 +3,8 @@ project_id = "ghkgncdqjgbkizsqyxfy"
 [functions.create-payment]
 verify_jwt = true
 
+[functions.enroll-free-course]
+verify_jwt = false
+
 [functions.payment-webhook]
 verify_jwt = false

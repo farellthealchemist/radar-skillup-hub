@@ -177,39 +177,24 @@ const Checkout = () => {
     setProcessing(true);
 
     try {
-      // Check if already enrolled
-      const { data: existingEnrollment } = await supabase
-        .from('enrollments')
-        .select('id')
-        .eq('user_id', user.id)
-        .eq('course_id', course.id)
-        .single();
+      const { data, error } = await supabase.functions.invoke('enroll-free-course', {
+        body: { courseId: course.id }
+      });
 
-      if (existingEnrollment) {
+      if (error) throw error;
+      if (!data.success) throw new Error(data.error || 'Enrollment failed');
+
+      if (data.alreadyEnrolled) {
         toast({
           title: "Sudah Terdaftar",
           description: "Anda sudah terdaftar di kursus ini",
         });
-        navigate('/my-courses');
-        return;
-      }
-
-      // Create free enrollment
-      const { error } = await supabase
-        .from('enrollments')
-        .insert({
-          user_id: user.id,
-          course_id: course.id,
-          progress: 0,
-          status: 'active'
+      } else {
+        toast({
+          title: "Berhasil Terdaftar!",
+          description: "Anda telah berhasil mendaftar di kursus gratis ini",
         });
-
-      if (error) throw error;
-
-      toast({
-        title: "Berhasil Terdaftar!",
-        description: "Anda telah berhasil mendaftar di kursus gratis ini",
-      });
+      }
       navigate('/my-courses');
     } catch (error: any) {
       toast({
