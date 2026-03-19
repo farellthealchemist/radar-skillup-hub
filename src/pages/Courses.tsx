@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { supabase } from '@/integrations/supabase/client';
+import { courses as staticCourses } from '@/data/courses';
 import { useScrollAnimation, useStaggeredAnimation } from '@/hooks/useScrollAnimation';
 import { 
   Clock, 
@@ -18,57 +18,28 @@ import {
 const OptimizedCourses = () => {
   const [activeCategory, setActiveCategory] = useState("Semua");
   const [searchTerm, setSearchTerm] = useState("");
-  const [courses, setCourses] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
-  
-  const { ref: heroRef, isVisible: heroVisible } = useScrollAnimation<HTMLElement>({ delay: 300 });
-  const { ref: coursesRef, visibleItems } = useStaggeredAnimation<HTMLDivElement>(20, 150, 250);
-  const { ref: guaranteeRef, visibleItems: guaranteeItems } = useStaggeredAnimation<HTMLDivElement>(3, 100, 200);
-  const { ref: ctaRef, isVisible: ctaVisible } = useScrollAnimation<HTMLElement>();
+  const loading = false;
 
-  // Fetch courses from database
-  useEffect(() => {
-    const fetchCourses = async () => {
-      try {
-        setLoading(true);
-        const { data, error } = await supabase
-          .from('courses')
-          .select('*')
-          .order('created_at', { ascending: true });
-
-        if (error) throw error;
-
-        const formattedCourses = data?.map(course => ({
-          id: course.id,
-          title: course.title,
-          slug: course.slug,
-          category: course.category,
-          description: course.description || '',
-          image: course.thumbnail_url || 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800',
-          duration: course.duration || '',
-          students: `${course.total_students || 0}+`,
-          level: course.level || 'Pemula',
-          price: course.is_free ? 'GRATIS' : `Rp ${course.price?.toLocaleString('id-ID')}`,
-          originalPrice: course.discount_price ? `Rp ${course.discount_price?.toLocaleString('id-ID')}` : null,
-          discount: course.discount_price ? `${Math.round((1 - course.discount_price / course.price) * 100)}%` : null,
-          rating: course.rating || 0,
-          reviewCount: course.total_students || 0,
-          popular: course.total_students > 500,
-          instructor: course.instructor_name || '',
-          language: course.language || 'Bahasa Indonesia',
-          isFree: course.is_free
-        })) || [];
-
-        setCourses(formattedCourses);
-      } catch (error) {
-        console.error('Error fetching courses:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchCourses();
-  }, []);
+  const courses = staticCourses.map(course => ({
+    id: course.id,
+    title: course.title,
+    slug: course.slug,
+    category: course.category,
+    description: course.description,
+    image: course.image,
+    duration: course.duration,
+    students: course.students,
+    level: course.level,
+    price: course.isFree ? 'GRATIS' : course.price,
+    originalPrice: course.originalPrice,
+    discount: course.discount,
+    rating: course.rating,
+    reviewCount: 0,
+    popular: course.popular,
+    instructor: course.instructor,
+    language: course.language,
+    isFree: course.isFree
+  }));
 
   // Calculate categories dynamically
   const allCategories = Array.from(new Set(courses.map(c => c.category)));

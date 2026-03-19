@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { supabase } from '@/integrations/supabase/client';
+import { courses as staticCourses } from '@/data/courses';
 import {
   Code, 
   Palette, 
@@ -107,98 +107,22 @@ const useCountAnimation = (targetValue, duration = 2000, isVisible = false) => {
 const Homepage = () => {
   const [openFaqIndex, setOpenFaqIndex] = useState(null);
   const [isFaqAnimating, setIsFaqAnimating] = useState(false);
-  const [featuredCourses, setFeaturedCourses] = useState<any[]>([]);
-  const [coursesLoading, setCoursesLoading] = useState(true);
+  const coursesLoading = false;
 
-  const toggleFaq = (index) => {
-    if (isFaqAnimating) return;
-    
-    setIsFaqAnimating(true);
-    setOpenFaqIndex(openFaqIndex === index ? null : index);
-    
-    setTimeout(() => setIsFaqAnimating(false), 600);
-  };
-
-  const faqs = [
-    {
-      question: "Bagaimana jika tidak memiliki latar belakang IT?",
-      answer: "Tidak masalah! Program kami dirancang untuk semua level, termasuk pemula tanpa latar belakang IT. Instruktur kami akan membantu Anda dari dasar hingga mahir."
-    },
-    {
-      question: "Apakah ada kelas FullStack Web Development?",
-      answer: "Saat ini kami fokus pada fundamental programming (Python, Java). Untuk FullStack development, Anda bisa mengikuti program programming terlebih dahulu sebagai foundation."
-    },
-    {
-      question: "Apakah pembayaran dapat dilakukan dengan cara mencicil?",
-      answer: "Ya, kami menyediakan sistem pembayaran cicilan yang fleksibel untuk memudahkan siswa mengikuti program kursus."
-    },
-    {
-      question: "Apakah ada kelas coding untuk anak SD?",
-      answer: "Ya! Kami memiliki program Scratch yang khusus dirancang untuk anak-anak SD. Program ini mengajarkan logika programming dengan cara yang menyenangkan dan mudah dipahami."
-    },
-    {
-      question: "Berapa lama durasi setiap kelas?",
-      answer: "Setiap sesi kelas berlangsung 2-3 jam dengan istirahat. Frekuensi kelas disesuaikan dengan program yang diambil."
-    },
-    {
-      question: "Apakah mendapat sertifikat setelah lulus?",
-      answer: "Ya, setiap peserta yang menyelesaikan program akan mendapat sertifikat resmi dari RADAR Education Center yang diakui industri."
-    }
-  ];
-
-  const { ref: heroRef, isVisible: heroVisible } = useScrollAnimation({ delay: 200 });
-  const { ref: servicesRef, visibleItems } = useStaggeredAnimation(4, 150, 300);
-  const { ref: aboutRef, isVisible: aboutVisible } = useScrollAnimation({ threshold: 0.1, rootMargin: "-50px" });
-  const { ref: testimonialsRef, visibleItems: testimonialVisible } = useStaggeredAnimation(3, 200, 250);
-  const { ref: statsRef, isVisible: statsVisible } = useScrollAnimation({ threshold: 0.3 });
-  const { ref: ctaRef, isVisible: ctaVisible } = useScrollAnimation();
-  const { ref: faqRef, isVisible: faqVisible } = useScrollAnimation({ threshold: 0.1 });
-
-  const studentCount = useCountAnimation(1000, 2500, statsVisible);
-  const courseCount = useCountAnimation(50, 2000, statsVisible);
-  const successRate = useCountAnimation(95, 2200, statsVisible);
-  const supportTime = useCountAnimation(24, 1800, statsVisible);
-
-  const [activeTestimonial, setActiveTestimonial] = useState(0);
-
-  // Fetch featured courses from database - same as Courses page
-  useEffect(() => {
-    const fetchFeaturedCourses = async () => {
-      try {
-        setCoursesLoading(true);
-        const { data, error } = await supabase
-          .from('courses')
-          .select('*')
-          .order('created_at', { ascending: true })
-          .limit(4);
-
-        if (error) throw error;
-
-        const formattedCourses = data?.map(course => ({
-          id: course.id,
-          title: course.title,
-          slug: course.slug,
-          category: course.category,
-          description: course.description || '',
-          image: course.thumbnail_url || 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800',
-          popular: course.total_students > 500,
-          price: course.is_free ? 'GRATIS' : `Rp ${course.price?.toLocaleString('id-ID')}`,
-          originalPrice: course.discount_price ? `Rp ${course.price?.toLocaleString('id-ID')}` : null,
-          discount: course.discount_price ? `${Math.round((1 - course.discount_price / course.price) * 100)}%` : null,
-          duration: course.duration || '3-6 bulan',
-          isFree: course.is_free
-        })) || [];
-
-        setFeaturedCourses(formattedCourses);
-      } catch (error) {
-        console.error('Error fetching courses:', error);
-      } finally {
-        setCoursesLoading(false);
-      }
-    };
-
-    fetchFeaturedCourses();
-  }, []);
+  const featuredCourses = staticCourses.slice(0, 4).map(course => ({
+    id: course.id,
+    title: course.title,
+    slug: course.slug,
+    category: course.category,
+    description: course.description,
+    image: course.image,
+    popular: course.popular,
+    price: course.isFree ? 'GRATIS' : course.price,
+    originalPrice: course.originalPrice,
+    discount: course.discount,
+    duration: course.duration,
+    isFree: course.isFree
+  }));
 
   const services = featuredCourses.length > 0 ? featuredCourses : [
     {
